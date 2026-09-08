@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NFL Player Prop Projections</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>NFL Player Prop Projections</h1>
+    <div id="meta" class="meta">Loading...</div>
+  </header>
+
+  <div class="controls">
+    <input id="search" type="text" placeholder="Search player or team...">
+    <select id="market-filter">
+      <option value="all">All markets</option>
+      <option value="anytime_td">Anytime TD</option>
+      <option value="passing_yards">Passing Yards</option>
+      <option value="rushing_yards">Rushing Yards</option>
+      <option value="receiving_yards">Receiving Yards</option>
+    </select>
+    <select id="position-filter">
+      <option value="all">All positions</option>
+      <option value="QB">QB</option>
+      <option value="RB">RB</option>
+      <option value="WR">WR</option>
+      <option value="TE">TE</option>
+    </select>
+    <select id="side-filter">
+      <option value="all">All sides</option>
+      <option value="over">Over / Yes only</option>
+      <option value="under">Under / No only</option>
+      <option value="edges">Recommended plays only</option>
+    </select>
+    <select id="sort-by">
+      <option value="edge">Sort: edge</option>
+      <option value="projection">Sort: projection</option>
+      <option value="name">Sort: player name</option>
+    </select>
+  </div>
+
+  <div class="table-wrap">
+    <table id="props-table">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Pos</th>
+          <th>Team</th>
+          <th>Opp</th>
+          <th>Market</th>
+          <th>Line</th>
+          <th>Projection</th>
+          <th>Prob.</th>
+          <th>Edge</th>
+          <th>Side</th>
+          <th>Kelly</th>
+        </tr>
+      </thead>
+      <tbody id="props-body">
+        <tr><td colspan="11" class="loading">Loading projections...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>Generated automatically each week. Edge is computed against the
+       de-vigged market price. Not betting advice.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

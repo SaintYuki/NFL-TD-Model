@@ -1,0 +1,76 @@
+name: Weekly NFL Props Update
+
+on:
+  schedule:
+    # 18:00 UTC = 2:00pm EDT (roughly Wednesday afternoon Eastern time,
+    # spring through fall) / 1:00pm EST once clocks change in November.
+    # Adjust the hour if you want a specific Eastern time year-round;
+    # GitHub Actions cron always runs in UTC.
+    - cron: "0 18 * * 3"
+  workflow_dispatch: {}   # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Determine current season and week
+        id: week
+        run: python scripts/current_nfl_week.py >> "$GITHUB_OUTPUT"
+
+      - name: Refresh input data
+        # Prior-season tables only need rebuilding once, right after that
+        # season ends -- skip if already present so this doesn't re-download
+        # a full season of play-by-play every single Wednesday for no reason.
+        run: |
+          PRIOR_SEASON=$(( ${{ steps.week.outputs.season }} - 1 ))
+          if [ ! -f data/prior/player_season.csv ]; then
+            python scripts/fetch_nflverse_data.py prior --season $PRIOR_SEASON --root data
+          fi
+          if [ ! -f data/roster_changes.csv ]; then
+            python scripts/fetch_nflverse_data.py roster \
+              --season ${{ steps.week.outputs.season }} --prior-season $PRIOR_SEASON --root data
+          fi
+          python scripts/fetch_nflverse_data.py current \
+            --root data \
+            --season ${{ steps.week.outputs.season }} \
+            --through-week ${{ steps.week.outputs.week }}
+
+      - name: Ensure prop_lines.csv exists
+        # No odds feed wired up yet (see README) -- an empty-but-headered
+        # file lets the pipeline run and just show projections with no
+        # market/edge columns, instead of erroring on a missing file.
+        run: |
+          if [ ! -f data/prop_lines.csv ]; then
+            echo "season,week,player_id,market,line,over_odds,under_odds,book,timestamp" > data/prop_lines.csv
+          fi
+
+      - name: Build projections and site data
+        run: |
+          python scripts/build_site_data.py \
+            --root data \
+            --season ${{ steps.week.outputs.season }} \
+            --week ${{ steps.week.outputs.week }} \
+            --out docs/data
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data data
+          git diff --cached --quiet && echo "no changes to commit" && exit 0
+          git commit -m "Weekly update: season ${{ steps.week.outputs.season }} week ${{ steps.week.outputs.week }}"
+          git push

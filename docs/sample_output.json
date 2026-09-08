@@ -1,0 +1,229 @@
+{
+  "player_id": "BAL_WR1",
+  "player_name": "BAL WR1",
+  "position": "WR",
+  "season": 2026,
+  "week": 1,
+  "team": "BAL",
+  "opponent": "BUF",
+  "generated_at": "2026-09-04T22:11:52.785300+00:00",
+  "model_version": "1.0.0",
+  "game_environment": {
+    "spread": 4.0,
+    "total": 40.524659342964725,
+    "implied_team_total": 18.26,
+    "projected_team_plays": 61.7,
+    "projected_team_pass_attempts": 35.0,
+    "projected_team_carries": 24.2,
+    "expected_team_offensive_td": 1.88
+  },
+  "data_blend": {
+    "games_current_season": 0.0,
+    "continuity_rho": 0.87,
+    "role_uncertainty": 0.168,
+    "weights_by_metric": {
+      "target_share": {
+        "metric": "target_share",
+        "w_current_season": 0.0,
+        "w_prior_season": 0.8704,
+        "w_league_baseline": 0.1296,
+        "stabilization_k": 4.0,
+        "continuity_rho": 0.8704
+      },
+      "rush_share": {
+        "metric": "rush_share",
+        "w_current_season": 0.0,
+        "w_prior_season": 0.8704,
+        "w_league_baseline": 0.1296,
+        "stabilization_k": 3.0,
+        "continuity_rho": 0.8704
+      },
+      "ypc": {
+        "metric": "ypc",
+        "w_current_season": 0.0,
+        "w_prior_season": 0.8704,
+        "w_league_baseline": 0.1296,
+        "stabilization_k": 12.0,
+        "continuity_rho": 0.8704
+      },
+      "yptarget": {
+        "metric": "yptarget",
+        "w_current_season": 0.0,
+        "w_prior_season": 0.8704,
+        "w_league_baseline": 0.1296,
+        "stabilization_k": 9.0,
+        "continuity_rho": 0.8704
+      },
+      "ypa": {
+        "metric": "ypa",
+        "w_current_season": 0.0,
+        "w_prior_season": 0.8704,
+        "w_league_baseline": 0.1296,
+        "stabilization_k": 10.0,
+        "continuity_rho": 0.8704
+      }
+    }
+  },
+  "markets": {
+    "anytime_td": {
+      "expected_touchdowns": 0.2382,
+      "probability": 0.2053,
+      "p_two_plus": 0.0242,
+      "fair_odds_american": 387,
+      "components": {
+        "lambda_total": 0.2382,
+        "lambda_rush": 0.0002,
+        "lambda_rec": 0.27,
+        "goal_line_share": 0.0,
+        "rz_target_share": 0.2856
+      },
+      "market": {
+        "book": "DemoBook",
+        "book_odds": -115,
+        "book_implied_prob": 0.5349,
+        "market_devig_prob": 0.5108,
+        "model_prob": 0.2053,
+        "edge_pct_points": -0.3055,
+        "expected_value_per_unit": -0.6162,
+        "kelly_full": 0.0,
+        "kelly_recommended": 0.0,
+        "recommended_side": "no"
+      }
+    },
+    "receiving_yards": {
+      "projection": 113.0,
+      "median": 102.1,
+      "sd": 61.4,
+      "distribution": "gamma",
+      "p_zero": 0.0006,
+      "ci_50": [
+        67.9,
+        146.4
+      ],
+      "ci_80": [
+        44.8,
+        195.5
+      ],
+      "expected_opportunities": 10.227,
+      "expected_yards_per_opportunity": 11.0517,
+      "opportunity_detail": {
+        "expected_opportunities": 10.227,
+        "team_pass_attempts": 35.0354,
+        "target_share": 0.2919,
+        "route_participation": 0.8442
+      },
+      "efficiency_detail": {
+        "expected_yards_per_opp": 11.0517,
+        "matchup_mult": 1.0595,
+        "wr_cb_mult": 1.03,
+        "air_yards_correction": 1.0561,
+        "qb_unit_delta": 0.0
+      },
+      "lines": [
+        {
+          "book": "DemoBook",
+          "line": 85.5,
+          "p_over": 0.6198,
+          "p_under": 0.3802,
+          "fair_over_odds": -163,
+          "fair_under_odds": 163,
+          "book_over_odds": -105,
+          "book_under_odds": -115,
+          "market_devig_prob_over": 0.4892,
+          "edge_over_pct_points": 0.1306,
+          "edge_under_pct_points": -0.1306,
+          "recommended_side": "over",
+          "kelly_recommended": 0.0551
+        }
+      ]
+    }
+  },
+  "key_drivers": [
+    {
+      "feature": "e_team_off_td",
+      "value": 1.8789,
+      "direction": "neutral",
+      "note": "Implied team total to expected TDs",
+      "market": "anytime_td"
+    },
+    {
+      "feature": "inside5_rush_share",
+      "value": 0.0,
+      "direction": "neutral",
+      "note": "Goal line carry share",
+      "market": "anytime_td"
+    },
+    {
+      "feature": "rz_target_share",
+      "value": 0.2856,
+      "direction": "neutral",
+      "note": "Red zone target share",
+      "market": "anytime_td"
+    },
+    {
+      "feature": "rush_td_share_of_off",
+      "value": 0.4799,
+      "direction": "neutral",
+      "note": "Team rush/pass TD split",
+      "market": "anytime_td"
+    },
+    {
+      "feature": "roster_usage_mult",
+      "value": 1.0,
+      "direction": "neutral",
+      "note": "Roster/depth chart change",
+      "impact": 0.0,
+      "market": "anytime_td"
+    },
+    {
+      "feature": "pass_matchup_mult",
+      "value": 1.0595,
+      "direction": "positive",
+      "note": "Opponent pass defense",
+      "impact": 6.32,
+      "market": "receiving_yards"
+    },
+    {
+      "feature": "matchup_eff_mult",
+      "value": 1.03,
+      "direction": "positive",
+      "note": "WR/CB matchup",
+      "impact": 3.27,
+      "market": "receiving_yards"
+    },
+    {
+      "feature": "weather_penalty",
+      "value": 0.9981,
+      "direction": "negative",
+      "note": "Weather",
+      "impact": -0.23,
+      "market": "receiving_yards"
+    },
+    {
+      "feature": "yptarget_unit_delta",
+      "value": 0.0,
+      "direction": "neutral",
+      "note": "QB quality change",
+      "impact": -0.02,
+      "market": "receiving_yards"
+    },
+    {
+      "feature": "roster_usage_mult",
+      "value": 1.0,
+      "direction": "neutral",
+      "note": "Roster/depth chart change",
+      "impact": -0.02,
+      "market": "receiving_yards"
+    },
+    {
+      "feature": "target_share",
+      "value": 0.2862,
+      "direction": "neutral",
+      "note": "Projected target share",
+      "market": "receiving_yards"
+    }
+  ],
+  "flags": [
+    "no_current_season_sample"
+  ]
+}
