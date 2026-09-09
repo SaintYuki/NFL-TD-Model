@@ -1096,9 +1096,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.034,
-    "probability": 0.0323,
-    "fair_odds": 3000,
+    "projection": 0.0329,
+    "probability": 0.0313,
+    "fair_odds": 3098,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -1117,11 +1117,11 @@
     ],
     "market": "passing_yards",
     "line": null,
-    "projection": 190.0,
-    "median": 190.0,
+    "projection": 190.3,
+    "median": 190.3,
     "ci_80": [
-      111.9,
-      268.0
+      112.1,
+      268.5
     ],
     "probability": null,
     "book": null,
@@ -1143,11 +1143,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 4.9,
-    "median": 4.1,
+    "projection": 4.7,
+    "median": 3.9,
     "ci_80": [
       0.0,
-      10.7
+      10.2
     ],
     "probability": null,
     "book": null,
@@ -3328,9 +3328,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0791,
-    "probability": 0.0735,
-    "fair_odds": 1260,
+    "projection": 0.0767,
+    "probability": 0.0713,
+    "fair_odds": 1302,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -3348,11 +3348,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 13.2,
-    "median": 11.9,
+    "projection": 12.7,
+    "median": 11.5,
     "ci_80": [
-      3.3,
-      24.6
+      3.0,
+      23.8
     ],
     "probability": null,
     "book": null,
@@ -3627,7 +3627,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -3646,11 +3646,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -3924,9 +3924,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0632,
-    "probability": 0.0592,
-    "fair_odds": 1590,
+    "projection": 0.0613,
+    "probability": 0.0574,
+    "fair_odds": 1642,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -3944,7 +3944,7 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 11.8,
+    "projection": 11.9,
     "median": 10.8,
     "ci_80": [
       0.0,
@@ -5656,9 +5656,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.162,
-    "probability": 0.1448,
-    "fair_odds": 591,
+    "projection": 0.1602,
+    "probability": 0.1433,
+    "fair_odds": 598,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -5676,11 +5676,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 59.3,
-    "median": 53.1,
+    "projection": 58.7,
+    "median": 52.5,
     "ci_80": [
-      20.8,
-      106.3
+      20.5,
+      105.3
     ],
     "probability": null,
     "book": null,
@@ -7422,7 +7422,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -7441,10 +7441,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -8633,9 +8633,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0602,
-    "probability": 0.0565,
-    "fair_odds": 1671,
+    "projection": 0.0584,
+    "probability": 0.0548,
+    "fair_odds": 1726,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -8654,11 +8654,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 14.7,
-    "median": 12.5,
+    "projection": 14.3,
+    "median": 12.1,
     "ci_80": [
-      3.9,
-      28.3
+      3.8,
+      27.6
     ],
     "probability": null,
     "book": null,
@@ -11228,7 +11228,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -11248,10 +11248,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -11364,7 +11364,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -11382,11 +11382,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -11906,9 +11906,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0042,
-    "probability": 0.004,
-    "fair_odds": 24743,
+    "projection": 0.004,
+    "probability": 0.0039,
+    "fair_odds": 25538,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -12041,7 +12041,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -12061,10 +12061,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -12563,9 +12563,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0709,
-    "probability": 0.0662,
-    "fair_odds": 1412,
+    "projection": 0.0701,
+    "probability": 0.0654,
+    "fair_odds": 1428,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -12583,11 +12583,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 8.3,
-    "median": 7.5,
+    "projection": 8.2,
+    "median": 7.4,
     "ci_80": [
       0.0,
-      18.9
+      18.7
     ],
     "probability": null,
     "book": null,
@@ -13789,7 +13789,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -13808,10 +13808,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -14132,7 +14132,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -14151,11 +14151,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -16078,7 +16078,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -16097,10 +16097,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -17307,7 +17307,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -17326,10 +17326,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -18547,7 +18547,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -18567,10 +18567,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -19237,7 +19237,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -19256,10 +19256,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -19283,7 +19283,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -19303,10 +19303,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -21804,7 +21804,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -21823,11 +21823,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -22972,9 +22972,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0027,
-    "probability": 0.0026,
-    "fair_odds": 38735,
+    "projection": 0.0026,
+    "probability": 0.0025,
+    "fair_odds": 39978,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -23863,7 +23863,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -23881,11 +23881,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -24227,7 +24227,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -24246,11 +24246,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -24410,7 +24410,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -24428,11 +24428,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -25530,7 +25530,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -25548,11 +25548,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -26588,7 +26588,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -26607,10 +26607,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -28234,7 +28234,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -28252,11 +28252,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -28699,7 +28699,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -28718,11 +28718,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -29226,7 +29226,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -29244,11 +29244,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -29651,9 +29651,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0849,
-    "probability": 0.0786,
-    "fair_odds": 1172,
+    "projection": 0.0822,
+    "probability": 0.0763,
+    "fair_odds": 1211,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -30011,7 +30011,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -30031,10 +30031,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -31460,9 +31460,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0076,
-    "probability": 0.0073,
-    "fair_odds": 13617,
+    "projection": 0.0075,
+    "probability": 0.0072,
+    "fair_odds": 13771,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -32145,7 +32145,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -32165,10 +32165,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -32578,7 +32578,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -32597,11 +32597,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -32670,7 +32670,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -32689,11 +32689,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -33353,7 +33353,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -33371,11 +33371,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -34715,7 +34715,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -34734,10 +34734,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -35294,7 +35294,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -35314,10 +35314,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -37289,7 +37289,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -37308,10 +37308,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -38548,7 +38548,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -38568,10 +38568,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -38732,7 +38732,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -38751,11 +38751,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -39138,9 +39138,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0034,
-    "probability": 0.0032,
-    "fair_odds": 30793,
+    "projection": 0.0033,
+    "probability": 0.0031,
+    "fair_odds": 31782,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -41587,9 +41587,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.1212,
-    "probability": 0.1104,
-    "fair_odds": 806,
+    "projection": 0.1199,
+    "probability": 0.1092,
+    "fair_odds": 815,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -41607,11 +41607,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.6,
-    "median": 29.9,
+    "projection": 33.3,
+    "median": 29.7,
     "ci_80": [
-      7.5,
-      64.2
+      7.3,
+      63.7
     ],
     "probability": null,
     "book": null,
@@ -42028,7 +42028,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -42047,10 +42047,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -42869,9 +42869,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0679,
-    "probability": 0.0634,
-    "fair_odds": 1477,
+    "projection": 0.0658,
+    "probability": 0.0615,
+    "fair_odds": 1526,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -43165,9 +43165,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0552,
-    "probability": 0.0518,
-    "fair_odds": 1829,
+    "projection": 0.0534,
+    "probability": 0.0503,
+    "fair_odds": 1889,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -43190,7 +43190,7 @@
     "median": 11.8,
     "ci_80": [
       0.0,
-      30.8
+      30.9
     ],
     "probability": null,
     "book": null,
@@ -43848,9 +43848,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0432,
-    "probability": 0.0408,
-    "fair_odds": 2349,
+    "projection": 0.0427,
+    "probability": 0.0404,
+    "fair_odds": 2376,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -43868,11 +43868,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 10.4,
-    "median": 9.6,
+    "projection": 10.3,
+    "median": 9.5,
     "ci_80": [
       0.0,
-      23.2
+      23.0
     ],
     "probability": null,
     "book": null,
@@ -44723,7 +44723,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -44742,10 +44742,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -44906,7 +44906,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 167513,
+    "fair_odds": 172885,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -45067,7 +45067,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -45086,10 +45086,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -45299,7 +45299,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -45319,10 +45319,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -45526,7 +45526,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -45545,11 +45545,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -46092,7 +46092,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -46112,10 +46112,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -46574,9 +46574,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.031,
-    "probability": 0.0294,
-    "fair_odds": 3298,
+    "projection": 0.0306,
+    "probability": 0.0291,
+    "fair_odds": 3336,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -46595,11 +46595,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 18.5,
-    "median": 15.5,
+    "projection": 18.3,
+    "median": 15.4,
     "ci_80": [
       0.0,
-      39.2
+      38.9
     ],
     "probability": null,
     "book": null,
@@ -46669,7 +46669,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -46689,11 +46689,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -48227,7 +48227,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -48247,10 +48247,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -48364,7 +48364,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -48384,10 +48384,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -50717,9 +50717,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0755,
-    "probability": 0.0703,
-    "fair_odds": 1323,
+    "projection": 0.0747,
+    "probability": 0.0695,
+    "fair_odds": 1338,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -50738,11 +50738,11 @@
     ],
     "market": "passing_yards",
     "line": null,
-    "projection": 176.5,
-    "median": 176.5,
+    "projection": 174.8,
+    "median": 174.8,
     "ci_80": [
-      103.1,
-      249.9
+      102.0,
+      247.6
     ],
     "probability": null,
     "book": null,
@@ -50764,11 +50764,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 10.6,
-    "median": 9.2,
+    "projection": 11.0,
+    "median": 9.5,
     "ci_80": [
-      0.0,
-      21.5
+      1.0,
+      22.1
     ],
     "probability": null,
     "book": null,
@@ -51437,7 +51437,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -51457,10 +51457,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -52821,7 +52821,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -52840,11 +52840,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -53896,7 +53896,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -53915,11 +53915,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -54330,7 +54330,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -54349,11 +54349,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -55048,9 +55048,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.1319,
-    "probability": 0.1195,
-    "fair_odds": 737,
+    "projection": 0.1278,
+    "probability": 0.116,
+    "fair_odds": 762,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -55068,11 +55068,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 29.3,
-    "median": 26.2,
+    "projection": 29.4,
+    "median": 26.3,
     "ci_80": [
-      3.4,
-      57.0
+      3.5,
+      57.1
     ],
     "probability": null,
     "book": null,
@@ -55611,9 +55611,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0192,
-    "probability": 0.0184,
-    "fair_odds": 5334,
+    "projection": 0.0186,
+    "probability": 0.0178,
+    "fair_odds": 5507,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -55631,11 +55631,11 @@
     ],
     "market": "passing_yards",
     "line": null,
-    "projection": 137.3,
-    "median": 137.3,
+    "projection": 137.6,
+    "median": 137.6,
     "ci_80": [
-      83.9,
-      190.8
+      84.0,
+      191.1
     ],
     "probability": null,
     "book": null,
@@ -55820,7 +55820,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -55839,10 +55839,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -56131,7 +56131,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -56151,10 +56151,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -56475,7 +56475,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -56494,11 +56494,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -57893,7 +57893,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -57912,11 +57912,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -58435,7 +58435,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -58453,11 +58453,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -60208,9 +60208,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0472,
-    "probability": 0.0446,
-    "fair_odds": 2144,
+    "projection": 0.0467,
+    "probability": 0.0441,
+    "fair_odds": 2169,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -60229,11 +60229,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 16.5,
-    "median": 13.7,
+    "projection": 16.3,
+    "median": 13.6,
     "ci_80": [
       0.0,
-      35.2
+      34.9
     ],
     "probability": null,
     "book": null,
@@ -60439,9 +60439,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0117,
-    "probability": 0.0112,
-    "fair_odds": 8806,
+    "projection": 0.0116,
+    "probability": 0.0111,
+    "fair_odds": 8906,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -60460,11 +60460,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 13.7,
-    "median": 11.8,
+    "projection": 13.6,
+    "median": 11.7,
     "ci_80": [
       0.0,
-      30.9
+      30.6
     ],
     "probability": null,
     "book": null,
@@ -61012,9 +61012,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0217,
-    "probability": 0.0207,
-    "fair_odds": 4727,
+    "projection": 0.021,
+    "probability": 0.0201,
+    "fair_odds": 4880,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -61287,7 +61287,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -61306,10 +61306,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -61333,7 +61333,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -61352,11 +61352,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -62858,7 +62858,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -62877,11 +62877,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -63040,7 +63040,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -63060,10 +63060,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 30.6,
+    "median": 30.7,
     "ci_80": [
       8.6,
-      71.4
+      71.6
     ],
     "probability": null,
     "book": null,
@@ -63604,9 +63604,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.327,
-    "probability": 0.2706,
-    "fair_odds": 270,
+    "projection": 0.3234,
+    "probability": 0.2681,
+    "fair_odds": 273,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -63624,11 +63624,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 56.1,
-    "median": 51.5,
+    "projection": 56.7,
+    "median": 52.1,
     "ci_80": [
-      24.4,
-      93.9
+      24.7,
+      94.8
     ],
     "probability": null,
     "book": null,
@@ -63649,11 +63649,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 23.2,
-    "median": 20.0,
+    "projection": 23.0,
+    "median": 19.8,
     "ci_80": [
-      5.7,
-      45.2
+      5.6,
+      44.8
     ],
     "probability": null,
     "book": null,
@@ -64444,9 +64444,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0884,
-    "probability": 0.0818,
-    "fair_odds": 1123,
+    "projection": 0.0857,
+    "probability": 0.0793,
+    "fair_odds": 1161,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -64464,8 +64464,8 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 15.4,
-    "median": 13.8,
+    "projection": 15.5,
+    "median": 13.9,
     "ci_80": [
       0.0,
       32.3
@@ -65940,7 +65940,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -65958,11 +65958,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -66348,7 +66348,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -66367,11 +66367,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -66987,7 +66987,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -67006,10 +67006,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -67172,7 +67172,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -67191,11 +67191,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -67970,7 +67970,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -67989,11 +67989,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -68476,9 +68476,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.2475,
-    "probability": 0.2124,
-    "fair_odds": 371,
+    "projection": 0.2398,
+    "probability": 0.2066,
+    "fair_odds": 384,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -68496,11 +68496,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.4,
-    "median": 29.5,
+    "projection": 33.5,
+    "median": 29.6,
     "ci_80": [
       8.3,
-      63.6
+      63.7
     ],
     "probability": null,
     "book": null,
@@ -68975,7 +68975,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -68994,10 +68994,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -70057,7 +70057,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -70076,10 +70076,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -70469,7 +70469,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -70488,11 +70488,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -70766,7 +70766,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -70785,11 +70785,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -71403,9 +71403,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0032,
-    "probability": 0.0031,
-    "fair_odds": 32533,
+    "projection": 0.0031,
+    "probability": 0.003,
+    "fair_odds": 33577,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -71423,11 +71423,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 4.7,
-    "median": 4.2,
+    "projection": 4.4,
+    "median": 4.0,
     "ci_80": [
       0.0,
-      9.8
+      9.4
     ],
     "probability": null,
     "book": null,
@@ -71996,7 +71996,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -72015,10 +72015,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -73341,7 +73341,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -73359,11 +73359,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -73386,7 +73386,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -73404,11 +73404,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -74067,7 +74067,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -74086,11 +74086,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -74204,7 +74204,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -74223,11 +74223,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -74250,7 +74250,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -74269,10 +74269,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -74576,7 +74576,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -74595,11 +74595,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -75661,7 +75661,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -75680,10 +75680,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -76677,7 +76677,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -76696,10 +76696,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -79356,7 +79356,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -79375,11 +79375,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -79537,7 +79537,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -79556,10 +79556,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -80600,7 +80600,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -80619,11 +80619,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -80914,9 +80914,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.1854,
-    "probability": 0.1638,
-    "fair_odds": 510,
+    "projection": 0.1833,
+    "probability": 0.1621,
+    "fair_odds": 517,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -80934,11 +80934,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 19.5,
-    "median": 17.3,
+    "projection": 19.9,
+    "median": 17.6,
     "ci_80": [
-      6.8,
-      35.1
+      7.0,
+      35.7
     ],
     "probability": null,
     "book": null,
@@ -81186,9 +81186,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.1015,
-    "probability": 0.0933,
-    "fair_odds": 972,
+    "projection": 0.1004,
+    "probability": 0.0923,
+    "fair_odds": 983,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -81206,11 +81206,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 17.5,
-    "median": 15.0,
+    "projection": 17.3,
+    "median": 14.9,
     "ci_80": [
-      2.7,
-      35.1
+      2.6,
+      34.8
     ],
     "probability": null,
     "book": null,
@@ -81871,7 +81871,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -81889,11 +81889,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -82350,7 +82350,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -82368,11 +82368,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -83803,7 +83803,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -83822,11 +83822,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -84805,7 +84805,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -84824,11 +84824,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -85235,7 +85235,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -85253,11 +85253,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -86193,7 +86193,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -86212,11 +86212,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -86781,9 +86781,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.5202,
-    "probability": 0.3947,
-    "fair_odds": 153,
+    "projection": 0.504,
+    "probability": 0.3852,
+    "fair_odds": 160,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -86801,11 +86801,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 53.8,
-    "median": 49.3,
+    "projection": 52.9,
+    "median": 48.5,
     "ci_80": [
-      23.2,
-      90.2
+      22.8,
+      88.8
     ],
     "probability": null,
     "book": null,
@@ -86826,11 +86826,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 11.4,
+    "projection": 11.5,
     "median": 9.9,
     "ci_80": [
       0.0,
-      24.1
+      24.2
     ],
     "probability": null,
     "book": null,
@@ -87033,7 +87033,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -87051,11 +87051,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -88020,7 +88020,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -88039,10 +88039,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -88065,7 +88065,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -88084,10 +88084,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -88825,7 +88825,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -88844,10 +88844,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -89070,7 +89070,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -89088,11 +89088,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -89207,7 +89207,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -89225,11 +89225,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -89387,7 +89387,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -89405,11 +89405,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -89985,9 +89985,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.2121,
-    "probability": 0.1851,
-    "fair_odds": 440,
+    "projection": 0.2098,
+    "probability": 0.1833,
+    "fair_odds": 446,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -90005,11 +90005,11 @@
     ],
     "market": "rushing_yards",
     "line": null,
-    "projection": 9.4,
-    "median": 8.2,
+    "projection": 9.7,
+    "median": 8.4,
     "ci_80": [
-      2.5,
-      18.0
+      2.6,
+      18.4
     ],
     "probability": null,
     "book": null,
@@ -90032,7 +90032,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -90051,10 +90051,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -90904,7 +90904,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -90922,11 +90922,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -91151,7 +91151,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -91170,10 +91170,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -92058,7 +92058,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -92076,11 +92076,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -92487,7 +92487,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -92507,11 +92507,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -93108,7 +93108,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -93126,11 +93126,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -93153,7 +93153,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -93171,11 +93171,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -93198,7 +93198,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -93216,11 +93216,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -95445,9 +95445,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0554,
-    "probability": 0.052,
-    "fair_odds": 1822,
+    "projection": 0.0547,
+    "probability": 0.0515,
+    "fair_odds": 1844,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -95466,11 +95466,37 @@
     ],
     "market": "passing_yards",
     "line": null,
-    "projection": 159.7,
-    "median": 159.7,
+    "projection": 158.2,
+    "median": 158.2,
     "ci_80": [
-      92.2,
-      227.2
+      91.2,
+      225.1
+    ],
+    "probability": null,
+    "book": null,
+    "book_over_odds": null,
+    "book_under_odds": null,
+    "edge": null,
+    "recommended_side": "pass",
+    "kelly": null
+  },
+  {
+    "player_id": "00-0040398",
+    "player_name": "Brady Cook",
+    "position": "QB",
+    "team": "MIA",
+    "opponent": "LV",
+    "flags": [
+      "high_role_uncertainty",
+      "no_current_season_sample"
+    ],
+    "market": "rushing_yards",
+    "line": null,
+    "projection": 6.0,
+    "median": 5.2,
+    "ci_80": [
+      0.0,
+      13.1
     ],
     "probability": null,
     "book": null,
@@ -95493,7 +95519,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -95511,11 +95537,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -95586,7 +95612,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -95605,11 +95631,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -96655,7 +96681,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -96674,11 +96700,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -97547,7 +97573,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -97566,10 +97592,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -97612,7 +97638,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -97631,10 +97657,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -99754,7 +99780,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -99773,11 +99799,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -100072,9 +100098,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0752,
-    "probability": 0.07,
-    "fair_odds": 1329,
+    "projection": 0.0728,
+    "probability": 0.0679,
+    "fair_odds": 1374,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -100867,7 +100893,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -100886,10 +100912,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -101697,7 +101723,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -101716,10 +101742,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 31.7,
+    "median": 31.8,
     "ci_80": [
-      10.5,
-      68.1
+      10.6,
+      68.2
     ],
     "probability": null,
     "book": null,
@@ -102305,7 +102331,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -102324,11 +102350,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -103582,7 +103608,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -103601,11 +103627,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -104782,9 +104808,9 @@
     ],
     "market": "anytime_td",
     "line": null,
-    "projection": 0.0479,
-    "probability": 0.0452,
-    "fair_odds": 2112,
+    "projection": 0.0464,
+    "probability": 0.0438,
+    "fair_odds": 2181,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -105374,7 +105400,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -105392,11 +105418,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 29.3,
+    "projection": 33.2,
+    "median": 29.0,
     "ci_80": [
-      9.4,
-      63.3
+      9.2,
+      62.7
     ],
     "probability": null,
     "book": null,
@@ -105825,7 +105851,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -105844,11 +105870,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 28.2,
+    "projection": 33.2,
+    "median": 27.9,
     "ci_80": [
-      7.6,
-      66.4
+      7.5,
+      65.8
     ],
     "probability": null,
     "book": null,
@@ -106601,7 +106627,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -106621,11 +106647,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -106895,7 +106921,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -106916,10 +106942,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -107042,7 +107068,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -107063,10 +107089,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -107385,7 +107411,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -107406,10 +107432,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -107630,7 +107656,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -107651,10 +107677,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -107924,7 +107950,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -107945,10 +107971,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -108169,7 +108195,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -108190,10 +108216,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -108561,7 +108587,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -108582,10 +108608,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -112628,7 +112654,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -112649,10 +112675,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -112677,7 +112703,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -112698,10 +112724,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -112726,7 +112752,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -112747,10 +112773,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -112775,7 +112801,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -112796,10 +112822,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -112824,7 +112850,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -112845,10 +112871,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -112922,7 +112948,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -112943,10 +112969,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -112971,7 +112997,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -112992,10 +113018,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113020,7 +113046,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113041,10 +113067,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113069,7 +113095,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113090,10 +113116,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113118,7 +113144,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113139,10 +113165,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113167,7 +113193,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113188,10 +113214,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113216,7 +113242,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113237,10 +113263,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113314,7 +113340,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113335,10 +113361,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113461,7 +113487,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113482,10 +113508,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113510,7 +113536,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113531,10 +113557,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113559,7 +113585,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113580,10 +113606,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -113608,7 +113634,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -113629,10 +113655,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -116303,7 +116329,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -116323,11 +116349,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -119145,7 +119171,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -119165,11 +119191,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -119194,7 +119220,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -119214,11 +119240,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -120076,7 +120102,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -120096,11 +120122,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -120125,7 +120151,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -120145,11 +120171,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -120174,7 +120200,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -120194,11 +120220,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -120223,7 +120249,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -120243,11 +120269,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -120272,7 +120298,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -120292,11 +120318,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -120468,7 +120494,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -120488,11 +120514,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -121987,7 +122013,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -122007,11 +122033,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -131395,7 +131421,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -131415,11 +131441,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -133012,7 +133038,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -133032,11 +133058,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -134678,7 +134704,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -134698,11 +134724,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -134923,7 +134949,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -134943,11 +134969,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -134972,7 +134998,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -134992,11 +135018,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135021,7 +135047,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135041,11 +135067,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135070,7 +135096,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135090,11 +135116,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135119,7 +135145,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135139,11 +135165,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135168,7 +135194,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135188,11 +135214,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135217,7 +135243,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135237,11 +135263,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135266,7 +135292,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135286,11 +135312,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135315,7 +135341,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135335,11 +135361,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135364,7 +135390,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135384,11 +135410,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135413,7 +135439,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135433,11 +135459,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -135511,7 +135537,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -135531,11 +135557,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -136344,7 +136370,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -136365,10 +136391,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -136785,7 +136811,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -136806,10 +136832,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -136834,7 +136860,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -136855,10 +136881,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -136981,7 +137007,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -137001,11 +137027,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -137569,7 +137595,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -137589,11 +137615,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
@@ -137716,7 +137742,7 @@
     "line": null,
     "projection": 0.0006,
     "probability": 0.0006,
-    "fair_odds": 166747,
+    "fair_odds": 172094,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -137737,10 +137763,10 @@
     "market": "receiving_yards",
     "line": null,
     "projection": 36.3,
-    "median": 28.6,
+    "median": 28.7,
     "ci_80": [
       6.0,
-      76.5
+      76.7
     ],
     "probability": null,
     "book": null,
@@ -138353,7 +138379,7 @@
     "line": null,
     "projection": 0.0007,
     "probability": 0.0007,
-    "fair_odds": 142224,
+    "fair_odds": 143827,
     "book_odds": null,
     "book": null,
     "edge": null,
@@ -138373,11 +138399,11 @@
     ],
     "market": "receiving_yards",
     "line": null,
-    "projection": 33.5,
-    "median": 26.3,
+    "projection": 33.2,
+    "median": 26.0,
     "ci_80": [
-      5.3,
-      71.2
+      5.2,
+      70.5
     ],
     "probability": null,
     "book": null,
