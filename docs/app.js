@@ -8,12 +8,27 @@ const MARKET_LABEL = {
 let ROWS = [];
 
 async function load() {
-  const [metaRes, propsRes] = await Promise.all([
-    fetch("data/meta.json", { cache: "no-store" }),
-    fetch("data/props.json", { cache: "no-store" }),
-  ]);
-  const meta = await metaRes.json();
-  ROWS = await propsRes.json();
+  let meta;
+  try {
+    const metaRes = await fetch("data/meta.json", { cache: "no-store" });
+    if (!metaRes.ok) throw new Error(`HTTP ${metaRes.status} fetching meta.json`);
+    meta = await metaRes.json();
+  } catch (err) {
+    document.getElementById("meta").textContent = "Could not load meta.json: " + err.message;
+    console.error("meta load failed:", err);
+    return;
+  }
+
+  try {
+    const propsRes = await fetch("data/props.json", { cache: "no-store" });
+    if (!propsRes.ok) throw new Error(`HTTP ${propsRes.status} fetching props.json`);
+    ROWS = await propsRes.json();
+  } catch (err) {
+    document.getElementById("props-body").innerHTML =
+      `<tr><td colspan="11" class="loading">Could not load props.json: ${err.message}</td></tr>`;
+    console.error("props load failed:", err);
+    return;
+  }
 
   const genDate = new Date(meta.generated_at);
   document.getElementById("meta").textContent =
@@ -92,9 +107,4 @@ function render() {
   document.getElementById(id).addEventListener("change", render);
 });
 
-load().catch(err => {
-  document.getElementById("props-body").innerHTML =
-    `<tr><td colspan="11" class="loading">Could not load data/props.json yet. ` +
-    `Run the weekly build script or wait for the next scheduled update.</td></tr>`;
-  console.error(err);
-});
+load();

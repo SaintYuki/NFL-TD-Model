@@ -188,9 +188,15 @@ class DataStore:
             if len(self.player_season) else pd.DataFrame(
                 columns=["player_id", "player_name", "position", "team"])
         if len(self.roster_changes) and "new_team" in self.roster_changes.columns:
-            rc = self.roster_changes[["player_id", "new_team"]].dropna()
-            base = base.merge(rc, on="player_id", how="outer")
+            rc_cols = ["player_id", "new_team"]
+            if "position" in self.roster_changes.columns:
+                rc_cols.append("position")
+            rc = self.roster_changes[rc_cols].dropna(subset=["player_id", "new_team"])
+            base = base.merge(rc, on="player_id", how="outer", suffixes=("", "_rc"))
             base["team"] = base["new_team"].fillna(base["team"])
+            if "position_rc" in base.columns:
+                base["position"] = base["position_rc"].fillna(base["position"])
+                base = base.drop(columns=["position_rc"])
             base = base.drop(columns=["new_team"])
         if len(self.player_gamelog):
             latest = (self.player_gamelog.sort_values("week")

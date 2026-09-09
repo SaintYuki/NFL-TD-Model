@@ -3,7 +3,7 @@ Canonical dataset structure. Every table the pipeline consumes or produces is
 declared here as {column_name: (dtype, description)} so the loaders can
 validate incoming files and the docs stay in sync with the code.
 
-Run `python -m nflprops.schema` to print a markdown data dictionary.
+Run python -m nflprops.schema to print a markdown data dictionary.
 """
 
 from typing import Dict, Tuple
@@ -79,8 +79,8 @@ TEAM_SEASON_OFFENSE: Dict[str, Col] = {
     "offensive_coordinator":("str",   "OC name. Used to detect scheme continuity."),
     "head_coach":           ("str",   "HC name."),
     "play_caller":          ("str",   "Whoever actually calls plays."),
-    "scheme_run":           ("str",   "'zone' | 'gap' | 'mixed'."),
-    "scheme_pass":          ("str",   "'westcoast' | 'airraid' | 'playaction' | 'spread' | 'mixed'."),
+    "scheme_run":           ("str",   "zone or gap or mixed."),
+    "scheme_pass":          ("str",   "westcoast or airraid or playaction or spread or mixed."),
 }
 
 # ---------------------------------------------------------------------------
@@ -160,6 +160,7 @@ PLAYER_GAMELOG: Dict[str, Col] = {
 ROSTER_CHANGES: Dict[str, Col] = {
     "player_id":            ("str",   "Player ID."),
     "season":               ("int",   "Season the change applies to."),
+    "position":             ("str",   "Current position. Fills in players missing from prior_season.csv (rookies, players with no meaningful prior-season stats)."),
     "prior_team":           ("str",   "Team last season. Empty for rookies."),
     "new_team":             ("str",   "Team this season."),
     "changed_team":         ("bool",  "True if prior_team != new_team."),
@@ -188,7 +189,7 @@ GAME_ENVIRONMENT: Dict[str, Col] = {
     "home":             ("bool",  "True if at home."),
     "spread":           ("float", "Team spread. POSITIVE = underdog by that many points."),
     "total":            ("float", "Game total."),
-    "implied_total":    ("float", "total/2 - spread/2. Team's implied points."),
+    "implied_total":    ("float", "total/2 - spread/2. Team implied points."),
     "dome":             ("bool",  "Indoor or closed roof."),
     "wind_mph":         ("float", "Forecast wind."),
     "precip_prob":      ("float", "Forecast precipitation probability."),
@@ -201,7 +202,7 @@ PROP_LINES: Dict[str, Col] = {
     "season":       ("int",   "Season."),
     "week":         ("int",   "Week."),
     "player_id":    ("str",   "Player ID."),
-    "market":       ("str",   "'anytime_td' | 'passing_yards' | 'rushing_yards' | 'receiving_yards'."),
+    "market":       ("str",   "anytime_td or passing_yards or rushing_yards or receiving_yards."),
     "line":         ("float", "The posted number. NaN for anytime_td."),
     "over_odds":    ("int",   "American odds for over / yes."),
     "under_odds":   ("int",   "American odds for under / no."),
@@ -239,7 +240,7 @@ def data_dictionary_markdown() -> str:
         out.append("| column | dtype | description |")
         out.append("|---|---|---|")
         for c, (dt, desc) in cols.items():
-            out.append(f"| `{c}` | {dt} | {desc} |")
+            out.append(f"| {c} | {dt} | {desc} |")
     return "\n".join(out)
 
 

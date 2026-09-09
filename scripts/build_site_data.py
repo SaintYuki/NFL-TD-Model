@@ -14,6 +14,7 @@ nested per-player JSON used for auditing and calibration.
 
 import argparse
 import json
+import math
 import os
 import sys
 from datetime import datetime, timezone
@@ -21,6 +22,16 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nflprops import DataStore, ProjectionEngine  # noqa: E402
+
+
+def _json_safe(obj):
+    if isinstance(obj, float):
+        return None if (math.isnan(obj) or math.isinf(obj)) else obj
+    if isinstance(obj, dict):
+        return {k: _json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_json_safe(v) for v in obj]
+    return obj
 
 
 def flatten(projections: list[dict]) -> list[dict]:
@@ -87,7 +98,7 @@ def main():
 
     os.makedirs(args.out, exist_ok=True)
     with open(os.path.join(args.out, "props.json"), "w") as fh:
-        json.dump(rows, fh, indent=2, default=str)
+        json.dump(_json_safe(rows), fh, indent=2, default=str)
 
     meta = {
         "season": args.season,

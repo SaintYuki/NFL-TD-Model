@@ -494,6 +494,7 @@ def build_roster_changes(season: int, prior_season: int) -> pd.DataFrame:
     out = pd.DataFrame()
     out["player_id"] = m["gsis_id"]
     out["season"] = season
+    out["position"] = m["position"]
     out["prior_team"] = m["prior_team"]
     out["new_team"] = m["team"]
     out["changed_team"] = (m["prior_team"].notna()) & (m["prior_team"] != m["team"])
