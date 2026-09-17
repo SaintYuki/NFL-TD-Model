@@ -25,6 +25,16 @@ from nflprops import DataStore, ProjectionEngine  # noqa: E402
 
 
 def _json_safe(obj):
+    """
+    Recursively replace NaN/Infinity with None (JSON null).
+
+    Python's json.dump writes NaN as the bare token `NaN` by default, which
+    is NOT valid JSON per spec -- Python's own json.load tolerates it (so it
+    round-trips silently and never surfaces as a bug locally), but a
+    browser's JSON.parse() rejects it outright with a SyntaxError. That
+    mismatch is exactly what broke the live site: the data "looked" fine
+    every way it was inspected except the one way that mattered.
+    """
     if isinstance(obj, float):
         return None if (math.isnan(obj) or math.isinf(obj)) else obj
     if isinstance(obj, dict):
@@ -34,11 +44,30 @@ def _json_safe(obj):
     return obj
 
 
-def flatten(projections: list[dict]) -> list[dict]:
+def compute_def_ranks(store) -> dict:
+    """
+    League rank (1 = toughest/best defense) by def_epa_per_play_allowed,
+    blended the same way the model itself blends it, so the drawer's
+    "opponent defense" context matches what the projection actually used.
+    """
+    from nflprops.projections import ProjectionEngine
+    engine = ProjectionEngine(store)
+    rows = []
+    for team in store.player_meta()["team"].dropna().unique():
+        d = engine.blended_team_defense(team)
+        rows.append((team, d.get("def_epa_per_play_allowed", 0.0)))
+    rows.sort(key=lambda r: r[1])  # most negative EPA allowed = best defense = rank 1
+    return {team: i + 1 for i, (team, _) in enumerate(rows)}
+
+
+def flatten(projections: list[dict], def_ranks: dict | None = None) -> list[dict]:
+    def_ranks = def_ranks or {}
     rows = []
     for p in projections:
         if "error" in p:
             continue
+        env = p.get("game_environment", {})
+        drivers = p.get("key_drivers", [])
         base = {
             "player_id": p["player_id"],
             "player_name": p["player_name"],
@@ -46,8 +75,13 @@ def flatten(projections: list[dict]) -> list[dict]:
             "team": p["team"],
             "opponent": p["opponent"],
             "flags": p.get("flags", []),
+            "spread": env.get("spread"),
+            "total": env.get("total"),
+            "implied_team_total": env.get("implied_team_total"),
+            "opp_def_rank": def_ranks.get(p["opponent"]),
         }
         for market, blk in p.get("markets", {}).items():
+            top_driver = next((d for d in drivers if d.get("market") == market), None)
             if market == "anytime_td":
                 mk = blk.get("market")
                 rows.append({
@@ -60,6 +94,7 @@ def flatten(projections: list[dict]) -> list[dict]:
                     "edge": mk.get("edge_pct_points") if mk else None,
                     "recommended_side": mk.get("recommended_side") if mk else None,
                     "kelly": mk.get("kelly_recommended") if mk else None,
+                    "top_driver": top_driver.get("note") if top_driver else None,
                 })
             else:
                 lines = blk.get("lines") or [{}]
@@ -79,6 +114,7 @@ def flatten(projections: list[dict]) -> list[dict]:
                         "edge": edge,
                         "recommended_side": side,
                         "kelly": ln.get("kelly_recommended"),
+                        "top_driver": top_driver.get("note") if top_driver else None,
                     })
     return rows
 
@@ -93,8 +129,9 @@ def main():
 
     store = DataStore(args.root, args.season, args.week)
     engine = ProjectionEngine(store)
+    def_ranks = compute_def_ranks(store)
     projections = engine.project_slate()
-    rows = flatten(projections)
+    rows = flatten(projections, def_ranks)
 
     os.makedirs(args.out, exist_ok=True)
     with open(os.path.join(args.out, "props.json"), "w") as fh:
@@ -110,6 +147,34 @@ def main():
     }
     with open(os.path.join(args.out, "meta.json"), "w") as fh:
         json.dump(meta, fh, indent=2)
+
+    # Compact history snapshot, one file per week, for the site's trend
+    # sparklines. Real data that accumulates week over week -- there is
+    # only ever one or two points early in a season, and the site should
+    # just show fewer points rather than fabricate a longer trend.
+    hist_dir = os.path.join(args.out, "history")
+    os.makedirs(hist_dir, exist_ok=True)
+    compact = [
+        {"player_id": r["player_id"], "market": r["market"],
+         "projection": r["projection"], "line": r.get("line"),
+         "probability": r.get("probability")}
+        for r in rows
+    ]
+    with open(os.path.join(hist_dir, f"{args.season}_wk{args.week}.json"), "w") as fh:
+        json.dump(_json_safe(compact), fh, separators=(",", ":"))
+
+    index_path = os.path.join(hist_dir, "index.json")
+    weeks = []
+    if os.path.exists(index_path):
+        try:
+            weeks = json.load(open(index_path))
+        except Exception:
+            weeks = []
+    if args.week not in weeks:
+        weeks.append(args.week)
+    weeks = sorted(set(weeks))
+    with open(index_path, "w") as fh:
+        json.dump(weeks, fh)
 
     print(f"wrote {len(rows)} rows for season {args.season} week {args.week} "
           f"to {args.out}/", file=sys.stderr)

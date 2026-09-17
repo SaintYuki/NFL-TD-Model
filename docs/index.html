@@ -7,55 +7,72 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>NFL Player Prop Projections</h1>
-    <div id="meta" class="meta">Loading...</div>
+  <header class="top">
+    <div class="title-row">
+      <h1>NFL Player Prop Projections</h1>
+    </div>
+    <div class="subtitle" id="subtitle">Loading...</div>
   </header>
 
+  <div class="summary-bar" id="summary-bar">
+    <span class="stat"><strong id="stat-total">-</strong>&nbsp;props</span>
+    <span class="dot"></span>
+    <span class="stat"><strong id="stat-edges">-</strong>&nbsp;flagged edges</span>
+    <span class="dot"></span>
+    <span class="stat" id="stat-filters">No filters applied</span>
+    <span class="dot"></span>
+    <span class="stat" id="stat-updated">-</span>
+  </div>
+
   <div class="controls">
-    <input id="search" type="text" placeholder="Search player or team...">
-    <select id="market-filter">
-      <option value="all">All markets</option>
-      <option value="anytime_td">Anytime TD</option>
-      <option value="passing_yards">Passing Yards</option>
-      <option value="rushing_yards">Rushing Yards</option>
-      <option value="receiving_yards">Receiving Yards</option>
-    </select>
-    <select id="position-filter">
-      <option value="all">All positions</option>
-      <option value="QB">QB</option>
-      <option value="RB">RB</option>
-      <option value="WR">WR</option>
-      <option value="TE">TE</option>
-    </select>
-    <select id="side-filter">
-      <option value="all">All sides</option>
-      <option value="over">Over / Yes only</option>
-      <option value="under">Under / No only</option>
-      <option value="edges">Recommended plays only</option>
-    </select>
-    <select id="sort-by">
-      <option value="edge">Sort: edge</option>
-      <option value="projection">Sort: projection</option>
-      <option value="name">Sort: player name</option>
-    </select>
+    <div class="search-row">
+      <input id="search" type="text" placeholder="Search player, team, or matchup..." autocomplete="off">
+      <div id="autocomplete"></div>
+    </div>
+
+    <div class="pill-row" id="position-pills">
+      <span class="pill-group-label">Position</span>
+      <button class="pill active" data-position="all">All</button>
+      <button class="pill" data-position="QB">QB</button>
+      <button class="pill" data-position="RB">RB</button>
+      <button class="pill" data-position="WR">WR</button>
+      <button class="pill" data-position="TE">TE</button>
+    </div>
+
+    <div class="pill-row" id="market-pills">
+      <span class="pill-group-label">Market</span>
+      <button class="pill active" data-market="all">All</button>
+      <button class="pill" data-market="anytime_td">Anytime TD</button>
+      <button class="pill" data-market="passing_yards">Passing</button>
+      <button class="pill" data-market="rushing_yards">Rushing</button>
+      <button class="pill" data-market="receiving_yards">Receiving</button>
+    </div>
+
+    <div class="pill-row" id="preset-pills">
+      <span class="pill-group-label">Presets</span>
+      <button class="pill preset" data-preset="high-edge">High Edge Only</button>
+      <button class="pill preset" data-preset="all-td">All TD Props</button>
+      <button class="pill preset" data-preset="qb-passing">All QB Passing</button>
+      <button class="pill preset" data-preset="longshot-td">Longshot TDs (&lt;10%)</button>
+      <button class="pill preset" data-preset="favorites">&#9733; Favorites</button>
+    </div>
   </div>
 
   <div class="table-wrap">
     <table id="props-table">
       <thead>
         <tr>
-          <th>Player</th>
-          <th>Pos</th>
-          <th>Team</th>
-          <th>Opp</th>
-          <th>Market</th>
-          <th>Line</th>
-          <th>Projection</th>
-          <th>Prob.</th>
-          <th>Edge</th>
-          <th>Side</th>
-          <th>Kelly</th>
+          <th data-sort="player_name" class="col-group-start">Player</th>
+          <th data-sort="position">Pos</th>
+          <th data-sort="team">Matchup</th>
+          <th data-sort="market" class="col-group-start">Market</th>
+          <th data-sort="line">Line</th>
+          <th data-sort="projection" class="col-group-start">Projection</th>
+          <th data-sort="probability">Prob.</th>
+          <th data-sort="edge">Edge</th>
+          <th data-sort="recommended_side">Side</th>
+          <th data-sort="kelly">Kelly</th>
+          <th></th>
         </tr>
       </thead>
       <tbody id="props-body">
@@ -64,9 +81,19 @@
     </table>
   </div>
 
+  <div class="card-list" id="card-list"></div>
+
+  <div class="bottom-nav">
+    <button class="pill active" data-mobile-filter="all">All</button>
+    <button class="pill" data-mobile-filter="high-edge">High Edge</button>
+    <button class="pill" data-mobile-filter="anytime_td">TDs</button>
+    <button class="pill" data-mobile-filter="favorites">&#9733;</button>
+  </div>
+
   <footer>
     <p>Generated automatically each week. Edge is computed against the
-       de-vigged market price. Not betting advice.</p>
+       de-vigged market price. Probability and edge cells are colored by
+       magnitude. Click any row for a full breakdown. Not betting advice.</p>
   </footer>
 
   <script src="app.js"></script>

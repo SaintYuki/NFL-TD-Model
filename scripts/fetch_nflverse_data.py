@@ -485,7 +485,8 @@ def build_roster_changes(season: int, prior_season: int) -> pd.DataFrame:
     coordinators, scheme, and depth chart is left at safe defaults for you to
     hand-edit -- see the module docstring for why that part isn't scraped.
     """
-    cur = _rosters(season)[["player_id", "team", "position"]].dropna().drop_duplicates("player_id")
+    cur = _rosters(season)[["player_id", "player_name", "team", "position"]].dropna(
+        subset=["player_id", "team", "position"]).drop_duplicates("player_id")
     cur = cur.rename(columns={"player_id": "gsis_id"})
     prior = _rosters(prior_season)[["player_id", "team"]].dropna().drop_duplicates("player_id")
     prior = prior.rename(columns={"player_id": "gsis_id", "team": "prior_team"})
@@ -494,6 +495,7 @@ def build_roster_changes(season: int, prior_season: int) -> pd.DataFrame:
     out = pd.DataFrame()
     out["player_id"] = m["gsis_id"]
     out["season"] = season
+    out["player_name"] = m["player_name"]
     out["position"] = m["position"]
     out["prior_team"] = m["prior_team"]
     out["new_team"] = m["team"]
