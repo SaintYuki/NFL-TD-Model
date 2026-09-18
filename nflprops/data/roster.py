@@ -175,7 +175,7 @@ def apply_roster_adjustments(usage: pd.DataFrame,
                              share_cols: tuple[str, ...] = (
                                  "target_share", "rush_share", "rz_rush_share",
                                  "rz_target_share", "inside5_rush_share",
-                                 "air_yards_share"),
+                                 "air_yards_share", "pass_att_share"),
                              cfg: ModelConfig = DEFAULT_CONFIG) -> pd.DataFrame:
     """
     Apply usage multipliers to every share column, honor manual overrides, then
@@ -198,6 +198,11 @@ def apply_roster_adjustments(usage: pd.DataFrame,
             elig = df["position"].isin(["RB", "WR", "TE"])
         elif col in ("rush_share", "rz_rush_share", "inside5_rush_share"):
             elig = df["position"].isin(["RB", "WR", "QB"])
+        elif col == "pass_att_share":
+            # A team has exactly one set of dropbacks to give out. Without
+            # this, every rostered QB blends toward a starter's share and
+            # each backup projects as if he were starting.
+            elig = df["position"].isin(["QB"])
         else:
             elig = pd.Series(True, index=df.index)
         df[col] = renormalize_shares(df, col, eligible_mask=elig)

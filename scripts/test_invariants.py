@@ -43,7 +43,8 @@ if os.path.exists(root):
     for wk in (1, 5):
         store = DataStore(root, 2026, wk)
         eng = ProjectionEngine(store)
-        out = eng.project_slate()
+        skill_ids = eng.meta[eng.meta.position.isin(["QB", "RB", "WR", "TE"])]["player_id"].tolist()
+        out = eng.project_slate(skill_ids)
         errs = [o for o in out if "error" in o]
         check(f"week {wk} slate runs clean", len(errs) == 0)
 
@@ -59,7 +60,35 @@ if os.path.exists(root):
               py["ci_80"][0] < py["projection"] < py["ci_80"][1])
         atd = [o["markets"]["anytime_td"]["probability"] for o in out]
         check(f"week {wk} ATD probs in range", all(0 <= p <= 0.97 for p in atd))
-        check(f"week {wk} ATD mean plausible", 0.08 < float(np.mean(atd)) < 0.35)
+        # A real full 53-man-roster slate is mostly bench depth with
+        # near-zero ATD odds, so the RAW full-slate mean is naturally low
+        # (~0.05-0.08) and not a meaningful sanity check on its own. Filter
+        # to plausible role players (>5% probability) first -- that mean
+        # is stable around 0.10-0.15 on real data and actually catches a
+        # regression (e.g. probabilities collapsing toward zero, or a
+        # normalization bug inflating everyone).
+        starters = [p for p in atd if p > 0.05]
+        check(f"week {wk} ATD mean plausible among role players (>5%)",
+              len(starters) > 20 and 0.08 < float(np.mean(starters)) < 0.20)
+
+        u = eng.team_adjusted_usage().reset_index()
+        rbs = u[u.position == "RB"]
+        gaps = []
+        for team, g in rbs.groupby("team"):
+            g = g.sort_values("rush_share", ascending=False)
+            if len(g) >= 3 and g.iloc[0].rush_share > 0:
+                gaps.append(g.iloc[0].rush_share / max(g.iloc[2].rush_share, 1e-6))
+        med_gap = float(np.median(gaps)) if gaps else 0.0
+        check(f"week {wk} RB1 clearly separated from RB3 (depth not flattened)", med_gap > 3.0)
+
+        non_skill = eng.meta[~eng.meta.position.isin(["QB", "RB", "WR", "TE"])]
+        if len(non_skill):
+            rejected = False
+            try:
+                eng.project_player(non_skill.iloc[0]["player_id"])
+            except ValueError:
+                rejected = True
+            check(f"week {wk} non-skill position rejected, not silently WR-baselined", rejected)
 
         rb = [o for o in out if o.get("position") == "RB"
               and o["markets"].get("rushing_yards")]

@@ -80,6 +80,16 @@ class ProjectionEngine:
         self.yard_models = {k: cls(cfg) for k, cls in MODEL_REGISTRY.items()}
         self._usage_cache = None
 
+        # How many games each team has already played this season. Needed so
+        # that a player logging ZERO snaps while his team has played can be
+        # treated as real evidence of replacement-level usage, rather than as
+        # "no information" (which would leave him sitting on a prior-season
+        # share earned in the handful of games he actually appeared in).
+        self.team_games_played = {}
+        if len(store.player_gamelog):
+            gl = store.player_gamelog
+            self.team_games_played = gl.groupby("team")["week"].nunique().to_dict()
+
     # ------------------------------------------------------------------
     # Blending
     # ------------------------------------------------------------------
@@ -102,15 +112,72 @@ class ProjectionEngine:
         n_cur = safe_num(cur.get("n_games_current"), 0)
 
         posbase = self.cfg.position.get(pos, self.cfg.position["WR"])
+        repbase = self.cfg.replacement.get(pos, self.cfg.replacement["WR"])
+
+        # A player who has logged no snaps while his team has already played
+        # is not an unknown -- he is an observed non-contributor. Count those
+        # missed games as observations of replacement-level usage, so a
+        # backup cannot coast on a share he earned in a couple of spot starts
+        # last season.
+        team = ctx.get("team")
+        team_games = float(self.team_games_played.get(team, 0) or 0)
+        inactive_evidence = team_games > 0 and n_cur == 0
+
+        # Prior-season shares are computed over the games a player actually
+        # appeared in, so they answer "what was his share WHEN ACTIVE" rather
+        # than "what is his expected share in a random week". For a backup who
+        # made two spot starts those are wildly different numbers. Shrink
+        # opportunity shares toward replacement level by availability:
+        #
+        #   expected = share_when_active * avail + replacement * (1 - avail)
+        #   avail    = games_played / 17
+        #
+        # Trade-off worth knowing: this also shrinks a STARTER who missed
+        # most of last season to injury. Current-season data and the roster
+        # context pull him back up as evidence arrives, but in Week 1 a
+        # returning star will read low. Setting `returning_from_ir` in
+        # roster_changes.csv raises his rho, which partly offsets it.
+        prior_games = safe_num(prior.get("games"), 0.0)
+        availability = float(np.clip(prior_games / 17.0, 0.0, 1.0)) if prior_games else 0.0
+        # ...but ONLY when there is no current-season evidence. Availability
+        # shrinkage exists to answer "will he be on the field?", and a snap
+        # count from THIS season answers that far better than last season's
+        # games-played ever could. Applying both double-counts, and does real
+        # damage in the common case of a starter who missed time to injury:
+        # Joe Burrow played 8 games last year, so shrinkage halved his prior
+        # dropback share while simultaneously rewarding the backup who
+        # replaced him -- leaving a healthy, Week-1-starting Burrow projected
+        # at 21 attempts and 130 yards.
+        apply_availability = (n_cur == 0)
+
         blended, weights = {}, {}
         for m in PLAYER_METRICS:
-            lg = posbase.get(m, self.cfg.league.get(m, np.nan))
+            # Opportunity metrics regress toward REPLACEMENT level, efficiency
+            # metrics toward league average. An unknown player is assumed to
+            # barely play, not to play like a starter -- but when he does
+            # play, he gains yards at roughly a normal rate.
+            if m in repbase:
+                lg = repbase[m]
+            else:
+                lg = posbase.get(m, self.cfg.league.get(m, np.nan))
             if pd.isna(lg):
                 lg = 0.0
-            blended[m] = blend_value(m, cur.get(m), prior.get(m), lg,
-                                     n_cur, rho, self.week, self.cfg)
+
+            x_prior = prior.get(m)
+            if (apply_availability and m in repbase and x_prior is not None
+                    and not pd.isna(x_prior) and prior_games):
+                x_prior = float(x_prior) * availability + lg * (1.0 - availability)
+
+            x_cur, n_eff = cur.get(m), n_cur
+            if inactive_evidence and m in repbase:
+                # only opportunity metrics are affected; sitting on the bench
+                # says nothing about how efficient he would be if he played
+                x_cur, n_eff = lg, team_games
+
+            blended[m] = blend_value(m, x_cur, x_prior, lg,
+                                     n_eff, rho, self.week, self.cfg)
             if m in ("target_share", "rush_share", "ypc", "yptarget", "ypa"):
-                weights[m] = blend_weights_report(m, n_cur, rho, self.week, self.cfg)
+                weights[m] = blend_weights_report(m, n_eff, rho, self.week, self.cfg)
 
         blended["position"] = pos
         blended["player_id"] = player_id
@@ -230,6 +297,15 @@ class ProjectionEngine:
                               "rushing_yards", "receiving_yards"]
         f = self.build_features(player_id)
         pos = f.get("position", "WR")
+        if pos not in ("QB", "RB", "WR", "TE"):
+            # A non-skill position (OL, DL, LB, DB, K, P, LS, ...) has no
+            # target/rush profile of its own. Silently falling through to
+            # the WR baseline produces a plausible-looking but meaningless
+            # number, which is worse than refusing -- callers that want a
+            # full-roster sweep must filter to skill positions themselves.
+            raise ValueError(
+                f"{player_id} has position '{pos}', not a skill position "
+                f"(QB/RB/WR/TE) -- prop projections do not apply.")
         _, meta = self.blended_player(player_id)
 
         market_lines = self._lines_for(player_id)

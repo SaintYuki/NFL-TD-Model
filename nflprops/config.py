@@ -29,6 +29,11 @@ STABILIZATION_K: Dict[str, float] = {
     # usage / opportunity - stabilizes fast
     "snap_share": 3.0,
     "route_participation": 3.0,
+    # whether you are the starting QB is the fastest-resolving fact in
+    # football -- one start tells you far more than a whole prior season
+    # one start settles it almost entirely; K=0.5 puts ~67% weight on a
+    # single current-season game
+    "pass_att_share": 0.5,
     "target_share": 4.0,
     "rush_share": 3.0,
     "rz_rush_share": 5.0,
@@ -183,6 +188,43 @@ POSITION_BASELINE: Dict[str, Dict[str, float]] = {
     "TE": {"target_share": 0.135, "yptarget": 7.3, "adot": 7.9, "rush_share": 0.0},
 }
 
+# What to assume about a player we know NOTHING about.
+#
+# This is NOT the same as POSITION_BASELINE above, and conflating the two is a
+# real modeling error. POSITION_BASELINE describes a typical STARTER. But an
+# NFL roster carries ~6.7 RBs, ~10 WRs and ~3.7 QBs, and most of them never
+# see meaningful usage. Regressing every no-history player to a starter's
+# share and then renormalizing shares to sum to 1.0 flattens the entire
+# depth chart toward 1/n: a third-string back ends up projected within a few
+# yards of an All-Pro, which is exactly the symptom this fixes.
+#
+# Because renormalization preserves RATIOS, what matters is the gap between
+# a known starter and an unknown player, not the absolute level. A
+# replacement-level prior restores that gap.
+#
+# Efficiency metrics (ypc, yptarget, ypa) are NOT included here on purpose:
+# an unknown player's efficiency really is close to league average, it is
+# only his OPPORTUNITY that should be assumed near zero.
+REPLACEMENT_BASELINE: Dict[str, Dict[str, float]] = {
+    "QB": {"pass_att_share": 0.05, "rush_share": 0.012},
+    # NB: a real roster carries ~22 pass catchers (10+ WR, 4 TE, 7 RB).
+    # These values are summed across ALL of them before renormalization, so
+    # they must be small enough that replacement-level bodies collectively
+    # claim only ~10-15% of team targets. At 0.045 per WR the bench alone
+    # claimed ~73% of the passing game and diluted every real starter by a
+    # quarter. Sanity check when tuning: sum(replacement) over a full roster
+    # should stay well under 0.25.
+    "RB": {"rush_share": 0.055, "target_share": 0.008,
+           "rz_rush_share": 0.050, "inside5_rush_share": 0.050,
+           "rz_target_share": 0.008, "air_yards_share": 0.006},
+    "WR": {"target_share": 0.012, "rush_share": 0.002,
+           "rz_target_share": 0.012, "air_yards_share": 0.012,
+           "inside10_target_share": 0.012},
+    "TE": {"target_share": 0.010, "rush_share": 0.0,
+           "rz_target_share": 0.010, "air_yards_share": 0.009,
+           "inside10_target_share": 0.010},
+}
+
 # ----------------------------------------------------------------------------
 # 5. Game-environment mapping
 # ----------------------------------------------------------------------------
@@ -242,6 +284,7 @@ class ModelConfig:
     usage_shift: Dict[str, float] = field(default_factory=lambda: dict(USAGE_SHIFT))
     league: Dict[str, float] = field(default_factory=lambda: dict(LEAGUE_BASELINE))
     position: Dict[str, Dict[str, float]] = field(default_factory=lambda: dict(POSITION_BASELINE))
+    replacement: Dict[str, Dict[str, float]] = field(default_factory=lambda: dict(REPLACEMENT_BASELINE))
     dispersion_cv: Dict[str, float] = field(default_factory=lambda: dict(DISPERSION_CV))
     use_schedule_override: bool = USE_SCHEDULE_OVERRIDE
     td_kappa: float = TD_POISSON_KAPPA

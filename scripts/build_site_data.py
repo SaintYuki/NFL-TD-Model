@@ -130,7 +130,14 @@ def main():
     store = DataStore(args.root, args.season, args.week)
     engine = ProjectionEngine(store)
     def_ranks = compute_def_ranks(store)
-    projections = engine.project_slate()
+
+    # Only project offensive skill positions. Without this, every position
+    # on a real roster (OL, DL, LB, DB, K, P, LS) gets run through the model
+    # too -- and since none of those positions have a real target/rush
+    # profile, they all regress to nearly the same generic baseline and
+    # show up as dozens of near-identical "phantom" rows.
+    skill_ids = engine.meta[engine.meta.position.isin(["QB", "RB", "WR", "TE"])]["player_id"].tolist()
+    projections = engine.project_slate(skill_ids)
     rows = flatten(projections, def_ranks)
 
     os.makedirs(args.out, exist_ok=True)
