@@ -206,6 +206,24 @@ class ProjectionEngine:
                 # only opportunity metrics are affected; sitting on the bench
                 # says nothing about how efficient he would be if he played
                 x_cur, n_eff = lg, team_games
+            elif m in repbase and n_cur > 0:
+                # OPPORTUNITY CREDIBILITY: a game is not a fixed unit of
+                # evidence. Chase seeing 4 targets and Chase seeing 14 both
+                # counted as "one game", so a quiet afternoon moved an
+                # established role as much as a heavy workload would. Scale
+                # the current-season weight by observed volume relative to a
+                # normal game for that role, capped so a genuine blowup still
+                # counts fully.
+                seen = safe_num(cur.get("targets_per_game") if m.endswith("target_share")
+                                else cur.get("carries_per_game") if "rush" in m
+                                else None, np.nan)
+                expected_per_game = (
+                    safe_num(prior.get("targets_per_game"), 5.0)
+                    if m.endswith("target_share")
+                    else safe_num(prior.get("carries_per_game"), 8.0))
+                if not np.isnan(seen) and expected_per_game > 0:
+                    vol_ratio = float(np.clip(seen / expected_per_game, 0.25, 1.0))
+                    n_eff = n_cur * vol_ratio
 
             blended[m] = blend_value(m, x_cur, x_prior, lg,
                                      n_eff, rho, self.week, self.cfg)

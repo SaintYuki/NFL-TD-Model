@@ -93,9 +93,12 @@ class AnytimeTDModel:
         # matchup: rushing TDs care about the run defense, receiving about pass D
         match_mult_rush = 0.5 + 0.5 * float(f.get("rush_matchup_mult", 1.0))
         match_mult_rec = 0.5 + 0.5 * float(f.get("pass_matchup_mult", 1.0))
-        rz_def = float(f.get("def_rz_td_adj", 1.0))
-
-        lam = (lam_rush * match_mult_rush + lam_rec * match_mult_rec) * rz_def
+        # NOTE: def_rz_td_adj is deliberately NOT applied here. It is already
+        # baked into e_team_rush_td / e_team_rec_td by
+        # features.expected_team_touchdowns(), and multiplying it in a second
+        # time charged the opponent's red-zone defense twice -- a ~15%
+        # understatement against good red-zone defenses.
+        lam = (lam_rush * match_mult_rush + lam_rec * match_mult_rec)
         lam = max(lam * min(roster_mult, 2.0), 0.0)
         return {
             "lambda_total": float(lam),

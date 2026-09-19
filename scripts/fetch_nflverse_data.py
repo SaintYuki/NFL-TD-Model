@@ -199,6 +199,9 @@ def redzone_team_week(pbp: pd.DataFrame) -> pd.DataFrame:
     team_rz_pass = rz[rz.play_type == "pass"].groupby(
         ["season", "week", "posteam"], as_index=False).size().rename(
         columns={"size": "team_rz_targets", "posteam": "team"})
+    i10 = p[(p["yardline_100"] <= 10) & (p.play_type == "pass")].groupby(
+        ["season", "week", "posteam"], as_index=False).size().rename(
+        columns={"size": "team_inside10_targets", "posteam": "team"})
     team_rz_rush = rz[rz.play_type == "run"].groupby(
         ["season", "week", "posteam"], as_index=False).size().rename(
         columns={"size": "team_rz_carries", "posteam": "team"})
@@ -206,7 +209,8 @@ def redzone_team_week(pbp: pd.DataFrame) -> pd.DataFrame:
         ["season", "week", "posteam"], as_index=False).size().rename(
         columns={"size": "team_inside5_carries", "posteam": "team"})
     out = team_rz_pass.merge(team_rz_rush, on=["season", "week", "team"], how="outer") \
-                       .merge(i5, on=["season", "week", "team"], how="outer")
+                       .merge(i5, on=["season", "week", "team"], how="outer") \
+                       .merge(i10, on=["season", "week", "team"], how="outer")
     return out.fillna(0)
 
 
@@ -326,7 +330,8 @@ def build_player_season(season: int) -> pd.DataFrame:
         right_on=["season", "week", "team"], how="left").groupby(
         "player_id", as_index=False).agg(
         team_rz_targets=("team_rz_targets", "sum"), team_rz_carries=("team_rz_carries", "sum"),
-        team_inside5_carries=("team_inside5_carries", "sum"))
+        team_inside5_carries=("team_inside5_carries", "sum"),
+        team_inside10_targets=("team_inside10_targets", "sum"))
 
     agg = agg.merge(rz_tgt_season, on="player_id", how="left")
     agg = agg.merge(rz_rsh_season, on="player_id", how="left")
@@ -356,7 +361,11 @@ def build_player_season(season: int) -> pd.DataFrame:
     out["rz_target_share"] = safe_div(agg["rz_targets"], agg["team_rz_targets"])
     out["rz_rush_share"] = safe_div(agg["rz_carries"], agg["team_rz_carries"])
     out["inside5_rush_share"] = safe_div(agg["inside5_carries"], agg["team_inside5_carries"])
-    out["inside10_target_share"] = safe_div(agg["inside10_targets"], agg["team_rz_targets"])
+    # denominator must be team INSIDE-10 targets, not inside-20; using the
+    # wider denominator understated every receiver's goal-area share and fed
+    # straight into the anytime-TD model
+    out["inside10_target_share"] = safe_div(agg["inside10_targets"],
+                                            agg["team_inside10_targets"])
     out["rush_td"] = agg["rush_td"]
     out["rec_td"] = agg["rec_td"]
     out["pass_att_share"] = safe_div(agg["attempts"], agg["team_pass_attempts"])

@@ -192,14 +192,22 @@ class ReceivingYardsModel(BaseYardageModel):
             ratio = float(ays) / float(ts)
             ay_corr = float(np.clip(1.0 + 0.16 * (ratio - 1.0), 0.88, 1.16))
 
-        ypt = ypt * _g(f, "pass_matchup_mult", 1.0) \
-                  * _g(f, "matchup_eff_mult", 1.0) \
+        # Team pass defense and the specific-corner matchup measure the same
+        # underlying signal from two angles. Multiplying them double-charged
+        # it (0.884 x 0.937 = 0.828, a 17% hit for one defense). Blend them
+        # instead: the defender-specific number is sharper, so it gets the
+        # larger weight, with the team number as the stabilizer.
+        team_mult = _g(f, "pass_matchup_mult", 1.0)
+        cb_mult = _g(f, "matchup_eff_mult", 1.0)
+        combined_matchup = 0.35 * team_mult + 0.65 * cb_mult
+        ypt = ypt * combined_matchup \
                   * _g(f, "weather_penalty", 1.0) * ay_corr
         ypt += _g(f, "yptarget_unit_delta", 0.0)
         ypt = float(np.clip(ypt, 3.6, 14.5))
         return {"expected_yards_per_opp": ypt,
                 "matchup_mult": _g(f, "pass_matchup_mult", 1.0),
                 "wr_cb_mult": _g(f, "matchup_eff_mult", 1.0),
+                "combined_matchup": round(combined_matchup, 4),
                 "air_yards_correction": ay_corr,
                 "qb_unit_delta": _g(f, "yptarget_unit_delta", 0.0)}
 
