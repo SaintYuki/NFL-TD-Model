@@ -62,6 +62,16 @@ class DataStore:
         self.game_env = _read(p("game_environment.csv"))
         self.prop_lines = _read(p("prop_lines.csv"))
 
+        # Advanced inputs (NGS / PFR / FTN / Sleeper). All optional: every
+        # consumer degrades to the previous behavior when a file is absent,
+        # so the pipeline still runs before fetch_advanced.py is ever called.
+        self.ngs = _read(p("advanced", "ngs_players.csv"))
+        self.pfr_player = _read(p("advanced", "pfr_player_eff.csv"))
+        self.pfr_def = _read(p("advanced", "pfr_def_units.csv"))
+        self.pfr_cbs = _read(p("advanced", "pfr_coverage_cbs.csv"))
+        self.team_scheme = _read(p("advanced", "team_scheme.csv"))
+        self.depth_injury = _read(p("advanced", "depth_injury.csv"))
+
         self._filter_to_week()
 
     # ------------------------------------------------------------------
@@ -191,12 +201,21 @@ class DataStore:
             rc_cols = ["player_id", "new_team"]
             if "position" in self.roster_changes.columns:
                 rc_cols.append("position")
+            if "player_name" in self.roster_changes.columns:
+                rc_cols.append("player_name")
             rc = self.roster_changes[rc_cols].dropna(subset=["player_id", "new_team"])
             base = base.merge(rc, on="player_id", how="outer", suffixes=("", "_rc"))
             base["team"] = base["new_team"].fillna(base["team"])
+            # current roster's position is more current than a prior-season
+            # snapshot, and is the ONLY source at all for a player who has no
+            # prior-season row (rookies, players who didn't play last year) --
+            # without this, ~80% of a real roster shows up with no position.
             if "position_rc" in base.columns:
                 base["position"] = base["position_rc"].fillna(base["position"])
                 base = base.drop(columns=["position_rc"])
+            if "player_name_rc" in base.columns:
+                base["player_name"] = base["player_name_rc"].fillna(base["player_name"])
+                base = base.drop(columns=["player_name_rc"])
             base = base.drop(columns=["new_team"])
         if len(self.player_gamelog):
             latest = (self.player_gamelog.sort_values("week")
@@ -206,6 +225,18 @@ class DataStore:
             base["position"] = base["position_gl"].fillna(base["position"])
             base = base.drop(columns=[c for c in ("team_gl", "position_gl") if c in base])
         base["player_name"] = base["player_name"].fillna(base["player_id"])
+
+        # Drop anyone with zero current-season evidence: not on this year's
+        # roster feed AND never logged a current-season game. This is what
+        # filters out players who played last season but are no longer in
+        # the league this year (retired, released and unsigned, etc.) --
+        # without it, every name from last season's stats sticks around
+        # forever with a stale team label.
+        rc_ids = set(self.roster_changes["player_id"]) if len(self.roster_changes) else set()
+        gl_ids = set(self.player_gamelog["player_id"]) if len(self.player_gamelog) else set()
+        if rc_ids or gl_ids:
+            base = base[base["player_id"].isin(rc_ids) | base["player_id"].isin(gl_ids)]
+
         return base.drop_duplicates("player_id").reset_index(drop=True)
 
     def environment_for(self, team: str) -> dict:

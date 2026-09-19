@@ -261,6 +261,7 @@ def assemble_projection_json(player_id, features, results, blend_meta,
             drivers = compute_drivers(market, features, res["expected_touchdowns"],
                                       recompute.get(market))
         else:
+            ladder_blk = res.pop("_ladder", None)
             dist = res.pop("_dist", None)
             m = {
                 "projection": res["projection"],
@@ -276,6 +277,8 @@ def assemble_projection_json(player_id, features, results, blend_meta,
                 "efficiency_detail": res["efficiency"],
                 "lines": [],
             }
+            if ladder_blk:
+                m.update(ladder_blk)
             for r in book_rows:
                 line = float(r.get("line"))
                 lp = line_probabilities(dist, line) if dist else {}

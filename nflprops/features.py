@@ -50,6 +50,7 @@ from .util import safe_num
 from .config import (
     ModelConfig, DEFAULT_CONFIG, LEAGUE_BASELINE,
     PASS_RATE_PER_POINT_SPREAD, RUSH_SHARE_PER_POINT_SPREAD,
+    MAX_PASS_RATE_SCRIPT_ADJ, PLAYS_PER_POINT_UNDERDOG,
     PLAYS_PER_POINT_TOTAL, TD_INTERCEPT, TD_SLOPE,
     OL_PASSBLOCK_YPA_BETA, OL_RUNBLOCK_YPC_BETA,
     WR_CORPS_YPA_BETA, QB_QUALITY_YPT_BETA,
@@ -86,13 +87,20 @@ def game_script_features(env: dict) -> dict:
     spread = safe_num(env.get("spread"), 0.0)
     total = safe_num(env.get("total"), 44.0)
     implied = float(env.get("implied_total", total / 2 - spread / 2))
+    # Trailing teams throw more -- but the effect saturates, and they also run
+    # FEWER total plays (three-and-outs, clock stopping, garbage time with
+    # backups). Leaving this uncapped made a 13.5-point underdog project more
+    # dropbacks than the best offense in football.
+    raw_script = PASS_RATE_PER_POINT_SPREAD * spread
+    script_adj = clamp(raw_script, -MAX_PASS_RATE_SCRIPT_ADJ, MAX_PASS_RATE_SCRIPT_ADJ)
+    underdog_play_penalty = PLAYS_PER_POINT_UNDERDOG * max(0.0, spread - 7.0)
     return {
         "spread": spread,
         "total": total,
         "team_total_implied": implied,
-        "pass_rate_script_adj": PASS_RATE_PER_POINT_SPREAD * spread,
+        "pass_rate_script_adj": script_adj,
         "rush_share_script_adj": RUSH_SHARE_PER_POINT_SPREAD * spread,
-        "plays_total_adj": PLAYS_PER_POINT_TOTAL * (total - 44.0),
+        "plays_total_adj": PLAYS_PER_POINT_TOTAL * (total - 44.0) + underdog_play_penalty,
         "game_script_index": clamp(spread / 10.0, -1.5, 1.5),
         "weather_penalty": _weather_penalty(env),
     }
@@ -147,6 +155,31 @@ def team_volume_features(team_off: dict, opp_def: dict, env: dict,
     pass_attempts = dropbacks * (1 - sack_rate)
     carries = plays * (1 - pass_rate)
 
+    # TEAM TOTAL RECONCILIATION
+    # ------------------------------------------------------------------
+    # The market's implied team total is the single sharpest input available,
+    # and the old model used it ONLY to size the expected-TD pool -- yardage
+    # projections ignored it completely. That let a 15.5-point implied team
+    # produce a league-leading passing projection, which is internally
+    # incoherent: you do not throw for 260 yards and score 15 points very
+    # often. Scale total offensive volume toward what the implied total
+    # supports, damped so the model can still disagree with Vegas (the point
+    # is to be consistent with the scoring environment, not to converge on
+    # the market's player props, which this never sees).
+    lg_pts = lg.get("team_points_per_game", 22.4)
+    implied = gs["team_total_implied"]
+    if implied and implied > 0:
+        raw_ratio = implied / lg_pts
+        # damped: a team implied for half the league average still gets ~78%
+        # of league-average volume, because bad offenses run plays too
+        volume_mult = clamp(1.0 + 0.42 * (raw_ratio - 1.0), 0.80, 1.18)
+    else:
+        volume_mult = 1.0
+    dropbacks *= volume_mult
+    pass_attempts *= volume_mult
+    carries *= volume_mult
+    plays *= volume_mult
+
     return {
         "proj_team_plays": plays,
         "proj_team_pass_rate": pass_rate,
@@ -154,6 +187,7 @@ def team_volume_features(team_off: dict, opp_def: dict, env: dict,
         "proj_team_pass_attempts": pass_attempts,
         "proj_team_carries": carries,
         "pace_ratio": pace_ratio,
+        "team_total_volume_mult": volume_mult,
         **gs,
     }
 
@@ -188,47 +222,76 @@ def wr_cb_matchup(player: dict, opp_def: dict) -> dict:
     """
     Assign the receiver to a coverage defender and grade the mismatch.
 
-      alignment: 'perimeter' | 'slot' | 'te' | 'rb'
-      grade_gap = (player_grade - defender_grade) / 10
-      yptarget multiplier = 1 + 0.055 * grade_gap  (capped +/-12%)
-      target-share nudge  = 1 + 0.020 * grade_gap  (small; volume is scheme-driven)
+    When real per-defender data is present (PFR advstats, loaded into
+    opp_def as cb1_*/cb2_* fields), the matchup is graded on what that
+    corner has ACTUALLY allowed -- yards per target and passer rating in
+    coverage -- rather than on a placeholder 0-100 grade. That is the
+    difference between "WR vs team pass defense" and the receiver-vs-
+    specific-defender interaction this model is supposed to capture.
+
+    Receiver-side traits from NGS refine it further:
+      separation   a receiver who consistently gets open is less affected by
+                   a strong corner than his raw grade implies
+      cushion      a receiver who is played soft sees easier underneath work
+      YAC above expected  survives tight coverage via run-after-catch
     """
     pos = player.get("position", "WR")
     slot_rate = float(player.get("slot_rate", 0.35 if pos == "WR" else 0.6))
     rank_raw = player.get("depth_chart_rank_new", 2)
     depth_rank = 2 if rank_raw is None or (isinstance(rank_raw, float) and np.isnan(rank_raw)) else int(rank_raw)
-    pgrade = safe_num(player.get("player_grade"), 68.0)
 
+    # --- pick the defender this receiver most likely faces -------------
     if pos == "TE":
-        alignment, dgrade = "te", float(opp_def.get("slot_cb_grade", 65.0))
+        alignment = "te"
         unit_epa = opp_def.get("def_vs_te", np.nan)
+        allowed_ypt = safe_num(opp_def.get("def_cov_yds_per_target"), 7.0)
     elif pos == "RB":
-        alignment, dgrade = "rb", 62.0
+        alignment = "rb"
         unit_epa = opp_def.get("def_vs_rb_pass", np.nan)
+        allowed_ypt = safe_num(opp_def.get("def_cov_yds_per_target"), 7.0)
     elif slot_rate >= 0.55:
-        alignment, dgrade = "slot", float(opp_def.get("slot_cb_grade", 63.0))
+        alignment = "slot"
         unit_epa = opp_def.get("def_vs_wr_slot", np.nan)
+        allowed_ypt = safe_num(opp_def.get("cb2_yds_tgt",
+                                           opp_def.get("def_cov_yds_per_target")), 7.0)
     else:
-        shadow = bool(opp_def.get("shadow_cb", False))
-        if depth_rank == 1 and shadow:
-            dgrade = float(opp_def.get("cb1_grade", 68.0))
-        elif depth_rank == 1:
-            dgrade = 0.6 * float(opp_def.get("cb1_grade", 68.0)) + 0.4 * float(opp_def.get("cb2_grade", 62.0))
-        else:
-            dgrade = float(opp_def.get("cb2_grade", 62.0))
         alignment = "perimeter"
         unit_epa = opp_def.get("def_vs_wr_out", np.nan)
+        shadow = bool(opp_def.get("shadow_cb", False))
+        cb1 = safe_num(opp_def.get("cb1_yds_tgt"), np.nan)
+        cb2 = safe_num(opp_def.get("cb2_yds_tgt"), np.nan)
+        if depth_rank == 1 and not np.isnan(cb1):
+            allowed_ypt = cb1 if shadow else (0.6 * cb1 + 0.4 * (cb2 if not np.isnan(cb2) else cb1))
+        elif not np.isnan(cb2):
+            allowed_ypt = cb2
+        else:
+            allowed_ypt = safe_num(opp_def.get("def_cov_yds_per_target"), 7.0)
 
-    gap = (pgrade - dgrade) / 10.0
-    eff_mult = clamp(1.0 + 0.055 * gap, 0.88, 1.12)
+    # --- grade the matchup on ALLOWED production -----------------------
+    # league-average coverage sits near 7.0 yards per target; every yard
+    # above that is a real, measured advantage for the receiver.
+    LEAGUE_YPT_ALLOWED = 7.0
+    ypt_edge = (allowed_ypt - LEAGUE_YPT_ALLOWED) / LEAGUE_YPT_ALLOWED
+    eff_mult = clamp(1.0 + 0.55 * ypt_edge, 0.86, 1.16)
+
+    # receiver traits (NGS), applied only when present
+    sep = player.get("ngs_separation")
+    if sep is not None and not pd.isna(sep):
+        # league average separation ~2.8 yards
+        eff_mult *= clamp(1.0 + 0.06 * (float(sep) - 2.8), 0.94, 1.08)
+    yacx = player.get("ngs_yac_above_expected")
+    if yacx is not None and not pd.isna(yacx):
+        eff_mult *= clamp(1.0 + 0.035 * float(yacx), 0.94, 1.10)
+
     if not pd.isna(unit_epa):
         eff_mult *= clamp(1.0 + 0.45 * float(unit_epa), 0.90, 1.12)
+
     return {
         "alignment": alignment,
-        "defender_grade": dgrade,
-        "wr_cb_grade_gap": gap,
-        "matchup_eff_mult": clamp(eff_mult, 0.84, 1.18),
-        "matchup_share_mult": clamp(1.0 + 0.020 * gap, 0.95, 1.05),
+        "defender_allowed_ypt": round(float(allowed_ypt), 2),
+        "wr_cb_grade_gap": round(ypt_edge, 4),
+        "matchup_eff_mult": clamp(eff_mult, 0.82, 1.20),
+        "matchup_share_mult": clamp(1.0 + 0.10 * ypt_edge, 0.95, 1.05),
     }
 
 

@@ -48,6 +48,11 @@ jobs:
             --root data \
             --season ${{ steps.week.outputs.season }} \
             --through-week ${{ steps.week.outputs.week }}
+          python scripts/fetch_advanced.py \
+            --root data \
+            --season ${{ steps.week.outputs.season }} \
+            --prior-season $PRIOR_SEASON \
+            --through-week ${{ steps.week.outputs.week }}
 
       - name: Ensure prop_lines.csv exists
         # No odds feed wired up yet (see README) -- an empty-but-headered

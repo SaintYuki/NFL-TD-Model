@@ -236,6 +236,41 @@ TD_SLOPE = 0.1205
 # Game script: spread shifts pass rate and rush volume.
 # pass_rate_adj = pass_rate + PASS_RATE_PER_POINT_SPREAD * (team_spread)
 # team_spread is POSITIVE when the team is an underdog by that many points.
+# Sample sizes at which an EFFICIENCY estimate is worth 50% credibility
+# against the league mean. Regression uses the player's own observed sample,
+# not games played:
+#
+#   regressed = (observed * n + league_mean * K) / (n + K)
+#
+# The old blend weighted only by RECENCY (how many games this season) and
+# never by SAMPLE SIZE (how much the prior estimate actually rests on). That
+# let Malik Willis carry a 12.06 YPA earned on ~48 attempts almost as
+# credibly as Mahomes's 7.15 on 457, which is the single largest source of
+# projection inflation in the system. These are stabilization points from
+# public NFL research: yards-per-attempt needs roughly a full season of
+# volume before it means much, yards-per-carry even more.
+EFFICIENCY_CREDIBILITY_K = {
+    "ypa": 260.0,        # pass attempts
+    "ypc": 130.0,        # carries
+    "yptarget": 85.0,    # targets
+    "catch_rate": 70.0,
+    "adot": 55.0,
+    "sack_rate": 220.0,
+}
+
+# Typical per-game team volume, used to convert a player's share into an
+# approximate opportunity count when the raw count is not stored.
+TEAM_VOLUME_PER_GAME = {"pass_att": 33.0, "carries": 26.0, "targets": 33.0}
+
+# Game script: how far the spread may move a team's pass rate. Uncapped,
+# this rewards being bad -- a 13.5-point underdog was getting a 0.673 pass
+# rate and MORE projected dropbacks than Mahomes. Real trailing teams do
+# throw more, but they also run fewer total plays (clock stops, three-and-
+# outs, giving up), which the old model ignored entirely.
+MAX_PASS_RATE_SCRIPT_ADJ = 0.055
+# Big underdogs lose possessions even as they pass more often.
+PLAYS_PER_POINT_UNDERDOG = -0.22
+
 PASS_RATE_PER_POINT_SPREAD = 0.0068
 RUSH_SHARE_PER_POINT_SPREAD = -0.0052     # favorites run more
 PLAYS_PER_POINT_TOTAL = 0.22              # higher totals -> slightly more plays

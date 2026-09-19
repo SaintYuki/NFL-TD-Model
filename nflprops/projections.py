@@ -16,7 +16,8 @@ import numpy as np
 import pandas as pd
 
 from .util import safe_num
-from .config import ModelConfig, DEFAULT_CONFIG
+from .config import (ModelConfig, DEFAULT_CONFIG, EFFICIENCY_CREDIBILITY_K,
+                     TEAM_VOLUME_PER_GAME)
 from .data.blend import blend_value, blend_weights_report
 from .data.roster import build_roster_context, apply_roster_adjustments
 from .features import build_feature_row
@@ -150,6 +151,25 @@ class ProjectionEngine:
         # at 21 attempts and 130 yards.
         apply_availability = (n_cur == 0)
 
+        # Approximate how much opportunity the prior-season efficiency rests
+        # on, so it can be regressed by CREDIBILITY rather than trusted flat.
+        vol = TEAM_VOLUME_PER_GAME
+        if pos == "QB":
+            prior_opps = prior_games * vol["pass_att"] * safe_num(prior.get("pass_att_share"), 0.0)
+            carry_opps = prior_games * vol["carries"] * safe_num(prior.get("rush_share"), 0.0)
+        elif pos == "RB":
+            prior_opps = prior_games * vol["targets"] * safe_num(prior.get("target_share"), 0.0)
+            carry_opps = prior_games * vol["carries"] * safe_num(prior.get("rush_share"), 0.0)
+        else:
+            prior_opps = prior_games * vol["targets"] * safe_num(prior.get("target_share"), 0.0)
+            carry_opps = prior_games * vol["carries"] * safe_num(prior.get("rush_share"), 0.0)
+        opp_count = {"ypa": prior_opps if pos == "QB" else 0.0,
+                     "ypc": carry_opps,
+                     "yptarget": prior_opps,
+                     "catch_rate": prior_opps,
+                     "adot": prior_opps,
+                     "sack_rate": prior_opps if pos == "QB" else 0.0}
+
         blended, weights = {}, {}
         for m in PLAYER_METRICS:
             # Opportunity metrics regress toward REPLACEMENT level, efficiency
@@ -168,6 +188,19 @@ class ProjectionEngine:
                     and not pd.isna(x_prior) and prior_games):
                 x_prior = float(x_prior) * availability + lg * (1.0 - availability)
 
+            # EFFICIENCY credibility regression: shrink toward the league mean
+            # in proportion to how little opportunity the estimate rests on.
+            # This is what stops a 48-attempt 12.1 YPA from surviving into a
+            # league-leading projection.
+            if (m in EFFICIENCY_CREDIBILITY_K and x_prior is not None
+                    and not pd.isna(x_prior)):
+                k_eff = EFFICIENCY_CREDIBILITY_K[m]
+                n_opp = max(0.0, float(opp_count.get(m, 0.0)))
+                lg_mean = self.cfg.league.get(m, posbase.get(m, lg))
+                if lg_mean is not None and not pd.isna(lg_mean):
+                    x_prior = ((float(x_prior) * n_opp + float(lg_mean) * k_eff)
+                               / (n_opp + k_eff))
+
             x_cur, n_eff = cur.get(m), n_cur
             if inactive_evidence and m in repbase:
                 # only opportunity metrics are affected; sitting on the bench
@@ -181,6 +214,24 @@ class ProjectionEngine:
 
         blended["position"] = pos
         blended["player_id"] = player_id
+
+        # NGS player traits (separation, CPOE, RYOE, ...) carried through as
+        # descriptive features for the matchup engine. These are TRAITS, not
+        # opportunity, so they are not blended or renormalized.
+        ngs_tbl = getattr(self.store, "ngs", None)
+        if ngs_tbl is not None and len(ngs_tbl):
+            row = ngs_tbl[ngs_tbl["player_id"] == player_id]
+            if len(row):
+                for c, v in row.iloc[0].items():
+                    if c != "player_id" and pd.notna(v):
+                        blended[c] = v
+        pfr_tbl = getattr(self.store, "pfr_player", None)
+        if pfr_tbl is not None and len(pfr_tbl):
+            row = pfr_tbl[pfr_tbl["player_id"] == player_id]
+            if len(row):
+                for c, v in row.iloc[0].items():
+                    if c not in ("player_id", "pfr_id") and pd.notna(v):
+                        blended[c] = v
         blended["n_games_current"] = n_cur
         # RZ share fallbacks: red zone samples are tiny, lean on overall share
         if not blended.get("inside5_rush_share"):
@@ -214,6 +265,36 @@ class ProjectionEngine:
                                  self.cfg.league.get(m, np.nan), n, rho, self.week, self.cfg)
         for m in DEF_STATIC:
             out[m] = prior.get(m)
+
+        # real PFR pressure + coverage, replacing placeholder grades
+        pd_def = getattr(self.store, "pfr_def", None)
+        if pd_def is not None and len(pd_def):
+            row = pd_def[pd_def["team"] == team]
+            if len(row):
+                r = row.iloc[0]
+                for c in ("def_pressures", "def_blitzes", "def_hurries",
+                          "def_qb_knockdowns", "def_cov_yds_per_target",
+                          "def_cov_cmp_pct", "def_cov_rating"):
+                    if c in r.index:
+                        out[c] = r[c]
+        cbs = getattr(self.store, "pfr_cbs", None)
+        if cbs is not None and len(cbs):
+            sub = cbs[cbs["team"] == team].sort_values("rank")
+            for i, (_, r) in enumerate(sub.iterrows(), start=1):
+                if i > 2:
+                    break
+                out[f"cb{i}_yds_tgt"] = r.get("yds_tgt")
+                out[f"cb{i}_rating"] = r.get("rat")
+                out[f"cb{i}_name"] = r.get("player")
+        scheme = getattr(self.store, "team_scheme", None)
+        if scheme is not None and len(scheme):
+            row = scheme[scheme["team"] == team]
+            if len(row):
+                r = row.iloc[0]
+                for c in ("def_blitz_rate", "def_avg_pass_rushers",
+                          "def_avg_box", "def_heavy_box_rate"):
+                    if c in r.index:
+                        out[c] = r[c]
         out["team_rho"] = rho
         return out
 
@@ -332,7 +413,25 @@ class ProjectionEngine:
                         continue
                 lns = (lines or {}).get(m)
                 lns = [lns] if isinstance(lns, (int, float)) else lns
-                results[m] = model.predict(f, lines=lns)
+                res = model.predict(f, lines=lns)
+                # ladder / outcome-distribution layer
+                try:
+                    from .ladder import build_ladder, ladder_score, percentiles
+                    d = res.get("_dist")
+                    if d is not None:
+                        ls = ladder_score(d, m, f,
+                                          res["opportunity"]["expected_opportunities"],
+                                          res["projection"])
+                        res["_ladder"] = {
+                            "ladder": build_ladder(d, m),
+                            "ladder_score": ls["ladder_score"],
+                            "p_ceiling": ls["p_ceiling"],
+                            "p_ceiling_vs_typical": ls["p_ceiling_vs_typical"],
+                            "percentiles": percentiles(d),
+                        }
+                except Exception:
+                    pass
+                results[m] = res
                 recompute[m] = (lambda mm: lambda f2: (
                     mm.opportunity(f2)["expected_opportunities"]
                     * mm.efficiency(f2)["expected_yards_per_opp"]))(model)

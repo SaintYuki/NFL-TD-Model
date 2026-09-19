@@ -22,6 +22,7 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from nflprops import DataStore, ProjectionEngine  # noqa: E402
+from nflprops.ladder import build_ladder, ladder_score, percentiles  # noqa: E402
 
 
 def _json_safe(obj):
@@ -115,6 +116,10 @@ def flatten(projections: list[dict], def_ranks: dict | None = None) -> list[dict
                         "recommended_side": side,
                         "kelly": ln.get("kelly_recommended"),
                         "top_driver": top_driver.get("note") if top_driver else None,
+                        "ladder": blk.get("ladder"),
+                        "ladder_score": blk.get("ladder_score"),
+                        "p_ceiling": blk.get("p_ceiling"),
+                        "percentiles": blk.get("percentiles"),
                     })
     return rows
 
