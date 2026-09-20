@@ -125,6 +125,22 @@ class ProjectionEngine:
         team_games = float(self.team_games_played.get(team, 0) or 0)
         inactive_evidence = team_games > 0 and n_cur == 0
 
+        # RHO DECAY WITH EVIDENCE
+        # ------------------------------------------------------------------
+        # rho represents uncertainty about whether a player's prior profile
+        # still describes him -- a team change, a new coordinator, a depth
+        # chart move. Current-season snaps on the NEW team resolve exactly
+        # that uncertainty, so rho must decay toward 1.0 as evidence arrives.
+        #
+        # Without this, Kenneth Walker (traded to KC, rho 0.55) took 23
+        # carries for a 60.5% rush share in Week 1, and the blend still put
+        # 34% of its weight on REPLACEMENT level -- returning 34.98%, below
+        # both his prior (43.6%) and his observed new-team usage. A blend
+        # should never land outside the range of its own inputs.
+        RHO_EVIDENCE_K = 1.5
+        if n_cur > 0:
+            rho = 1.0 - (1.0 - rho) * (RHO_EVIDENCE_K / (n_cur + RHO_EVIDENCE_K))
+
         # Prior-season shares are computed over the games a player actually
         # appeared in, so they answer "what was his share WHEN ACTIVE" rather
         # than "what is his expected share in a random week". For a backup who
@@ -223,7 +239,12 @@ class ProjectionEngine:
                     if m.endswith("target_share")
                     else safe_num(prior.get("carries_per_game"), 8.0))
                 if not np.isnan(seen) and expected_per_game > 0:
-                    vol_ratio = float(np.clip(seen / expected_per_game, 0.25, 1.0))
+                    # A heavy workload is MORE evidence than a normal one, not
+                    # merely "one game". Walker's 23 carries is roughly two
+                    # games of signal about his role; capping the ratio at 1.0
+                    # threw that information away. Allow up to 2x, floor at
+                    # 0.25 so a 2-target cameo still counts for little.
+                    vol_ratio = float(np.clip(seen / expected_per_game, 0.25, 2.0))
                     n_eff = n_cur * vol_ratio
 
             blended[m] = blend_value(m, x_cur, x_prior, lg,

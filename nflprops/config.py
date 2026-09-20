@@ -214,8 +214,13 @@ REPLACEMENT_BASELINE: Dict[str, Dict[str, float]] = {
     # claimed ~73% of the passing game and diluted every real starter by a
     # quarter. Sanity check when tuning: sum(replacement) over a full roster
     # should stay well under 0.25.
-    "RB": {"rush_share": 0.055, "target_share": 0.008,
-           "rz_rush_share": 0.050, "inside5_rush_share": 0.050,
+    # Same sizing discipline as the pass catchers above: teams roster ~6.7
+    # RBs but only 2-3 see meaningful carries. At 0.055 apiece the bench
+    # claimed 0.368 of the backfield and diluted every real lead back --
+    # Kenneth Walker went 0.434 -> 0.368 on renormalization despite a 23-carry
+    # Week 1. Sum across a full roster should stay near 0.12.
+    "RB": {"rush_share": 0.018, "target_share": 0.008,
+           "rz_rush_share": 0.016, "inside5_rush_share": 0.016,
            "rz_target_share": 0.008, "air_yards_share": 0.006},
     "WR": {"target_share": 0.012, "rush_share": 0.002,
            "rz_target_share": 0.012, "air_yards_share": 0.012,
