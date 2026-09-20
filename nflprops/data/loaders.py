@@ -203,6 +203,8 @@ class DataStore:
                 rc_cols.append("position")
             if "player_name" in self.roster_changes.columns:
                 rc_cols.append("player_name")
+            if "jersey_number" in self.roster_changes.columns:
+                rc_cols.append("jersey_number")
             rc = self.roster_changes[rc_cols].dropna(subset=["player_id", "new_team"])
             base = base.merge(rc, on="player_id", how="outer", suffixes=("", "_rc"))
             base["team"] = base["new_team"].fillna(base["team"])

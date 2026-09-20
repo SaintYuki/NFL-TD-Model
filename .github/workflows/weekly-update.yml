@@ -63,6 +63,17 @@ jobs:
             echo "season,week,player_id,market,line,over_odds,under_odds,book,timestamp" > data/prop_lines.csv
           fi
 
+      - name: Fetch Kalshi market odds
+        # Runs BEFORE the site build so build_site_data can merge market
+        # prices and divergence diagnostics into each prop row. Failure here
+        # is non-fatal: the site still builds with projections only.
+        continue-on-error: true
+        run: |
+          python scripts/fetch_kalshi.py --all-series \
+            --season ${{ steps.week.outputs.season }} \
+            --week ${{ steps.week.outputs.week }} \
+            --root data --out docs/data
+
       - name: Build projections and site data
         run: |
           python scripts/build_site_data.py \

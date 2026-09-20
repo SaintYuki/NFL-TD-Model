@@ -195,21 +195,43 @@ def team_volume_features(team_off: dict, opp_def: dict, env: dict,
 # ---------------------------------------------------------------------------
 # Matchup adjustments
 # ---------------------------------------------------------------------------
-def pass_matchup_multiplier(opp_def: dict, cfg: ModelConfig = DEFAULT_CONFIG) -> float:
+def pass_matchup_multiplier(opp_def: dict, cfg: ModelConfig = DEFAULT_CONFIG,
+                            league_means: dict | None = None) -> float:
+    """
+    A matchup multiplier is RELATIVE, so it must average 1.0 across the
+    league by construction -- every defense cannot be above average.
+
+    Centering it on hardcoded constants broke that. The hardcoded YPA-allowed
+    baseline was 7.05 while the actual blended league mean was 6.20, so every
+    defense looked good and the multiplier averaged 0.934: a silent 6.6%
+    haircut on every passing projection, league-wide. That single bias put
+    the model below market on 94% of passing-yards contracts.
+
+    Centering on the ACTUAL mean of the data in hand fixes it and keeps it
+    fixed as the season's numbers move.
+    """
     lg = cfg.league
-    epa = float(opp_def.get("def_epa_per_pass_allowed", lg["def_epa_per_pass_allowed"]))
-    ypa = float(opp_def.get("def_ypa_allowed", lg["def_ypa_allowed"]))
-    m_epa = 1.0 + 0.55 * (epa - lg["def_epa_per_pass_allowed"])
-    m_ypa = ypa / lg["def_ypa_allowed"]
+    lm = league_means or {}
+    base_epa = lm.get("def_epa_per_pass_allowed", lg["def_epa_per_pass_allowed"])
+    base_ypa = lm.get("def_ypa_allowed", lg["def_ypa_allowed"])
+    epa = safe_num(opp_def.get("def_epa_per_pass_allowed"), base_epa)
+    ypa = safe_num(opp_def.get("def_ypa_allowed"), base_ypa)
+    m_epa = 1.0 + 0.55 * (epa - base_epa)
+    m_ypa = ypa / max(base_ypa, 1e-6)
     return clamp(0.5 * m_epa + 0.5 * m_ypa, 0.86, 1.16)
 
 
-def rush_matchup_multiplier(opp_def: dict, cfg: ModelConfig = DEFAULT_CONFIG) -> float:
+def rush_matchup_multiplier(opp_def: dict, cfg: ModelConfig = DEFAULT_CONFIG,
+                            league_means: dict | None = None) -> float:
+    """Same relative-centering requirement as the pass multiplier above."""
     lg = cfg.league
-    epa = float(opp_def.get("def_epa_per_rush_allowed", lg["def_epa_per_rush_allowed"]))
-    ypc = float(opp_def.get("def_ypc_allowed", lg["def_ypc_allowed"]))
-    m_epa = 1.0 + 0.60 * (epa - lg["def_epa_per_rush_allowed"])
-    m_ypc = ypc / lg["def_ypc_allowed"]
+    lm = league_means or {}
+    base_epa = lm.get("def_epa_per_rush_allowed", lg["def_epa_per_rush_allowed"])
+    base_ypc = lm.get("def_ypc_allowed", lg["def_ypc_allowed"])
+    epa = safe_num(opp_def.get("def_epa_per_rush_allowed"), base_epa)
+    ypc = safe_num(opp_def.get("def_ypc_allowed"), base_ypc)
+    m_epa = 1.0 + 0.60 * (epa - base_epa)
+    m_ypc = ypc / max(base_ypc, 1e-6)
     m = 0.45 * m_epa + 0.55 * m_ypc
     # light boxes help the run
     lb = float(opp_def.get("def_light_box_rate", np.nan))
@@ -397,15 +419,16 @@ FEATURE_ORDER = [
 
 def build_feature_row(player_blend: dict, team_off: dict, team_off_prior: dict,
                       opp_def: dict, env: dict, roster_ctx: dict,
-                      cfg: ModelConfig = DEFAULT_CONFIG) -> dict:
+                      cfg: ModelConfig = DEFAULT_CONFIG,
+                      league_means: dict | None = None) -> dict:
     """One dict with every feature the four models need."""
     f = {}
     f.update(team_volume_features(team_off, opp_def, env, cfg))
     f.update(expected_team_touchdowns(env, team_off, opp_def, cfg))
     f.update(unit_change_features(team_off, team_off_prior))
     f.update(wr_cb_matchup({**player_blend, **roster_ctx}, opp_def))
-    f["pass_matchup_mult"] = pass_matchup_multiplier(opp_def, cfg)
-    f["rush_matchup_mult"] = rush_matchup_multiplier(opp_def, cfg)
+    f["pass_matchup_mult"] = pass_matchup_multiplier(opp_def, cfg, league_means)
+    f["rush_matchup_mult"] = rush_matchup_multiplier(opp_def, cfg, league_means)
 
     for k in ("target_share", "air_yards_share", "rush_share", "route_participation",
               "snap_share", "rz_target_share", "rz_rush_share", "inside5_rush_share",

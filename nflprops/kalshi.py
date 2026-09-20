@@ -63,6 +63,8 @@ from __future__ import annotations
 import base64
 import os
 import re
+
+import numpy as np
 import time
 from dataclasses import dataclass, field
 from typing import Optional
@@ -386,10 +388,21 @@ def match_quotes_to_players(quotes: list[KalshiQuote],
     """
     Map each quote to an internal player_id.
 
-    players: [{"player_id":..., "player_name":..., "team":..., "position":...}]
-    Returns {ticker: player_id}. Unmatched tickers are simply absent --
-    they are reported by the caller rather than silently guessed at, because
-    a wrong player match is worse than no match.
+    players: [{"player_id":..., "player_name":..., "team":..., "position":...,
+               "jersey_number": ...}]
+    Returns {ticker: player_id}. Unmatched tickers are simply absent.
+
+    JERSEY NUMBER IS LOAD-BEARING, NOT DECORATIVE
+    ---------------------------------------------
+    Kalshi's name codes collide. Atlanta rosters both Bijan Robinson (#7) and
+    Brian Robinson (#15), and BOTH encode to "BROBINSON". Matching on name
+    alone silently picked the backup, so the market's price for a star was
+    compared against a backup's projection -- which produced a fake 87-point
+    "edge" that looked like the best play on the board.
+
+    So: when a name code matches more than one player, the jersey number in
+    the ticker decides. If it cannot decide, the quote is LEFT UNMATCHED
+    rather than guessed, because a wrong match is far worse than no match.
     """
     by_team: dict[str, list[dict]] = {}
     for p in players:
@@ -398,20 +411,43 @@ def match_quotes_to_players(quotes: list[KalshiQuote],
     mapping = {}
     for q in quotes:
         pool = by_team.get(q.team.upper(), []) or players
-        best = None
-        for p in pool:
-            cands = name_code_candidates(p.get("player_name", ""))
-            if q.name_code in cands:
-                best = p
-                break
-        if best is None:
-            # fall back to a suffix match on the surname only
+
+        # every player whose encodings include this ticker's name code
+        cands = [p for p in pool
+                 if q.name_code in name_code_candidates(p.get("player_name", ""))]
+
+        if not cands:
+            # surname-suffix fallback
             for p in pool:
-                last = normalize_name((p.get("player_name") or "").split()[-1]
-                                      if p.get("player_name") else "")
+                nm = p.get("player_name") or ""
+                last = normalize_name(nm.split()[-1]) if nm else ""
                 if last and q.name_code.endswith(last):
-                    best = p
-                    break
-        if best is not None:
-            mapping[q.ticker] = best["player_id"]
+                    cands.append(p)
+
+        if not cands:
+            continue
+
+        if len(cands) == 1:
+            mapping[q.ticker] = cands[0]["player_id"]
+            continue
+
+        # ambiguous: let the jersey number decide
+        if q.jersey is not None:
+            exact = [p for p in cands
+                     if _jersey_of(p) is not None and int(_jersey_of(p)) == int(q.jersey)]
+            if len(exact) == 1:
+                mapping[q.ticker] = exact[0]["player_id"]
+                continue
+        # still ambiguous -> leave unmatched rather than guess wrong
     return mapping
+
+
+def _jersey_of(player: dict):
+    v = player.get("jersey_number")
+    if v is None:
+        return None
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return None
+    return None if np.isnan(f) else f

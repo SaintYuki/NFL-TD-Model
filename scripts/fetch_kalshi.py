@@ -33,6 +33,7 @@ from nflprops.kalshi import (  # noqa: E402
 from nflprops.kalshi_edge import (  # noqa: E402
     evaluate_quote, kalshi_yes_probability, td_probability_at_least,
 )
+from nflprops.ladder import divergence_report  # noqa: E402
 
 
 def selftest(client: KalshiClient):
@@ -119,8 +120,11 @@ def main():
     # 2. match to internal players
     store = DataStore(args.root, args.season, args.week)
     engine = ProjectionEngine(store)
+    _pcols = ["player_id", "player_name", "team", "position"]
+    if "jersey_number" in engine.meta.columns:
+        _pcols.append("jersey_number")
     players = engine.meta[engine.meta.position.isin(["QB", "RB", "WR", "TE"])][
-        ["player_id", "player_name", "team", "position"]].to_dict("records")
+        _pcols].to_dict("records")
     mapping = match_quotes_to_players(quotes, players)
     unmatched = [q.ticker for q in quotes if q.ticker not in mapping]
     print(f"matched {len(mapping)}/{len(quotes)} tickers to players", file=sys.stderr)
@@ -146,6 +150,7 @@ def main():
             continue
         for q in qs:
             try:
+                dist, res_proj = None, None
                 if q.market == "anytime_td":
                     td = engine.td_model.predict(f)
                     k = int(q.strike)
@@ -159,11 +164,35 @@ def main():
                     model = engine.yard_models.get(q.market)
                     if model is None:
                         continue
-                    dist = model.predict(f)["_dist"]
+                    mres = model.predict(f)
+                    dist = mres["_dist"]
+                    res_proj = mres["projection"]
                     p_model = kalshi_yes_probability(dist, q.market, q.strike)
                 ev = evaluate_quote(p_model, q)
                 ev["player_id"] = pid
                 ev["market"] = q.market
+                ev["player_name"] = f.get("player_name")
+                ev["team"] = f.get("team")
+                ev["opponent"] = f.get("opponent")
+
+                # Market divergence diagnostic. For yardage markets the
+                # Kalshi strike is a probability threshold, not a median, so
+                # the comparable "market line" is the strike where the market
+                # prices ~50%. That is approximated by inverting the model
+                # distribution at the market's own implied probability, which
+                # yields the yardage the market is effectively projecting.
+                if q.market != "anytime_td" and dist is not None:
+                    pm = q.implied_prob
+                    if pm is not None and 0.02 < pm < 0.98:
+                        try:
+                            implied_line = float(dist.quantile(1.0 - pm))
+                            ev["market_implied_projection"] = round(implied_line, 1)
+                            ev["model_projection"] = res_proj
+                            ev["divergence"] = divergence_report(
+                                res_proj, implied_line, f,
+                                0.0, 0.0, q.market)
+                        except Exception:
+                            pass
                 evaluations.append(ev)
             except Exception as e:
                 print(f"[warn] {q.ticker}: {type(e).__name__}: {e}", file=sys.stderr)

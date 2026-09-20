@@ -206,7 +206,12 @@ POSITION_BASELINE: Dict[str, Dict[str, float]] = {
 # an unknown player's efficiency really is close to league average, it is
 # only his OPPORTUNITY that should be assumed near zero.
 REPLACEMENT_BASELINE: Dict[str, Dict[str, float]] = {
-    "QB": {"pass_att_share": 0.05, "rush_share": 0.012},
+    # Third instance of the roster-dilution bug (after WR and RB). Teams
+    # carry ~3.7 QBs but one takes ~95% of dropbacks. At 0.05 apiece the
+    # backups claimed ~18% of the passing game, holding starters to 27.4
+    # projected attempts against a real NFL average of ~33 -- which made the
+    # model read BELOW market on 94% of passing-yards contracts.
+    "QB": {"pass_att_share": 0.012, "rush_share": 0.012},
     # NB: a real roster carries ~22 pass catchers (10+ WR, 4 TE, 7 RB).
     # These values are summed across ALL of them before renormalization, so
     # they must be small enough that replacement-level bodies collectively
@@ -219,15 +224,22 @@ REPLACEMENT_BASELINE: Dict[str, Dict[str, float]] = {
     # claimed 0.368 of the backfield and diluted every real lead back --
     # Kenneth Walker went 0.434 -> 0.368 on renormalization despite a 23-carry
     # Week 1. Sum across a full roster should stay near 0.12.
+    # RED ZONE IS MORE CONCENTRATED THAN OVERALL USAGE.
+    # A WR5 runs routes in the open field but essentially never sees a
+    # goal-line target, so red-zone replacement levels must be far lower than
+    # the corresponding full-field ones. Holding them equal spread ~18% of
+    # every team's expected touchdowns (0.43-0.51 TDs) across 16-23 bench
+    # players the market does not even list a price for, which suppressed
+    # anytime-TD probability for the real candidates by roughly the same 18%.
     "RB": {"rush_share": 0.018, "target_share": 0.008,
-           "rz_rush_share": 0.016, "inside5_rush_share": 0.016,
-           "rz_target_share": 0.008, "air_yards_share": 0.006},
+           "rz_rush_share": 0.006, "inside5_rush_share": 0.005,
+           "rz_target_share": 0.003, "air_yards_share": 0.006},
     "WR": {"target_share": 0.012, "rush_share": 0.002,
-           "rz_target_share": 0.012, "air_yards_share": 0.012,
-           "inside10_target_share": 0.012},
+           "rz_target_share": 0.004, "air_yards_share": 0.012,
+           "inside10_target_share": 0.004},
     "TE": {"target_share": 0.010, "rush_share": 0.0,
-           "rz_target_share": 0.010, "air_yards_share": 0.009,
-           "inside10_target_share": 0.010},
+           "rz_target_share": 0.004, "air_yards_share": 0.009,
+           "inside10_target_share": 0.004},
 }
 
 # ----------------------------------------------------------------------------

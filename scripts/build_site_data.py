@@ -126,6 +126,77 @@ def flatten(projections: list[dict], def_ranks: dict | None = None) -> list[dict
     return rows
 
 
+def load_kalshi(out_dir: str) -> dict:
+    """
+    Load a previously fetched kalshi.json and index it by (player_id, market).
+
+    Each player-market can carry MANY Kalshi contracts (one per strike). The
+    dashboard row shows a single market comparison, so pick the contract
+    closest to a coin flip -- that is the strike carrying the most
+    information about where the market actually projects the player, and it
+    is also the most liquid part of the ladder. The full set is kept under
+    `all_contracts` so the drawer can show the whole ladder.
+    """
+    path = os.path.join(out_dir, "kalshi.json")
+    if not os.path.exists(path):
+        return {}
+    try:
+        rows = json.load(open(path))
+    except Exception:
+        return {}
+    by_key: dict = {}
+    for r in rows:
+        key = (r.get("player_id"), r.get("market"))
+        by_key.setdefault(key, []).append(r)
+
+    out = {}
+    for key, contracts in by_key.items():
+        liquid = [c for c in contracts if c.get("liquid")]
+        pool = liquid or contracts
+        best = min(pool, key=lambda c: abs((c.get("market_implied_probability") or 0.5) - 0.5))
+        out[key] = {"primary": best, "all_contracts": sorted(
+            contracts, key=lambda c: (c.get("market_strike") or 0))}
+    return out
+
+
+def attach_market(row: dict, kalshi_index: dict) -> dict:
+    k = kalshi_index.get((row.get("player_id"), row.get("market")))
+    if not k:
+        return row
+    p = k["primary"]
+    row["market_ticker"] = p.get("market_ticker")
+    row["market_strike"] = p.get("market_strike")
+    row["market_implied_probability"] = p.get("market_implied_probability")
+    row["model_probability"] = p.get("model_probability")
+    row["yes_bid"] = p.get("yes_bid")
+    row["yes_ask"] = p.get("yes_ask")
+    row["market_liquid"] = p.get("liquid")
+    row["market_implied_projection"] = p.get("market_implied_projection")
+    row["divergence"] = p.get("divergence")
+    # overwrite the placeholder edge/side/kelly with the real market numbers
+    if p.get("edge") is not None:
+        row["edge"] = p.get("edge")
+        row["recommended_side"] = p.get("recommended_side")
+        row["kelly"] = p.get("kelly")
+        row["line"] = p.get("market_strike")
+    try:
+        from nflprops.market_divergence import ladder_divergence
+        row["ladder_divergence"] = ladder_divergence(
+            k["all_contracts"], row.get("projection") or 0.0)
+    except Exception:
+        pass
+    row["kalshi_ladder"] = [
+        {"strike": c.get("market_strike"),
+         "market_prob": c.get("market_implied_probability"),
+         "model_prob": c.get("model_probability"),
+         "edge": c.get("edge"),
+         "side": c.get("recommended_side"),
+         "liquid": c.get("liquid")}
+        for c in k["all_contracts"]
+    ]
+    return row
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default="data")
@@ -146,6 +217,13 @@ def main():
     skill_ids = engine.meta[engine.meta.position.isin(["QB", "RB", "WR", "TE"])]["player_id"].tolist()
     projections = engine.project_slate(skill_ids)
     rows = flatten(projections, def_ranks)
+
+    # merge Kalshi market data if it has been fetched
+    kalshi_index = load_kalshi(args.out)
+    if kalshi_index:
+        rows = [attach_market(r, kalshi_index) for r in rows]
+        n_mkt = sum(1 for r in rows if r.get("market_ticker"))
+        print(f"attached Kalshi market data to {n_mkt} rows", file=sys.stderr)
 
     os.makedirs(args.out, exist_ok=True)
     with open(os.path.join(args.out, "props.json"), "w") as fh:

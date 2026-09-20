@@ -254,6 +254,37 @@ function attributionHtml(row) {
     </div>`;
 }
 
+function marketHtml(row) {
+  if (!row.market_ticker) return "";
+  const d = row.ladder_divergence;
+  const pct = v => (v === null || v === undefined) ? "-" : (v * 100).toFixed(1) + "%";
+  let rows = `
+    <div class="row"><span>Market implied prob</span><span>${pct(row.market_implied_probability)}</span></div>
+    <div class="row"><span>Model prob</span><span>${pct(row.model_probability)}</span></div>
+    <div class="row"><span>Strike</span><span>${row.market_strike ?? "-"}</span></div>
+    <div class="row"><span>Bid / Ask</span><span>${row.yes_bid ?? "-"} / ${row.yes_ask ?? "-"}</span></div>`;
+  if (d && d.status === "ok") {
+    rows += `
+    <div class="row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:6px">
+      <span>Model projection</span><span>${d.model_projection}</span></div>
+    <div class="row"><span>Market implied median</span><span>${d.market_implied_median}</span></div>
+    <div class="row"><span>Level gap</span><span>${d.level_gap > 0 ? "+" : ""}${d.level_gap}</span></div>
+    <div class="row"><span>Tail prob gap</span><span>${pct(d.mean_tail_prob_gap)}</span></div>`;
+  }
+  const ladder = (row.kalshi_ladder || []).filter(c => c.liquid).map(c =>
+    `<div class="row"><span>${c.strike}+</span><span>mkt ${pct(c.market_prob)} / model ${pct(c.model_prob)}</span></div>`
+  ).join("");
+  const verdict = d && d.status === "ok"
+    ? `<div style="margin-top:8px;font-size:11.5px;color:var(--text-dim);line-height:1.45">
+         <strong style="color:var(--text)">${d.verdict.replace(/_/g, " ")}</strong><br>${d.interpretation}</div>`
+    : "";
+  return `<div class="drawer-block" style="grid-column: span 2;">
+      <h4>Market (Kalshi)</h4>${rows}
+      ${ladder ? `<div style="margin-top:8px"><h4>Ladder</h4>${ladder}</div>` : ""}
+      ${verdict}
+    </div>`;
+}
+
 function drawerHtml(row) {
   const histKey = row.player_id + "|" + row.market;
   const hist = HISTORY[histKey] || [];
@@ -277,6 +308,7 @@ function drawerHtml(row) {
       <div class="sparkline-wrap">${sparklineSvg(hist)}</div>
     </div>
     ${attributionHtml(row)}
+    ${marketHtml(row)}
   </div>`;
 }
 

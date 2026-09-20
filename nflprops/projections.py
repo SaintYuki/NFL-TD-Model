@@ -61,7 +61,9 @@ class ProjectionEngine:
         self.season = store.season
 
         self.meta = store.player_meta()
-        self.roster_ctx = build_roster_context(store.roster_changes, self.meta, cfg)
+        self.roster_ctx = build_roster_context(
+            store.roster_changes, self.meta, cfg,
+            depth_injury=getattr(store, "depth_injury", None))
 
         self.cur_usage = store.current_player_usage().set_index("player_id") \
             if len(store.current_player_usage()) else pd.DataFrame()
@@ -78,6 +80,7 @@ class ProjectionEngine:
             if len(store.team_def_prior) else pd.DataFrame()
 
         self._qb_change_cache = {}
+        self._league_def_means = None
         self.td_model = AnytimeTDModel(cfg)
         self.yard_models = {k: cls(cfg) for k, cls in MODEL_REGISTRY.items()}
         self._usage_cache = None
@@ -380,6 +383,27 @@ class ProjectionEngine:
     # ------------------------------------------------------------------
     # Main API
     # ------------------------------------------------------------------
+    def league_defense_means(self) -> dict:
+        """
+        Actual league means of the blended defensive metrics. Matchup
+        multipliers are centered on these so they average 1.0, instead of on
+        hardcoded constants that no longer match the data.
+        """
+        if self._league_def_means is not None:
+            return self._league_def_means
+        keys = ("def_epa_per_pass_allowed", "def_ypa_allowed",
+                "def_epa_per_rush_allowed", "def_ypc_allowed")
+        acc = {k: [] for k in keys}
+        for t in self.meta["team"].dropna().unique():
+            d = self.blended_team_defense(t)
+            for k in keys:
+                v = d.get(k)
+                if v is not None and not pd.isna(v):
+                    acc[k].append(float(v))
+        self._league_def_means = {k: (float(np.mean(v)) if v else None)
+                                  for k, v in acc.items()}
+        return self._league_def_means
+
     def qb_change_for(self, team: str) -> dict:
         """Cached QB-continuity adjustment for a team's pass catchers."""
         if team in self._qb_change_cache:
@@ -421,7 +445,8 @@ class ProjectionEngine:
         team_off_prior = self._row(self.prior_off, team)
         opp_def = self.blended_team_defense(opponent) if opponent else {}
 
-        f = build_feature_row(pb, team_off, team_off_prior, opp_def, env, ctx, self.cfg)
+        f = build_feature_row(pb, team_off, team_off_prior, opp_def, env, ctx,
+                              self.cfg, league_means=self.league_defense_means())
         f["team"] = team
         f["opponent"] = opponent
         f["missing_game_environment"] = bool(env.get("_missing", False))

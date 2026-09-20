@@ -494,7 +494,11 @@ def build_roster_changes(season: int, prior_season: int) -> pd.DataFrame:
     coordinators, scheme, and depth chart is left at safe defaults for you to
     hand-edit -- see the module docstring for why that part isn't scraped.
     """
-    cur = _rosters(season)[["player_id", "player_name", "team", "position"]].dropna(
+    _cols = ["player_id", "player_name", "team", "position"]
+    _r = _rosters(season)
+    if "jersey_number" in _r.columns:
+        _cols.append("jersey_number")
+    cur = _r[_cols].dropna(
         subset=["player_id", "team", "position"]).drop_duplicates("player_id")
     cur = cur.rename(columns={"player_id": "gsis_id"})
     prior = _rosters(prior_season)[["player_id", "team"]].dropna().drop_duplicates("player_id")
@@ -506,6 +510,10 @@ def build_roster_changes(season: int, prior_season: int) -> pd.DataFrame:
     out["season"] = season
     out["player_name"] = m["player_name"]
     out["position"] = m["position"]
+    # jersey number disambiguates same-surname teammates when matching
+    # sportsbook tickers (ATL rosters BOTH Bijan and Brian Robinson, and both
+    # encode to "BROBINSON")
+    out["jersey_number"] = m["jersey_number"] if "jersey_number" in m.columns else None
     out["prior_team"] = m["prior_team"]
     out["new_team"] = m["team"]
     out["changed_team"] = (m["prior_team"].notna()) & (m["prior_team"] != m["team"])

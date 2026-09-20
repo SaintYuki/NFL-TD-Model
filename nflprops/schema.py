@@ -162,6 +162,7 @@ ROSTER_CHANGES: Dict[str, Col] = {
     "season":               ("int",   "Season the change applies to."),
     "player_name":          ("str",   "Display name. Fills in players missing from prior_season.csv (rookies, deep bench)."),
     "position":             ("str",   "Current position. Fills in players missing from prior_season.csv (rookies, players with no meaningful prior-season stats)."),
+    "jersey_number":        ("float", "Jersey number. Disambiguates same-surname teammates when matching sportsbook tickers."),
     "prior_team":           ("str",   "Team last season. Empty for rookies."),
     "new_team":             ("str",   "Team this season."),
     "changed_team":         ("bool",  "True if prior_team != new_team."),

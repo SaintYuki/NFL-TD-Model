@@ -117,10 +117,19 @@ def uncertainty_score(row: pd.Series, rho: float) -> float:
 
 def build_roster_context(roster_changes: pd.DataFrame,
                          player_meta: pd.DataFrame,
-                         cfg: ModelConfig = DEFAULT_CONFIG) -> pd.DataFrame:
+                         cfg: ModelConfig = DEFAULT_CONFIG,
+                         depth_injury: pd.DataFrame | None = None) -> pd.DataFrame:
     """
     Returns one row per player with: rho, usage_mult, uncertainty, team, position.
     player_meta needs player_id, position, and team (current).
+
+    When a Sleeper depth/injury table is supplied it is applied here, and it
+    is the most direct fix available for a problem this model has had all
+    along: an injured starter keeps a large usage share and steals volume
+    from the player who actually replaced him. Before this, Seattle showed
+    Darnold at 0.351 dropback share while injured, holding Drew Lock to
+    0.603 when he should be near 0.90. The model was inferring availability
+    from last season's usage instead of reading this week's injury report.
     """
     meta = player_meta[["player_id", "position", "team"]].drop_duplicates("player_id")
     rc = roster_changes.copy()
@@ -141,7 +150,35 @@ def build_roster_context(roster_changes: pd.DataFrame,
     df["rho"] = [continuity_rho(r, r["position"], cfg) for _, r in df.iterrows()]
     df["usage_mult"] = [usage_multiplier(r, cfg) for _, r in df.iterrows()]
     df["role_uncertainty"] = [uncertainty_score(r, r["rho"]) for _, r in df.iterrows()]
+    # --- Sleeper injury status + depth chart -------------------------------
+    df["injury_status"] = None
+    df["depth_chart_order"] = np.nan
+    if depth_injury is not None and len(depth_injury):
+        di = depth_injury[["player_id", "injury_status", "depth_chart_order"]].dropna(
+            subset=["player_id"]).drop_duplicates("player_id")
+        df = df.drop(columns=["injury_status", "depth_chart_order"]).merge(
+            di, on="player_id", how="left")
+
+        from ..advanced import injury_multiplier
+        inj_mult = df["injury_status"].map(injury_multiplier).fillna(1.0)
+        df["injury_multiplier"] = inj_mult
+        df["usage_mult"] = df["usage_mult"] * inj_mult
+
+        # A confirmed DEPTH CHART STARTER gets a boost, and a confirmed
+        # backup a haircut. Renormalization then redistributes whatever the
+        # injured/benched players give up to whoever is actually playing.
+        starter = (df["depth_chart_order"] == 1) & (inj_mult > 0.5)
+        backup = (df["depth_chart_order"] >= 2)
+        df.loc[starter, "usage_mult"] = df.loc[starter, "usage_mult"] * 1.35
+        df.loc[backup, "usage_mult"] = df.loc[backup, "usage_mult"] * 0.70
+
+        # an OUT player carries no role uncertainty -- he simply is not playing
+        df.loc[inj_mult <= 0.0, "role_uncertainty"] = 0.0
+    else:
+        df["injury_multiplier"] = 1.0
+
     keep = ["player_id", "position", "team", "rho", "usage_mult", "role_uncertainty",
+            "injury_status", "injury_multiplier", "depth_chart_order",
             "changed_team", "rookie", "new_oc", "new_qb", "scheme_change_major",
             "depth_chart_rank_new", "depth_chart_volatility", "manual_share_override",
             "usage_shift_tags"]
@@ -181,9 +218,12 @@ def apply_roster_adjustments(usage: pd.DataFrame,
     Apply usage multipliers to every share column, honor manual overrides, then
     renormalize per team so shares remain a valid partition of team opportunity.
     """
-    df = usage.merge(ctx[["player_id", "usage_mult", "manual_share_override",
-                          "role_uncertainty", "rho"]],
-                     on="player_id", how="left")
+    _ctx_cols = ["player_id", "usage_mult", "manual_share_override",
+                 "role_uncertainty", "rho"]
+    for extra in ("injury_multiplier", "depth_chart_order"):
+        if extra in ctx.columns:
+            _ctx_cols.append(extra)
+    df = usage.merge(ctx[_ctx_cols], on="player_id", how="left")
     df["usage_mult"] = df["usage_mult"].fillna(1.0)
 
     for col in share_cols:
