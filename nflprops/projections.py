@@ -77,6 +77,7 @@ class ProjectionEngine:
         self.prior_def = store.team_def_prior.set_index("team") \
             if len(store.team_def_prior) else pd.DataFrame()
 
+        self._qb_change_cache = {}
         self.td_model = AnytimeTDModel(cfg)
         self.yard_models = {k: cls(cfg) for k, cls in MODEL_REGISTRY.items()}
         self._usage_cache = None
@@ -358,6 +359,23 @@ class ProjectionEngine:
     # ------------------------------------------------------------------
     # Main API
     # ------------------------------------------------------------------
+    def qb_change_for(self, team: str) -> dict:
+        """Cached QB-continuity adjustment for a team's pass catchers."""
+        if team in self._qb_change_cache:
+            return self._qb_change_cache[team]
+        from .qb_change import qb_change_multiplier
+        try:
+            res = qb_change_multiplier(
+                team,
+                self.store.player_season,
+                self.store.player_gamelog,
+                getattr(self.store, "depth_injury", None),
+                getattr(self.store, "ngs", None))
+        except Exception:
+            res = {"qb_efficiency_mult": 1.0, "qb_changed": False}
+        self._qb_change_cache[team] = res
+        return res
+
     def build_features(self, player_id: str) -> dict:
         usage = self.team_adjusted_usage()
         if player_id not in usage.index:
@@ -388,6 +406,18 @@ class ProjectionEngine:
         f["missing_game_environment"] = bool(env.get("_missing", False))
         f["player_name"] = pb.get("player_name", player_id)
         f["sack_rate"] = pb.get("sack_rate", 0.065)
+
+        # QB continuity: a receiver's prior yards-per-target was earned with a
+        # specific quarterback. If that changed, adjust.
+        if f.get("position") in ("WR", "TE", "RB"):
+            qc = self.qb_change_for(team)
+            f["qb_efficiency_mult"] = qc.get("qb_efficiency_mult", 1.0)
+            f["qb_changed"] = qc.get("qb_changed", False)
+            f["qb_change_detail"] = qc.get("detail")
+            f["current_qb"] = qc.get("current_qb")
+            f["prior_qb"] = qc.get("prior_qb")
+        else:
+            f["qb_efficiency_mult"] = 1.0
         return f
 
     def project_player(self, player_id: str, markets=None,
@@ -413,7 +443,13 @@ class ProjectionEngine:
         results, recompute = {}, {}
         for m in markets:
             if m == "anytime_td":
-                results[m] = self.td_model.predict(f)
+                tdres = self.td_model.predict(f)
+                try:
+                    from .attribution import attribute_anytime_td
+                    tdres["_attribution"] = attribute_anytime_td(f, tdres)
+                except Exception:
+                    pass
+                results[m] = tdres
                 recompute[m] = lambda f2: self.td_model.intensity(f2)["lambda_total"]
             elif m in self.yard_models:
                 if m == "passing_yards" and pos != "QB":
@@ -447,6 +483,11 @@ class ProjectionEngine:
                             "p_ceiling_vs_typical": ls["p_ceiling_vs_typical"],
                             "percentiles": percentiles(d),
                         }
+                except Exception:
+                    pass
+                try:
+                    from .attribution import attribute
+                    res["_attribution"] = attribute(m, f, res)
                 except Exception:
                     pass
                 results[m] = res

@@ -249,6 +249,7 @@ def assemble_projection_json(player_id, features, results, blend_meta,
                 "p_two_plus": res["p_two_plus_td"],
                 "fair_odds_american": res["fair_odds"],
                 "components": res["components"],
+                "attribution": res.get("_attribution"),
             }
             if book_rows:
                 r = book_rows[0]
@@ -261,6 +262,7 @@ def assemble_projection_json(player_id, features, results, blend_meta,
             drivers = compute_drivers(market, features, res["expected_touchdowns"],
                                       recompute.get(market))
         else:
+            attrib = res.pop("_attribution", None)
             ladder_blk = res.pop("_ladder", None)
             dist = res.pop("_dist", None)
             m = {
@@ -279,6 +281,8 @@ def assemble_projection_json(player_id, features, results, blend_meta,
             }
             if ladder_blk:
                 m.update(ladder_blk)
+            if attrib:
+                m["attribution"] = attrib
             for r in book_rows:
                 line = float(r.get("line"))
                 lp = line_probabilities(dist, line) if dist else {}

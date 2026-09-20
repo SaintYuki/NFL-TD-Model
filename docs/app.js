@@ -217,6 +217,43 @@ function sparklineSvg(points) {
   </svg>`;
 }
 
+function attributionHtml(row) {
+  const a = row.attribution;
+  if (!a) return "";
+  if (a.market === "anytime_td") {
+    const tp = a.team_pool || {}, ps = a.player_share || {};
+    return `<div class="drawer-block">
+      <h4>How this TD probability is built</h4>
+      <div class="row"><span>Implied team total</span><span>${tp.implied_team_total ?? "-"}</span></div>
+      <div class="row"><span>Expected team TDs</span><span>${tp.expected_offensive_td ?? "-"}</span></div>
+      <div class="row"><span>&nbsp;&nbsp;receiving pool</span><span>${tp.expected_receiving_td ?? "-"}</span></div>
+      <div class="row"><span>&nbsp;&nbsp;rushing pool</span><span>${tp.expected_rushing_td ?? "-"}</span></div>
+      <div class="row"><span>Inside-10 target share</span><span>${ps.inside10_target_share ?? "-"}</span></div>
+      <div class="row"><span>Red zone target share</span><span>${ps.rz_target_share ?? "-"}</span></div>
+      <div class="row"><span>Inside-5 carry share</span><span>${ps.inside5_rush_share ?? "-"}</span></div>
+      <div class="row"><span><strong>Expected TDs (lambda)</strong></span><span><strong>${a.lambda_total ?? "-"}</strong></span></div>
+    </div>`;
+  }
+  const opp = a.opportunity || {}, eff = a.efficiency || {};
+  const oppRows = Object.entries(opp).map(([k, v]) =>
+    `<div class="row"><span>${k.replace(/_/g, " ")}</span><span>${v}</span></div>`).join("");
+  const stepRows = (a.steps || []).map(s => {
+    const d = s.delta === null || s.delta === undefined ? "" :
+      `<span class="${s.delta >= 0 ? "side-over" : "side-under"}">${s.delta >= 0 ? "+" : ""}${s.delta}</span>`;
+    return `<div class="row" title="${(s.detail || "").replace(/"/g, "&quot;")}">
+        <span>${s.label}</span><span>${s.yards} ${d}</span></div>`;
+  }).join("");
+  return `<div class="drawer-block">
+      <h4>Opportunity</h4>${oppRows}
+      <div class="row"><span>yds per opportunity</span><span>${Object.values(eff)[0] ?? "-"}</span></div>
+    </div>
+    <div class="drawer-block" style="grid-column: span 2;">
+      <h4>How the projection is built (yards)</h4>${stepRows}
+      <div class="row" style="border-top:1px solid var(--border);margin-top:4px;padding-top:6px">
+        <span><strong>Projection</strong></span><span><strong>${a.projection}</strong></span></div>
+    </div>`;
+}
+
 function drawerHtml(row) {
   const histKey = row.player_id + "|" + row.market;
   const hist = HISTORY[histKey] || [];
@@ -239,6 +276,7 @@ function drawerHtml(row) {
       <h4>Trend (last ${Math.max(hist.length, 1)} wk${hist.length === 1 ? "" : "s"})</h4>
       <div class="sparkline-wrap">${sparklineSvg(hist)}</div>
     </div>
+    ${attributionHtml(row)}
   </div>`;
 }
 

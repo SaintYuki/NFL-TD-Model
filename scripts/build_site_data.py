@@ -96,6 +96,7 @@ def flatten(projections: list[dict], def_ranks: dict | None = None) -> list[dict
                     "recommended_side": mk.get("recommended_side") if mk else None,
                     "kelly": mk.get("kelly_recommended") if mk else None,
                     "top_driver": top_driver.get("note") if top_driver else None,
+                    "attribution": blk.get("attribution"),
                 })
             else:
                 lines = blk.get("lines") or [{}]
@@ -120,6 +121,7 @@ def flatten(projections: list[dict], def_ranks: dict | None = None) -> list[dict
                         "ladder_score": blk.get("ladder_score"),
                         "p_ceiling": blk.get("p_ceiling"),
                         "percentiles": blk.get("percentiles"),
+                        "attribution": blk.get("attribution"),
                     })
     return rows
 
