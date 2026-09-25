@@ -438,6 +438,45 @@ def build_team_offense_season(season: int) -> pd.DataFrame:
     return out
 
 
+def defense_vs_position(season: int) -> pd.DataFrame:
+    """
+    EPA allowed per target to each receiving position group.
+
+    These columns already existed in the schema but were hardcoded to 0.0,
+    so the model was carrying dead weight: a defense elite against receivers
+    but soft against tight ends looked identical to an average one. This
+    computes them for real from play-by-play.
+
+    Honest scope note: pbp carries no alignment data, so there is no way to
+    separate slot from perimeter receivers here. Rather than invent a split,
+    WR is reported as ONE bucket and def_vs_wr_slot is left equal to it.
+    A real slot/outside split needs charting data we do not have.
+    """
+    pbp = _pbp(season)
+    rost = _rosters(season)[["player_id", "position"]].dropna().drop_duplicates("player_id")
+
+    p = pbp[(pbp["play_type"] == "pass") & (pbp["receiver_player_id"].notna())].copy()
+    p = p.merge(rost, left_on="receiver_player_id", right_on="player_id", how="left")
+    p["epa"] = pd.to_numeric(p["epa"], errors="coerce")
+
+    league = {}
+    for pos in ("WR", "TE", "RB"):
+        sub = p[p["position"] == pos]
+        league[pos] = float(sub["epa"].mean()) if len(sub) else 0.0
+
+    rows = []
+    for team, g in p.groupby("defteam"):
+        rec = {"team": team}
+        for pos, col in (("WR", "def_vs_wr_out"), ("TE", "def_vs_te"), ("RB", "def_vs_rb_pass")):
+            sub = g[g["position"] == pos]
+            # relative to league average, so 0.0 means average and the sign
+            # reads the same way as every other matchup input
+            rec[col] = (float(sub["epa"].mean()) - league[pos]) if len(sub) >= 15 else 0.0
+        rec["def_vs_wr_slot"] = rec["def_vs_wr_out"]   # no alignment data; see docstring
+        rows.append(rec)
+    return pd.DataFrame(rows)
+
+
 def build_team_defense_season(season: int) -> pd.DataFrame:
     pbp = _pbp(season)
     wk = team_defense_week(pbp)
@@ -476,10 +515,16 @@ def build_team_defense_season(season: int) -> pd.DataFrame:
     out["def_light_box_rate"] = np.nan
     out["def_man_rate"] = np.nan
     out["def_zone_rate"] = np.nan
-    out["def_vs_wr_out"] = 0.0
-    out["def_vs_wr_slot"] = 0.0
-    out["def_vs_te"] = 0.0
-    out["def_vs_rb_pass"] = 0.0
+    dvp = defense_vs_position(season)
+    if len(dvp):
+        out = out.merge(dvp, on="team", how="left")
+        for c in ("def_vs_wr_out", "def_vs_wr_slot", "def_vs_te", "def_vs_rb_pass"):
+            out[c] = out[c].fillna(0.0)
+    else:
+        out["def_vs_wr_out"] = 0.0
+        out["def_vs_wr_slot"] = 0.0
+        out["def_vs_te"] = 0.0
+        out["def_vs_rb_pass"] = 0.0
     out["cb1_grade"] = GRADE_PLACEHOLDER
     out["cb2_grade"] = GRADE_PLACEHOLDER
     out["slot_cb_grade"] = GRADE_PLACEHOLDER

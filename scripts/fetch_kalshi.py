@@ -198,10 +198,37 @@ def main():
                 print(f"[warn] {q.ticker}: {type(e).__name__}: {e}", file=sys.stderr)
 
     # 4. write
+    #
+    # STALENESS IS A REAL RISK, SO IT IS RECORDED EXPLICITLY.
+    # These prices are a snapshot. Kalshi NFL markets move all week as injury
+    # news lands, and the site serves whatever snapshot was captured when
+    # this script last ran. Without a timestamp there is no way to tell a
+    # live price from a two-day-old one -- which is exactly how you end up
+    # clicking a "+5.9pp edge" that no longer exists. Every row carries the
+    # fetch time, and kalshi_meta.json lets the dashboard show and flag it.
+    from datetime import datetime, timezone
+    fetched_at = datetime.now(timezone.utc).isoformat()
+    for e in evaluations:
+        e["fetched_at"] = fetched_at
+
     os.makedirs(args.out, exist_ok=True)
     path = os.path.join(args.out, "kalshi.json")
     with open(path, "w") as fh:
         json.dump(evaluations, fh, indent=2, default=str)
+    # Archive a per-week copy. kalshi.json is overwritten on every fetch, so
+    # without this there is no record of what the market looked like when a
+    # bet was available -- and no way to grade the model after the fact.
+    hist_dir = os.path.join(args.out, "history")
+    os.makedirs(hist_dir, exist_ok=True)
+    with open(os.path.join(hist_dir,
+              f"kalshi_{args.season}_wk{args.week}.json"), "w") as fh:
+        json.dump(evaluations, fh, default=str)
+
+    with open(os.path.join(args.out, "kalshi_meta.json"), "w") as fh:
+        json.dump({"fetched_at": fetched_at,
+                   "n_evaluations": len(evaluations),
+                   "n_raw_markets": len(raw),
+                   "season": args.season, "week": args.week}, fh, indent=2)
 
     playable = [e for e in evaluations if e.get("recommended_side") in ("yes", "no")]
     print(f"wrote {len(evaluations)} evaluations ({len(playable)} actionable) to {path}",

@@ -427,6 +427,12 @@ def build_feature_row(player_blend: dict, team_off: dict, team_off_prior: dict,
     f.update(expected_team_touchdowns(env, team_off, opp_def, cfg))
     f.update(unit_change_features(team_off, team_off_prior))
     f.update(wr_cb_matchup({**player_blend, **roster_ctx}, opp_def))
+    # surface the positional defense splits so attribution can show WHICH
+    # part of the opponent's pass defense is driving the matchup
+    for c in ("def_vs_wr_out", "def_vs_wr_slot", "def_vs_te", "def_vs_rb_pass",
+              "def_cov_yds_per_target", "def_blitz_rate"):
+        if c in opp_def:
+            f[c] = opp_def.get(c)
     f["pass_matchup_mult"] = pass_matchup_multiplier(opp_def, cfg, league_means)
     f["rush_matchup_mult"] = rush_matchup_multiplier(opp_def, cfg, league_means)
 

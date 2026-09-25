@@ -27,6 +27,7 @@ let ACTIVE_PRESET = null;
 let SORT_KEY = "edge";
 let SORT_DIR = -1;
 let EXPANDED_ROW = null;
+let KALSHI_FETCHED_AT = null;
 
 // ---------------------------------------------------------------------
 // Loading
@@ -58,6 +59,15 @@ async function load() {
   document.getElementById("subtitle").textContent =
     `Season ${meta.season}, Week ${meta.week} \u00b7 ${meta.n_players} players \u00b7 updated ${genDate.toLocaleString()}`;
   document.getElementById("stat-updated").textContent = "updated " + genDate.toLocaleTimeString();
+
+  KALSHI_FETCHED_AT = meta.kalshi_fetched_at || null;
+  const age = marketAgeLabel();
+  if (age) {
+    const el = document.getElementById("stat-updated");
+    el.insertAdjacentHTML("afterend",
+      `<span class="dot"></span><span class="stat" title="Kalshi prices are a snapshot and move during the week">
+         market prices <strong style="color:${age.level === "fresh" ? "var(--pos)" : age.level === "aging" ? "#fcd34d" : "var(--neg)"}">${age.txt}</strong></span>`);
+  }
 
   loadHistory(meta.season).catch(() => {}); // best-effort, never blocks the table
 
@@ -254,8 +264,28 @@ function attributionHtml(row) {
     </div>`;
 }
 
+function marketAgeLabel() {
+  if (!KALSHI_FETCHED_AT) return null;
+  const mins = (Date.now() - new Date(KALSHI_FETCHED_AT).getTime()) / 60000;
+  if (Number.isNaN(mins)) return null;
+  const txt = mins < 90 ? `${Math.round(mins)} min old`
+    : mins < 60 * 36 ? `${(mins / 60).toFixed(1)} hr old`
+    : `${(mins / 1440).toFixed(1)} days old`;
+  // Kalshi NFL prices drift through the week on injury news. Past a few
+  // hours the displayed price is a historical quote, not something you can
+  // trade at, so it is flagged rather than shown as if it were live.
+  const level = mins < 120 ? "fresh" : mins < 60 * 12 ? "aging" : "stale";
+  return { txt, level, mins };
+}
+
 function marketHtml(row) {
   if (!row.market_ticker) return "";
+  const age = marketAgeLabel();
+  const ageWarn = !age ? "" :
+    `<div class="row" style="margin-top:6px">
+       <span>Prices captured</span>
+       <span style="color:${age.level === "fresh" ? "var(--pos)" : age.level === "aging" ? "#fcd34d" : "var(--neg)"}">
+         ${age.txt}${age.level === "stale" ? " - RE-FETCH BEFORE BETTING" : ""}</span></div>`;
   const d = row.ladder_divergence;
   const pct = v => (v === null || v === undefined) ? "-" : (v * 100).toFixed(1) + "%";
   let rows = `
@@ -281,6 +311,7 @@ function marketHtml(row) {
   return `<div class="drawer-block" style="grid-column: span 2;">
       <h4>Market (Kalshi)</h4>${rows}
       ${ladder ? `<div style="margin-top:8px"><h4>Ladder</h4>${ladder}</div>` : ""}
+      ${ageWarn}
       ${verdict}
     </div>`;
 }

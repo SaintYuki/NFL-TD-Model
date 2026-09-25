@@ -62,9 +62,12 @@ def attribute_receiving(f: dict, result: dict) -> dict:
          "detail": f"his {_fmt(base_ypt,2)} yds/target vs league {_fmt(lg_ypt,2)}",
          "yards": _fmt(y1), "delta": _fmt(y1 - y0)},
         {"label": "Matchup",
-         "detail": (f"opp pass D + specific defender "
-                    f"({_fmt(f.get('defender_allowed_ypt', 7.0),1)} yds/tgt allowed), "
-                    f"x{_fmt(combined_matchup,3)}"),
+         "detail": (f"opp pass D + defender "
+                    f"({_fmt(f.get('defender_allowed_ypt', 7.0),1)} yds/tgt allowed)"
+                    + (f", vs {f.get('position')} EPA "
+                       f"{_fmt(f.get('def_vs_te') if f.get('position')=='TE' else f.get('def_vs_rb_pass') if f.get('position')=='RB' else f.get('def_vs_wr_out'), 3):+}"
+                       if f.get("def_vs_wr_out") is not None else "")
+                    + f", x{_fmt(combined_matchup,3)}"),
          "yards": _fmt(y2), "delta": _fmt(y2 - y1)},
         {"label": "Quarterback",
          "detail": (f.get("qb_change_detail") or "no change")

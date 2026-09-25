@@ -90,6 +90,29 @@ def evaluate_quote(p_model: float, quote: KalshiQuote,
     edge = float(p_model) - float(p_market)
     out["edge"] = round(edge, 4)
 
+    # EXTREME-DISAGREEMENT GUARD
+    # --------------------------------------------------------------
+    # A near-zero model probability against a confident market price is
+    # almost never edge -- it is the model missing a role change. Kyler
+    # Murray and Jameis Winston both returned to starting jobs that the
+    # depth-chart feed had not recorded, so the model still had them at
+    # backup usage and assigned P(175+ pass yards) = 0.000 while the market
+    # priced 0.695. That produced a maximum-Kelly "no" recommendation built
+    # on a number that was simply wrong.
+    #
+    # Real edges are large; they are not absolute. When the model claims
+    # near-impossibility and the market disagrees strongly, the model loses.
+    if (p_model < 0.03 and p_market > 0.25) or (p_model > 0.97 and p_market < 0.75):
+        out.update({
+            "recommended_side": "model_role_gap",
+            "expected_value": None,
+            "kelly": 0.0,
+            "warning": ("model assigns near-certainty against a confident "
+                        "market -- usually a missed role/injury change, "
+                        "not an edge"),
+        })
+        return out
+
     # cost to actually transact: you pay the ask for YES, or (1 - bid) for NO.
     # Using the midpoint here would overstate every edge, since you cannot
     # actually trade at the midpoint.

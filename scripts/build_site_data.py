@@ -150,6 +150,11 @@ def load_kalshi(out_dir: str) -> dict:
         by_key.setdefault(key, []).append(r)
 
     out = {}
+    out["__fetched_at__"] = None
+    for r in rows:
+        if r.get("fetched_at"):
+            out["__fetched_at__"] = r["fetched_at"]
+            break
     for key, contracts in by_key.items():
         liquid = [c for c in contracts if c.get("liquid")]
         pool = liquid or contracts
@@ -220,6 +225,7 @@ def main():
 
     # merge Kalshi market data if it has been fetched
     kalshi_index = load_kalshi(args.out)
+    kalshi_fetched_at = kalshi_index.pop("__fetched_at__", None) if kalshi_index else None
     if kalshi_index:
         rows = [attach_market(r, kalshi_index) for r in rows]
         n_mkt = sum(1 for r in rows if r.get("market_ticker"))
@@ -230,6 +236,7 @@ def main():
         json.dump(_json_safe(rows), fh, indent=2, default=str)
 
     meta = {
+        "kalshi_fetched_at": kalshi_fetched_at,
         "season": args.season,
         "week": args.week,
         "generated_at": datetime.now(timezone.utc).isoformat(),

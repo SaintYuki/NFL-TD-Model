@@ -212,6 +212,7 @@ def apply_roster_adjustments(usage: pd.DataFrame,
                              share_cols: tuple[str, ...] = (
                                  "target_share", "rush_share", "rz_rush_share",
                                  "rz_target_share", "inside5_rush_share",
+                                 "inside10_target_share",
                                  "air_yards_share", "pass_att_share"),
                              cfg: ModelConfig = DEFAULT_CONFIG) -> pd.DataFrame:
     """
@@ -234,7 +235,14 @@ def apply_roster_adjustments(usage: pd.DataFrame,
             ov = df["manual_share_override"]
             df.loc[ov.notna(), col] = ov[ov.notna()]
         # QBs do not consume target share; RB/WR/TE partition it
-        if col in ("target_share", "rz_target_share", "air_yards_share"):
+        if col in ("target_share", "rz_target_share", "air_yards_share",
+                   "inside10_target_share"):
+            # inside10_target_share carries the LARGEST weight (0.45) in the
+            # receiving-TD allocation, yet it was the one share never
+            # renormalized. Team sums ranged 0.51 to 1.23 instead of 1.0, so
+            # receivers on some teams had their TD probability nearly halved
+            # by an accounting artifact -- and it is why concentrating the
+            # red-zone replacement baselines produced no visible change.
             elig = df["position"].isin(["RB", "WR", "TE"])
         elif col in ("rush_share", "rz_rush_share", "inside5_rush_share"):
             elig = df["position"].isin(["RB", "WR", "QB"])
