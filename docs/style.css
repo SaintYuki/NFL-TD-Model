@@ -470,3 +470,46 @@ footer {
   font-size: 11.5px;
   border-top: 1px solid var(--border);
 }
+
+
+/* =========================================================================
+   Edge prominence, top plays, confidence  (added: edge is the reason the
+   page exists, so it should be the first thing the eye lands on)
+   ========================================================================= */
+.edge-cell { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+.edge-sub { display:block; font-size:10px; font-weight:600; color:var(--text-faint);
+            letter-spacing:0; margin-top:1px; }
+
+.top-plays {
+  margin: 14px 24px 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(52,211,153,0.06), transparent 60%);
+  padding: 14px 16px;
+}
+.top-plays h3 { margin:0 0 10px; font-size:12px; text-transform:uppercase;
+                letter-spacing:.07em; color:var(--text-dim); }
+.top-play-row { display:flex; align-items:center; gap:10px; padding:7px 0;
+                border-bottom:1px solid var(--border); font-size:13px; cursor:pointer; }
+.top-play-row:last-child { border-bottom:none; }
+.top-play-rank { width:20px; color:var(--text-faint); font-weight:700; font-size:11px; }
+.top-play-name { font-weight:600; flex:1; }
+.top-play-edge { font-weight:800; font-size:15px; }
+.top-plays .empty { color:var(--text-faint); font-size:12.5px; font-style:italic; }
+
+.tag {
+  display:inline-block; font-size:9.5px; font-weight:800; letter-spacing:.05em;
+  padding:2px 7px; border-radius:4px; white-space:nowrap;
+}
+.tag-STRONG   { background:var(--pos-strong); color:#06120b; }
+.tag-PLAYABLE { background:rgba(52,211,153,.18); color:var(--pos); }
+.tag-MONITOR  { background:rgba(251,191,36,.16); color:#fcd34d; }
+.tag-NOEDGE   { background:var(--border); color:var(--text-faint); }
+.tag-EXCLUDED { background:rgba(248,113,113,.16); color:var(--neg); }
+.tag-ILLIQUID { background:var(--border); color:var(--text-faint); }
+
+.conf-pill { font-size:10.5px; font-weight:700; padding:2px 6px; border-radius:4px;
+             background:var(--border); color:var(--text-dim); }
+
+.td-dist { display:flex; gap:3px; margin-top:6px; }
+.td-dist .seg { height:7px; border-radius:2px; }

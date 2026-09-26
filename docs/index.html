@@ -24,6 +24,8 @@
     <span class="stat" id="stat-updated">-</span>
   </div>
 
+  <div class="top-plays" id="top-plays"></div>
+
   <div class="controls">
     <div class="search-row">
       <input id="search" type="text" placeholder="Search player, team, or matchup..." autocomplete="off">
@@ -70,13 +72,15 @@
           <th data-sort="projection" class="col-group-start">Projection</th>
           <th data-sort="probability">Prob.</th>
           <th data-sort="edge">Edge</th>
+          <th data-sort="confidence">Conf</th>
+          <th data-sort="bettable">Play</th>
           <th data-sort="recommended_side">Side</th>
           <th data-sort="kelly">Kelly</th>
           <th></th>
         </tr>
       </thead>
       <tbody id="props-body">
-        <tr><td colspan="11" class="loading">Loading projections...</td></tr>
+        <tr><td colspan="13" class="loading">Loading projections...</td></tr>
       </tbody>
     </table>
   </div>

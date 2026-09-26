@@ -26,6 +26,10 @@ from .models.yardage import MODEL_REGISTRY
 from .probability import edge_and_stake, devig_two_way
 from .output import assemble_projection_json
 
+# Effective stabilization constant for "played zero snaps while the team
+# played". Smaller than any normal metric K because absence is decisive.
+INACTIVE_EVIDENCE_K = 0.75
+
 PLAYER_METRICS = [
     "snap_share", "route_participation", "target_share", "air_yards_share",
     "rush_share", "rz_target_share", "rz_rush_share", "inside5_rush_share",
@@ -225,7 +229,17 @@ class ProjectionEngine:
             if inactive_evidence and m in repbase:
                 # only opportunity metrics are affected; sitting on the bench
                 # says nothing about how efficient he would be if he played
-                x_cur, n_eff = lg, team_games
+                #
+                # Converge FAST. Using the metric's normal stabilization
+                # constant left a player who has not taken a snap in two
+                # games still carrying two thirds of his prior-season share,
+                # which is how bench pass catchers ended up holding 28% of
+                # every team's target pool (reality is ~5%) and forced
+                # renormalization to cut ~27% off genuine starters.
+                # Not playing is unusually strong evidence, so it gets a
+                # small K rather than the metric's default.
+                x_cur = lg
+                n_eff = team_games * (self.cfg.k(m) / INACTIVE_EVIDENCE_K)
             elif m in repbase and n_cur > 0:
                 # OPPORTUNITY CREDIBILITY: a game is not a fixed unit of
                 # evidence. Chase seeing 4 targets and Chase seeing 14 both
@@ -376,9 +390,84 @@ class ProjectionEngine:
             rows.append(b)
         usage = pd.DataFrame(rows).merge(
             self.meta[["player_id", "team", "player_name"]], on="player_id", how="left")
+        usage = self._apply_qb_starter_override(usage)
         usage = apply_roster_adjustments(usage, self.roster_ctx, cfg=self.cfg)
         self._usage_cache = usage.set_index("player_id")
         return self._usage_cache
+
+    def _apply_qb_starter_override(self, usage: pd.DataFrame) -> pd.DataFrame:
+        """
+        Identify each team's starting QB, preferring FORWARD-LOOKING evidence.
+
+        Precedence, and the reason for it:
+
+        1. Sleeper depth_chart_order == 1, if that QB is not ruled out.
+           This is the only source that reflects a change ANNOUNCED but not
+           yet played -- a starter returning from injury. Sam Darnold coming
+           back ahead of Drew Lock, or Michael Penix Jr. reclaiming Atlanta,
+           are invisible to anything based on past snaps. Sleeper's coverage
+           is thin at most positions but hits ~30 of 32 QB1s, so at QB
+           specifically it is trustworthy.
+
+        2. Whoever threw a clear majority of the team's attempts in the most
+           recent week played. This catches mid-season changes the depth
+           chart missed -- Jameis Winston taking over the Giants in Week 2.
+
+        3. Otherwise leave the blend alone.
+
+        Getting this order wrong in either direction is costly: trusting only
+        past snaps pins a returning starter at backup usage, while trusting
+        only the depth chart misses unannounced in-game changes.
+        """
+        gl = self.store.player_gamelog
+        depth = getattr(self.store, "depth_injury", None)
+        if (not len(gl) or "pass_attempts" not in gl.columns) and depth is None:
+            return usage
+
+        STARTER_SHARE, BACKUP_SHARE = 0.93, 0.035
+        OUT_STATUSES = {"Out", "IR", "PUP", "Suspended", "Doubtful"}
+
+        # team -> starter player_id, by precedence
+        starters: dict[str, str] = {}
+
+        # (2) observed: last week's primary passer
+        if len(gl) and "pass_attempts" in gl.columns:
+            for team, g in gl.groupby("team"):
+                last_wk = g["week"].max()
+                lw = g[(g["week"] == last_wk) & (g["pass_attempts"].fillna(0) > 0)]
+                if not len(lw):
+                    continue
+                total = float(lw["pass_attempts"].sum())
+                if total < 10:
+                    continue
+                top = lw.sort_values("pass_attempts", ascending=False).iloc[0]
+                if float(top["pass_attempts"]) / total >= 0.65:
+                    starters[team] = top["player_id"]
+
+        # (1) announced: depth chart wins, unless that QB is ruled out
+        if depth is not None and len(depth):
+            d = depth.copy()
+            if "position" in d.columns:
+                d = d[d["position"] == "QB"]
+            if "depth_chart_order" in d.columns:
+                d1 = d[d["depth_chart_order"] == 1]
+                for _, r in d1.iterrows():
+                    status = r.get("injury_status")
+                    if status is not None and str(status) in OUT_STATUSES:
+                        continue      # listed QB1 but ruled out; keep observed
+                    team = r.get("team")
+                    pid = r.get("player_id")
+                    if team and pid and pid in set(usage["player_id"]):
+                        starters[team] = pid
+
+        for team, pid in starters.items():
+            mask = (usage["team"] == team) & (usage["position"] == "QB")
+            if not mask.any():
+                continue
+            is_starter = usage["player_id"] == pid
+            usage.loc[mask & is_starter, "pass_att_share"] = STARTER_SHARE
+            usage.loc[mask & ~is_starter, "pass_att_share"] = BACKUP_SHARE
+        return usage
 
     # ------------------------------------------------------------------
     # Main API

@@ -50,7 +50,7 @@ async function load() {
     ROWS = await propsRes.json();
   } catch (err) {
     document.getElementById("props-body").innerHTML =
-      `<tr><td colspan="11" class="loading">Could not load props.json: ${err.message}</td></tr>`;
+      `<tr><td colspan="13" class="loading">Could not load props.json: ${err.message}</td></tr>`;
     console.error("props load failed:", err);
     return;
   }
@@ -227,6 +227,33 @@ function sparklineSvg(points) {
   </svg>`;
 }
 
+function tdDistHtml(row) {
+  const d = row.td_distribution;
+  if (!d) return "";
+  const segs = [["0 TD", d.p_0_td, "#64748b"], ["1 TD", d.p_1_td, "#34d399"],
+                ["2 TD", d.p_2_td, "#5b9dff"], ["3+ TD", d.p_3plus_td, "#ffd23f"]];
+  return `<div class="drawer-block">
+    <h4>TD outcome distribution</h4>
+    ${segs.map(([l, v, c]) =>
+      `<div class="row"><span>${l}</span><span style="color:${c}">${((v||0)*100).toFixed(1)}%</span></div>`).join("")}
+    <div class="td-dist">${segs.map(([, v, c]) =>
+      `<div class="seg" style="flex:${Math.max(v||0, 0.001)};background:${c}"></div>`).join("")}</div>
+  </div>`;
+}
+
+function confidenceHtml(row) {
+  if (row.confidence === undefined || row.confidence === null) return "";
+  const p = row.confidence_parts || {};
+  return `<div class="drawer-block">
+    <h4>Confidence ${row.confidence_grade ?? ""}</h4>
+    <div class="big">${row.confidence}</div>
+    <div class="row"><span>role certainty</span><span>${p.role ?? "-"}</span></div>
+    <div class="row"><span>sample size</span><span>${p.sample ?? "-"}</span></div>
+    <div class="row"><span>market quality</span><span>${p.market_quality ?? "-"}</span></div>
+    <div class="row"><span>model/market agreement</span><span>${p.agreement ?? "-"}</span></div>
+  </div>`;
+}
+
 function attributionHtml(row) {
   const a = row.attribution;
   if (!a) return "";
@@ -338,6 +365,8 @@ function drawerHtml(row) {
       <h4>Trend (last ${Math.max(hist.length, 1)} wk${hist.length === 1 ? "" : "s"})</h4>
       <div class="sparkline-wrap">${sparklineSvg(hist)}</div>
     </div>
+    ${tdDistHtml(row)}
+    ${confidenceHtml(row)}
     ${attributionHtml(row)}
     ${marketHtml(row)}
   </div>`;
@@ -425,7 +454,11 @@ function rowHtml(r, idx) {
       ${r.ci_80 ? `<div class="proj-ci">${fmt(r.ci_80[0])}-${fmt(r.ci_80[1])}</div>` : ""}
     </td>
     <td><span class="prob-cell ${probClass(r)}">${prob}</span></td>
-    <td><span class="edge-cell ${edgeClass(r)}">${edgeText}</span></td>
+    <td><span class="edge-cell ${edgeClass(r)}">${edgeText}</span>
+        ${r.model_probability !== undefined && r.model_probability !== null
+          ? `<span class="edge-sub">model ${(r.model_probability*100).toFixed(0)}% / mkt ${((r.market_implied_probability??0)*100).toFixed(0)}%</span>` : ""}</td>
+    <td><span class="conf-pill">${r.confidence_grade ?? "-"}</span></td>
+    <td><span class="tag tag-${(r.bettable||"NO EDGE").replace(/\s/g,"")}">${r.bettable ?? "-"}</span></td>
     <td class="${sideClass(r.recommended_side)}">${r.recommended_side || "-"}</td>
     <td>${r.kelly ? fmt(r.kelly * 100, 1) + "%" : "-"}</td>
     <td><span class="fav-star ${isFav ? "active" : ""}" data-fav-idx="${idx}">\u2605</span></td>
@@ -435,7 +468,7 @@ function rowHtml(r, idx) {
 function renderTable(rows) {
   const body = document.getElementById("props-body");
   if (!rows.length) {
-    body.innerHTML = `<tr><td colspan="11" class="loading">No rows match those filters.</td></tr>`;
+    body.innerHTML = `<tr><td colspan="13" class="loading">No rows match those filters.</td></tr>`;
     return;
   }
   const limited = rows.slice(0, 500);
@@ -473,7 +506,7 @@ function toggleDrawer(tr, row) {
   const drawerRow = document.createElement("tr");
   drawerRow.className = "drawer-row";
   const td = document.createElement("td");
-  td.colSpan = 11;
+  td.colSpan = 13;
   td.innerHTML = drawerHtml(row);
   drawerRow.appendChild(td);
   tr.after(drawerRow);
@@ -530,8 +563,44 @@ function renderCards(rows) {
 // ---------------------------------------------------------------------
 // Main render
 // ---------------------------------------------------------------------
+function renderTopPlays(rows) {
+  const el = document.getElementById("top-plays");
+  if (!el) return;
+  const plays = rows
+    .filter(r => ["STRONG", "PLAYABLE"].includes(r.bettable))
+    .sort((a, b) => Math.abs(b.edge || 0) - Math.abs(a.edge || 0))
+    .slice(0, 5);
+  if (!plays.length) {
+    // Saying "none" is the honest output when nothing clears the bar. A
+    // top-plays panel that always lists five names would just be the five
+    // largest random errors on a day with no edge.
+    el.innerHTML = `<h3>Top plays</h3><div class="empty">
+      Nothing clears the playable threshold on this slate.
+      ${ROWS.some(r => r.market_ticker) ? "" : "Market prices not loaded - run fetch_kalshi."}
+    </div>`;
+    return;
+  }
+  el.innerHTML = `<h3>Top plays</h3>` + plays.map((r, i) => `
+    <div class="top-play-row" data-player="${r.player_name}">
+      <span class="top-play-rank">${i + 1}</span>
+      <span class="top-play-name">${r.player_name}
+        <span class="player-sub">${r.position} ${r.team} &middot; ${MARKET_LABEL[r.market] || r.market}${r.line != null ? " " + r.line + "+" : ""}</span>
+      </span>
+      <span class="tag tag-${(r.bettable||"").replace(/\s/g,"")}">${r.bettable}</span>
+      <span class="top-play-edge ${(r.edge||0) > 0 ? "side-over" : "side-under"}">
+        ${(r.edge||0) > 0 ? "+" : ""}${((r.edge||0)*100).toFixed(1)}pp</span>
+    </div>`).join("");
+  el.querySelectorAll(".top-play-row").forEach(row => {
+    row.addEventListener("click", () => {
+      document.getElementById("search").value = row.dataset.player;
+      render();
+    });
+  });
+}
+
 function render() {
   const rows = sortRows(filteredRows());
+  renderTopPlays(ROWS);
   renderTable(rows);
   renderCards(rows);
 

@@ -120,12 +120,26 @@ class AnytimeTDModel:
 
         # multi-TD probabilities straight from the Poisson
         p2 = float(1 - math.exp(-lam) * (1 + lam))
+
+        # Full outcome distribution. The Poisson is already being computed,
+        # so exposing P(0), P(1), P(2), P(3+) costs nothing and says far more
+        # than a bare lambda: "0.587 expected TDs" is opaque, while
+        # "56% none / 33% one / 9% two" is immediately readable.
+        dist = {}
+        cum = 0.0
+        for k in range(3):
+            pk = math.exp(-lam) * (lam ** k) / math.factorial(k)
+            dist[f"p_{k}_td"] = round(pk, 4)
+            cum += pk
+        dist["p_3plus_td"] = round(max(0.0, 1.0 - cum), 4)
+
         return {
             "expected_touchdowns": round(lam, 4),
             "p_anytime_td": round(p, 4),
             "p_two_plus_td": round(max(p2, 0.0), 4),
             "fair_odds": american_odds(p),
             "components": {k: round(v, 4) for k, v in parts.items()},
+            "td_distribution": dist,
         }
 
     # ------------------------------------------------------------------

@@ -249,6 +249,7 @@ def assemble_projection_json(player_id, features, results, blend_meta,
                 "p_two_plus": res["p_two_plus_td"],
                 "fair_odds_american": res["fair_odds"],
                 "components": res["components"],
+                "td_distribution": res.get("td_distribution"),
                 "attribution": res.get("_attribution"),
             }
             if book_rows:

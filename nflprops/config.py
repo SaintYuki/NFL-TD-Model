@@ -231,13 +231,13 @@ REPLACEMENT_BASELINE: Dict[str, Dict[str, float]] = {
     # every team's expected touchdowns (0.43-0.51 TDs) across 16-23 bench
     # players the market does not even list a price for, which suppressed
     # anytime-TD probability for the real candidates by roughly the same 18%.
-    "RB": {"rush_share": 0.018, "target_share": 0.008,
+    "RB": {"rush_share": 0.018, "target_share": 0.004,
            "rz_rush_share": 0.006, "inside5_rush_share": 0.005,
            "rz_target_share": 0.003, "air_yards_share": 0.006},
-    "WR": {"target_share": 0.012, "rush_share": 0.002,
+    "WR": {"target_share": 0.005, "rush_share": 0.002,
            "rz_target_share": 0.004, "air_yards_share": 0.012,
            "inside10_target_share": 0.004},
-    "TE": {"target_share": 0.010, "rush_share": 0.0,
+    "TE": {"target_share": 0.004, "rush_share": 0.0,
            "rz_target_share": 0.004, "air_yards_share": 0.009,
            "inside10_target_share": 0.004},
 }

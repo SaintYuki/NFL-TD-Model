@@ -97,6 +97,7 @@ def flatten(projections: list[dict], def_ranks: dict | None = None) -> list[dict
                     "kelly": mk.get("kelly_recommended") if mk else None,
                     "top_driver": top_driver.get("note") if top_driver else None,
                     "attribution": blk.get("attribution"),
+                    "td_distribution": blk.get("td_distribution"),
                 })
             else:
                 lines = blk.get("lines") or [{}]
@@ -162,6 +163,76 @@ def load_kalshi(out_dir: str) -> dict:
         out[key] = {"primary": best, "all_contracts": sorted(
             contracts, key=lambda c: (c.get("market_strike") or 0))}
     return out
+
+
+def confidence_score(row: dict) -> dict:
+    """
+    0-100 confidence, built ONLY from things we actually measure. No vibes.
+
+      role certainty   inverse of role_uncertainty (rho, depth volatility)
+      sample           games of current-season data behind the projection
+      market quality   liquid two-sided quote with a tight spread
+      agreement        model and market not wildly apart (a huge gap has
+                       historically meant a model role gap, not an edge)
+
+    Deliberately NOT a function of edge size. Confidence answers "how much
+    do we trust this number", which is a different question from "how big is
+    the disagreement" -- conflating them would make every wrong projection
+    look confident precisely when it is most wrong.
+    """
+    role = 1.0 - min(max(float(row.get("role_uncertainty") or 0.15), 0.0), 1.0)
+    n_games = float(row.get("games_current_season") or 0)
+    sample = min(n_games / 4.0, 1.0)
+
+    spread = row.get("market_spread")
+    if row.get("market_ticker") and spread is not None:
+        market_q = 1.0 - min(float(spread) / 0.12, 1.0)
+    elif row.get("market_ticker"):
+        market_q = 0.5
+    else:
+        market_q = 0.35          # no market to check against
+
+    edge = row.get("edge")
+    if edge is None:
+        agreement = 0.6
+    else:
+        agreement = 1.0 - min(abs(float(edge)) / 0.35, 1.0)
+
+    score = 100.0 * (0.34 * role + 0.26 * sample
+                     + 0.22 * market_q + 0.18 * agreement)
+    grade = ("A+" if score >= 85 else "A" if score >= 75 else "B+" if score >= 65
+             else "B" if score >= 55 else "C" if score >= 45 else "D")
+    return {"confidence": round(score, 1), "confidence_grade": grade,
+            "confidence_parts": {"role": round(role, 2), "sample": round(sample, 2),
+                                 "market_quality": round(market_q, 2),
+                                 "agreement": round(agreement, 2)}}
+
+
+def bettable_tag(row: dict) -> str:
+    """
+    Heuristic playability tag.
+
+    IMPORTANT: these thresholds are NOT backtested. No graded results exist
+    yet, so they are reasoned defaults, not validated ones. Once
+    grade_results.py has a few hundred settled contracts, replace them with
+    the edge buckets that actually showed positive ROI.
+    """
+    side = row.get("recommended_side")
+    if side == "model_role_gap":
+        return "EXCLUDED"
+    if side not in ("yes", "no"):
+        return "NO EDGE"
+    edge = abs(float(row.get("edge") or 0))
+    conf = float(row.get("confidence") or 0)
+    if not row.get("market_liquid"):
+        return "ILLIQUID"
+    if edge >= 0.10 and conf >= 65:
+        return "STRONG"
+    if edge >= 0.06 and conf >= 55:
+        return "PLAYABLE"
+    if edge >= 0.035:
+        return "MONITOR"
+    return "NO EDGE"
 
 
 def attach_market(row: dict, kalshi_index: dict) -> dict:
@@ -230,6 +301,11 @@ def main():
         rows = [attach_market(r, kalshi_index) for r in rows]
         n_mkt = sum(1 for r in rows if r.get("market_ticker"))
         print(f"attached Kalshi market data to {n_mkt} rows", file=sys.stderr)
+
+    # score confidence and playability before writing
+    for r in rows:
+        r.update(confidence_score(r))
+        r["bettable"] = bettable_tag(r)
 
     os.makedirs(args.out, exist_ok=True)
     with open(os.path.join(args.out, "props.json"), "w") as fh:

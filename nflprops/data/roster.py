@@ -167,18 +167,26 @@ def build_roster_context(roster_changes: pd.DataFrame,
         # A confirmed DEPTH CHART STARTER gets a boost, and a confirmed
         # backup a haircut. Renormalization then redistributes whatever the
         # injured/benched players give up to whoever is actually playing.
+        # Carried SEPARATELY from usage_mult, because it must not touch the
+        # red-zone shares. Goal-line concentration is already encoded by the
+        # red-zone replacement baselines and renormalization; multiplying a
+        # depth-chart boost on top of that double-counts the same fact and
+        # inflated anytime-TD probability league-wide (role-player mean went
+        # to 0.237 against a realistic 0.08-0.20).
+        df["depth_boost"] = 1.0
         starter = (df["depth_chart_order"] == 1) & (inj_mult > 0.5)
         backup = (df["depth_chart_order"] >= 2)
-        df.loc[starter, "usage_mult"] = df.loc[starter, "usage_mult"] * 1.35
-        df.loc[backup, "usage_mult"] = df.loc[backup, "usage_mult"] * 0.70
+        df.loc[starter, "depth_boost"] = 1.35
+        df.loc[backup, "depth_boost"] = 0.70
 
         # an OUT player carries no role uncertainty -- he simply is not playing
         df.loc[inj_mult <= 0.0, "role_uncertainty"] = 0.0
     else:
         df["injury_multiplier"] = 1.0
+        df["depth_boost"] = 1.0
 
     keep = ["player_id", "position", "team", "rho", "usage_mult", "role_uncertainty",
-            "injury_status", "injury_multiplier", "depth_chart_order",
+            "injury_status", "injury_multiplier", "depth_boost", "depth_chart_order",
             "changed_team", "rookie", "new_oc", "new_qb", "scheme_change_major",
             "depth_chart_rank_new", "depth_chart_volatility", "manual_share_override",
             "usage_shift_tags"]
@@ -221,16 +229,24 @@ def apply_roster_adjustments(usage: pd.DataFrame,
     """
     _ctx_cols = ["player_id", "usage_mult", "manual_share_override",
                  "role_uncertainty", "rho"]
-    for extra in ("injury_multiplier", "depth_chart_order"):
+    for extra in ("injury_multiplier", "depth_boost", "depth_chart_order"):
         if extra in ctx.columns:
             _ctx_cols.append(extra)
     df = usage.merge(ctx[_ctx_cols], on="player_id", how="left")
     df["usage_mult"] = df["usage_mult"].fillna(1.0)
 
+    PRIMARY_SHARES = {"target_share", "rush_share", "pass_att_share"}
+    if "depth_boost" not in df.columns:
+        df["depth_boost"] = 1.0
+    df["depth_boost"] = df["depth_boost"].fillna(1.0)
+
     for col in share_cols:
         if col not in df.columns:
             continue
-        df[col] = df[col].astype(float) * df["usage_mult"]
+        mult = df["usage_mult"]
+        if col in PRIMARY_SHARES:
+            mult = mult * df["depth_boost"]
+        df[col] = df[col].astype(float) * mult
         if col == "target_share" and "manual_share_override" in df.columns:
             ov = df["manual_share_override"]
             df.loc[ov.notna(), col] = ov[ov.notna()]
