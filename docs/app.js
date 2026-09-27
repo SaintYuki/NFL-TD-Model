@@ -69,6 +69,7 @@ async function load() {
          market prices <strong style="color:${age.level === "fresh" ? "var(--pos)" : age.level === "aging" ? "#fcd34d" : "var(--neg)"}">${age.txt}</strong></span>`);
   }
 
+  populateTeamFilter();
   loadHistory(meta.season).catch(() => {}); // best-effort, never blocks the table
 
   render();
@@ -107,6 +108,19 @@ function activeMarket() {
   return el ? el.dataset.market : "all";
 }
 
+function activeTeam() {
+  const el = document.getElementById("team-filter");
+  return el ? el.value : "all";
+}
+
+function populateTeamFilter() {
+  const sel = document.getElementById("team-filter");
+  if (!sel) return;
+  const teams = [...new Set(ROWS.flatMap(r => [r.team, r.opponent]).filter(Boolean))].sort();
+  sel.innerHTML = `<option value="all">All teams (${teams.length})</option>` +
+    teams.map(t => `<option value="${t}">${t}</option>`).join("");
+}
+
 function passesPreset(row, preset) {
   if (!preset) return true;
   if (preset === "high-edge") return row.recommended_side && row.recommended_side !== "pass";
@@ -135,9 +149,15 @@ function filteredRows() {
   const search = document.getElementById("search").value.trim();
   const position = activePosition();
   const market = activeMarket();
+  const team = activeTeam();
   return ROWS.filter(r => {
     if (position !== "all" && r.position !== position) return false;
     if (market !== "all" && r.market !== market) return false;
+    // Exact match on either side of the matchup. Typing "SEA" in the search
+    // box also matched player names containing those letters; a dedicated
+    // exact team filter is the fix, and it covers the opponent too so you
+    // can pull up a whole game.
+    if (team !== "all" && r.team !== team && r.opponent !== team) return false;
     if (!passesPreset(r, ACTIVE_PRESET)) return false;
     if (search) {
       const hay = `${r.player_name} ${r.team} ${r.opponent}`;
@@ -612,10 +632,50 @@ function render() {
   if (activePosition() !== "all") activeFilters.push(activePosition());
   if (activeMarket() !== "all") activeFilters.push(MARKET_LABEL[activeMarket()] || activeMarket());
   if (ACTIVE_PRESET) activeFilters.push(ACTIVE_PRESET);
+  if (activeTeam() !== "all") activeFilters.push(activeTeam());
   document.getElementById("stat-filters").textContent =
     activeFilters.length ? activeFilters.join(", ") : "No filters applied";
 
-  document.querySelectorAll("th[data-sort]").forEach(th => {
+  const teamSel = document.getElementById("team-filter");
+if (teamSel) teamSel.addEventListener("change", render);
+
+const clearBtn = document.getElementById("clear-filters");
+if (clearBtn) clearBtn.addEventListener("click", () => {
+  document.getElementById("search").value = "";
+  if (teamSel) teamSel.value = "all";
+  document.querySelectorAll("#position-pills .pill").forEach(p => p.classList.remove("active"));
+  document.querySelector('#position-pills .pill[data-position="all"]')?.classList.add("active");
+  document.querySelectorAll("#market-pills .pill").forEach(p => p.classList.remove("active"));
+  document.querySelector('#market-pills .pill[data-market="all"]')?.classList.add("active");
+  document.querySelectorAll("#preset-pills .pill").forEach(p => p.classList.remove("active"));
+  ACTIVE_PRESET = null;
+  render();
+});
+
+// Mobile: the controls block was five stacked pill rows that pushed the
+// table off screen in portrait. Collapse it behind a button.
+(function setupMobileFilters() {
+  const fab = document.getElementById("filter-fab");
+  const controls = document.querySelector(".controls");
+  if (!fab || !controls) return;
+  const scrim = document.createElement("div");
+  scrim.className = "filter-scrim";
+  document.body.appendChild(scrim);
+  const close = () => { controls.classList.remove("open"); scrim.classList.remove("open"); };
+  fab.addEventListener("click", () => {
+    const open = controls.classList.toggle("open");
+    scrim.classList.toggle("open", open);
+  });
+  scrim.addEventListener("click", close);
+  controls.addEventListener("click", e => {
+    // close after a choice so the results are visible immediately
+    if (e.target.closest(".pill") || e.target.id === "clear-filters") {
+      if (window.matchMedia("(max-width: 760px)").matches) setTimeout(close, 180);
+    }
+  });
+})();
+
+document.querySelectorAll("th[data-sort]").forEach(th => {
     th.classList.toggle("sorted", th.dataset.sort === SORT_KEY);
     th.querySelector(".arrow")?.remove();
     if (th.dataset.sort === SORT_KEY) {
@@ -680,6 +740,45 @@ document.querySelectorAll(".bottom-nav .pill").forEach(pill => {
     render();
   });
 });
+const teamSel = document.getElementById("team-filter");
+if (teamSel) teamSel.addEventListener("change", render);
+
+const clearBtn = document.getElementById("clear-filters");
+if (clearBtn) clearBtn.addEventListener("click", () => {
+  document.getElementById("search").value = "";
+  if (teamSel) teamSel.value = "all";
+  document.querySelectorAll("#position-pills .pill").forEach(p => p.classList.remove("active"));
+  document.querySelector('#position-pills .pill[data-position="all"]')?.classList.add("active");
+  document.querySelectorAll("#market-pills .pill").forEach(p => p.classList.remove("active"));
+  document.querySelector('#market-pills .pill[data-market="all"]')?.classList.add("active");
+  document.querySelectorAll("#preset-pills .pill").forEach(p => p.classList.remove("active"));
+  ACTIVE_PRESET = null;
+  render();
+});
+
+// Mobile: the controls block was five stacked pill rows that pushed the
+// table off screen in portrait. Collapse it behind a button.
+(function setupMobileFilters() {
+  const fab = document.getElementById("filter-fab");
+  const controls = document.querySelector(".controls");
+  if (!fab || !controls) return;
+  const scrim = document.createElement("div");
+  scrim.className = "filter-scrim";
+  document.body.appendChild(scrim);
+  const close = () => { controls.classList.remove("open"); scrim.classList.remove("open"); };
+  fab.addEventListener("click", () => {
+    const open = controls.classList.toggle("open");
+    scrim.classList.toggle("open", open);
+  });
+  scrim.addEventListener("click", close);
+  controls.addEventListener("click", e => {
+    // close after a choice so the results are visible immediately
+    if (e.target.closest(".pill") || e.target.id === "clear-filters") {
+      if (window.matchMedia("(max-width: 760px)").matches) setTimeout(close, 180);
+    }
+  });
+})();
+
 document.querySelectorAll("th[data-sort]").forEach(th => {
   th.addEventListener("click", () => {
     const key = th.dataset.sort;

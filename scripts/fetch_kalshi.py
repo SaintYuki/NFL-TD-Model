@@ -61,6 +61,8 @@ def selftest(client: KalshiClient):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--discover", action="store_true",
+                    help="list every NFL series Kalshi actually publishes")
     ap.add_argument("--debug", action="store_true",
                     help="print raw tickers and price fields, then exit")
     ap.add_argument("--event", default=None, help="Kalshi event ticker")
@@ -77,6 +79,57 @@ def main():
 
     if args.selftest:
         sys.exit(selftest(client))
+
+    if args.discover:
+        # Two-step discovery. Paging unfiltered /markets does not work --
+        # there are tens of thousands of markets across every category and
+        # the NFL ones never surface. So: ask the /series endpoint first,
+        # and if that is unavailable, probe candidate tickers directly,
+        # which is cheap and definitive.
+        found = {}
+        try:
+            data = client.get("/series", {"category": "Sports"})
+            for sr in data.get("series", []):
+                t = (sr.get("ticker") or "").upper()
+                if t.startswith("KXNFL"):
+                    found[t] = sr.get("title") or ""
+            if found:
+                print("from /series endpoint:")
+        except Exception as e:
+            print(f"/series unavailable ({type(e).__name__}), probing candidates instead")
+
+        if not found:
+            candidates = sorted(set(list(SERIES_TO_MARKET) + [
+                "KXNFLRUSHYDS", "KXNFLRUSHINGYDS", "KXNFLRUSHYARDS",
+                "KXNFLRUSHINGYARDS", "KXNFLRUSH", "KXNFLRUSHYD",
+                "KXNFLRECEPTIONS", "KXNFLREC", "KXNFLCATCHES",
+                "KXNFLPASSTD", "KXNFLINT", "KXNFLPASSCOMP",
+                "KXNFLPASSATT", "KXNFLLONGESTREC", "KXNFLLONGESTRUSH",
+            ]))
+            print(f"probing {len(candidates)} candidate series...\n")
+            for c in candidates:
+                try:
+                    # single request, NOT get_markets() -- that paginates to
+                    # exhaustion and would crawl across every candidate
+                    resp = client.get("/markets", {"series_ticker": c,
+                                                   "limit": 5, "status": "open"})
+                    ms = resp.get("markets", [])
+                except Exception:
+                    ms = []
+                if ms:
+                    found[c] = f"{len(ms)}+ open, e.g. {ms[0].get('ticker')}"
+
+        print(f"{'series':26} mapped to           detail")
+        for k in sorted(found):
+            print(f"  {k:24} {SERIES_TO_MARKET.get(k, '** NOT MAPPED **'):18} {found[k]}")
+        unmapped = [k for k in found if k not in SERIES_TO_MARKET]
+        if unmapped:
+            print("\nAdd to SERIES_TO_MARKET in nflprops/kalshi.py:")
+            for k in unmapped:
+                print(f'    "{k}": "<market>",')
+        elif not found:
+            print("  (nothing found -- check network and that the NFL season is live)")
+        sys.exit(0)
 
     if not (args.season and args.week):
         ap.error("--season and --week are required unless --selftest")

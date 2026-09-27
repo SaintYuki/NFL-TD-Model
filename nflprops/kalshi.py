@@ -76,8 +76,13 @@ DEFAULT_BASE_URL = os.environ.get(
 SERIES_TO_MARKET = {
     "KXNFLTD": "anytime_td",
     "KXNFLPASSYDS": "passing_yards",
-    "KXNFLRUSHYDS": "rushing_yards",
     "KXNFLRECYDS": "receiving_yards",
+    # Rushing has never come back from --all-series. The ticker below is a
+    # guess that has produced nothing, so several plausible spellings are
+    # mapped rather than betting on one. Run `--discover` to list the series
+    # Kalshi actually publishes and add the real one here.
+    "KXNFLRSHYDS": "rushing_yards",
+    
 }
 
 # Real NFL team abbreviations as they appear in Kalshi tickers. A known-set

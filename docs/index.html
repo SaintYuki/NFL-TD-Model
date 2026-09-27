@@ -32,6 +32,14 @@
       <div id="autocomplete"></div>
     </div>
 
+    <div class="pill-row" id="team-row">
+      <span class="pill-group-label">Team</span>
+      <select id="team-filter">
+        <option value="all">All teams</option>
+      </select>
+      <button class="pill" id="clear-filters">Clear all</button>
+    </div>
+
     <div class="pill-row" id="position-pills">
       <span class="pill-group-label">Position</span>
       <button class="pill active" data-position="all">All</button>
@@ -86,6 +94,8 @@
   </div>
 
   <div class="card-list" id="card-list"></div>
+
+  <button class="filter-fab" id="filter-fab" aria-label="Filters">Filters</button>
 
   <div class="bottom-nav">
     <button class="pill active" data-mobile-filter="all">All</button>

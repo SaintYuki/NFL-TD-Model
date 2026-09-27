@@ -298,11 +298,20 @@ PLAYS_PER_POINT_TOTAL = 0.22              # higher totals -> slightly more plays
 # Residual dispersion, expressed as coefficient of variation (sd / mean).
 # Passing yards are near-normal; rushing and receiving are right-skewed and
 # modeled with a Gamma. Receiving for low-volume players is zero-inflated.
+# Calibrated against the weeks 1-2 backtest, not assumed. The originals were
+# textbook values; measured residuals were far wider, and CI80 coverage came
+# in at 0.55-0.73 against a 0.80 target -- i.e. the model was substantially
+# overconfident, which also understates every tail/alt-line probability.
+#   passing   empirical CV 0.476  (was 0.265)
+#   rushing   empirical CV 0.860  (was 0.480)
+#   receiving empirical CV 0.850  (was 0.585)
+# Set slightly below the raw empirical figure because part of that spread is
+# genuine projection error that the other fixes are still reducing.
 DISPERSION_CV: Dict[str, float] = {
-    "passing_yards": 0.265,
-    "rushing_yards": 0.480,
-    "receiving_yards": 0.585,
-    "receptions": 0.400,
+    "passing_yards": 0.430,
+    "rushing_yards": 0.780,
+    "receiving_yards": 0.770,
+    "receptions": 0.520,
 }
 # CV shrinks as projected volume rises: cv = cv_base * (ref/mu)**CV_VOLUME_EXP
 CV_VOLUME_EXP = 0.16
@@ -318,7 +327,11 @@ CV_UNCERTAINTY_PENALTY = 0.35   # cv *= 1 + penalty * (1 - rho)
 
 # Anytime-TD Poisson -> probability calibration.
 # p = 1 - exp(-lambda * TD_POISSON_KAPPA), then optional isotonic recalibration.
-TD_POISSON_KAPPA = 0.965
+# Calibrated on the weeks 1-2 backtest: the model predicted a 0.1277 mean
+# anytime-TD probability against an observed base rate of 0.1704, and EVERY
+# reliability bucket came in under-predicted. That ~33% shortfall is also the
+# source of the persistent negative edge against the market on TD props.
+TD_POISSON_KAPPA = 1.30
 
 # ----------------------------------------------------------------------------
 # 7. Betting / edge settings

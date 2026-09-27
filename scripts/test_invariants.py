@@ -68,8 +68,13 @@ if os.path.exists(root):
         # regression (e.g. probabilities collapsing toward zero, or a
         # normalization bug inflating everyone).
         starters = [p for p in atd if p > 0.05]
+        # Band updated from the weeks 1-2 backtest. Among players the model
+        # rated above 5%, the OBSERVED anytime-TD rate was 0.236 (n=449).
+        # The old 0.08-0.20 band was set while the model was systematically
+        # under-predicting (0.128 predicted vs a 0.170 base rate), so it was
+        # encoding the bug as the expectation.
         check(f"week {wk} ATD mean plausible among role players (>5%)",
-              len(starters) > 20 and 0.08 < float(np.mean(starters)) < 0.20)
+              len(starters) > 20 and 0.15 < float(np.mean(starters)) < 0.32)
 
         u = eng.team_adjusted_usage().reset_index()
         rbs = u[u.position == "RB"]
