@@ -12,6 +12,8 @@ Public entry points:
 
 from __future__ import annotations
 
+import os
+
 import numpy as np
 import pandas as pd
 
@@ -86,6 +88,19 @@ class ProjectionEngine:
         self._qb_change_cache = {}
         self._league_def_means = None
         self.td_model = AnytimeTDModel(cfg)
+        # Install the fitted anytime-TD calibration if calibrate.py has
+        # produced one. Loaded from disk so it refreshes every time the
+        # backtest is rerun, rather than being frozen in the source.
+        try:
+            import json as _json
+            _cp = os.path.join(store.root, "calibration_params.json")
+            if os.path.exists(_cp):
+                _c = _json.load(open(_cp)).get("anytime_td_calibration")
+                if _c and _c.get("n", 0) >= 300:
+                    self.td_model.set_calibration(_c["intercept"],
+                                                  _c["slope_log_lambda"])
+        except Exception:
+            pass
         self.yard_models = {k: cls(cfg) for k, cls in MODEL_REGISTRY.items()}
         self._usage_cache = None
 
@@ -594,8 +609,17 @@ class ProjectionEngine:
                 model = self.yard_models[m]
                 # skip a market with no posted line when the position does not
                 # normally carry it or the projected volume is negligible
+                if m == "rushing_yards" and pos == "QB":
+                    # QB rushing is priced off a rush-share model built for
+                    # running backs, and it does not transfer: designed runs
+                    # and scrambles behave nothing like RB carries. It was
+                    # the single worst subgroup on the board (-8.9pp median,
+                    # 21% above market) and every one of the fifteen worst
+                    # edges was a QB rushing line. Removed rather than
+                    # patched, since nothing downstream depends on it.
+                    continue
                 if m not in booked:
-                    if m == "rushing_yards" and pos not in ("RB", "QB"):
+                    if m == "rushing_yards" and pos not in ("RB",):
                         continue
                     opp = model.opportunity(f)["expected_opportunities"]
                     if opp < 1.5:

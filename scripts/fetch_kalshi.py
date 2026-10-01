@@ -273,8 +273,20 @@ def main():
     # bet was available -- and no way to grade the model after the fact.
     hist_dir = os.path.join(args.out, "history")
     os.makedirs(hist_dir, exist_ok=True)
+    # latest snapshot, overwritten (used by build_site_data and grading)
     with open(os.path.join(hist_dir,
               f"kalshi_{args.season}_wk{args.week}.json"), "w") as fh:
+        json.dump(evaluations, fh, default=str)
+
+    # TIME SERIES: a separate stamped copy per fetch, never overwritten.
+    # Closing-line value needs prices at more than one moment, and the
+    # practical question -- "does it pay to bet Wednesday or Sunday?" --
+    # can only be answered if the whole week of prices is retained.
+    snaps = os.path.join(hist_dir, "snapshots")
+    os.makedirs(snaps, exist_ok=True)
+    stamp = fetched_at.replace(":", "").replace("-", "").split(".")[0]
+    with open(os.path.join(snaps,
+              f"kalshi_{args.season}_wk{args.week}_{stamp}.json"), "w") as fh:
         json.dump(evaluations, fh, default=str)
 
     with open(os.path.join(args.out, "kalshi_meta.json"), "w") as fh:

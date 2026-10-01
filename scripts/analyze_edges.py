@@ -35,7 +35,20 @@ def pct(x):
 
 
 def summarize(rows):
+    # Rows tagged model_role_gap were ALREADY refused by the system -- the
+    # model claimed near-impossibility against a confident market, which is
+    # a known role/data gap rather than an edge. Counting them in the stats
+    # imports large fake negative edges (Jalon Daniels at -0.605 making his
+    # first start) and drags every median down. They are reported separately.
+    excluded = [r for r in rows if r.get("recommended_side") == "model_role_gap"]
+    rows = [r for r in rows if r.get("recommended_side") != "model_role_gap"]
     liquid = [r for r in rows if r.get("liquid") and r.get("edge") is not None]
+    if excluded:
+        print(f"excluded as role/data gaps (not bettable): {len(excluded)}")
+        for r in sorted(excluded, key=lambda x: x.get("edge") or 0)[:5]:
+            print(f"    {str(r.get('player_name'))[:20]:22} {r.get('market'):16} "
+                  f"model={r.get('model_probability'):.3f} mkt={r.get('market_implied_probability'):.3f}")
+        print()
     if not liquid:
         print("no liquid contracts with an edge")
         return
