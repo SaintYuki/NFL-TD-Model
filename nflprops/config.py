@@ -35,7 +35,7 @@ STABILIZATION_K: Dict[str, float] = {
     # single current-season game
     "pass_att_share": 0.5,
     "target_share": 4.0,
-    "rush_share": 3.0,
+    "rush_share": 1.5,
     "rz_rush_share": 5.0,
     "rz_target_share": 6.0,
     "inside5_rush_share": 6.0,
@@ -231,7 +231,7 @@ REPLACEMENT_BASELINE: Dict[str, Dict[str, float]] = {
     # every team's expected touchdowns (0.43-0.51 TDs) across 16-23 bench
     # players the market does not even list a price for, which suppressed
     # anytime-TD probability for the real candidates by roughly the same 18%.
-    "RB": {"rush_share": 0.018, "target_share": 0.004,
+    "RB": {"rush_share": 0.005, "target_share": 0.004,
            "rz_rush_share": 0.006, "inside5_rush_share": 0.005,
            "rz_target_share": 0.003, "air_yards_share": 0.006},
     "WR": {"target_share": 0.005, "rush_share": 0.002,
@@ -279,6 +279,26 @@ EFFICIENCY_CREDIBILITY_K = {
 # approximate opportunity count when the raw count is not stored.
 TEAM_VOLUME_PER_GAME = {"pass_att": 33.0, "carries": 26.0, "targets": 33.0}
 
+# Share of team carries taken by each position, measured from 2026 weeks 1-4
+# play-by-play. Renormalising rush share across ALL positions at once forced
+# the total to 1.0 without respecting this split: running backs alone already
+# blended to ~0.96, so once quarterback and receiver shares were added the
+# pool hit ~1.21 and renormalisation cut every real back by roughly a
+# quarter. Quinshon Judkins blended to 0.608 (his actual was 0.578) and came
+# out of renormalisation at 0.434.
+#
+# Renormalising WITHIN each position group to these targets keeps the pool
+# coherent without taxing the backs for the quarterbacks' carries.
+CARRY_SHARE_BY_POSITION = {"RB": 0.833, "QB": 0.155, "WR": 0.051, "TE": 0.034}
+
+# Player rush shares are measured against the sum of player carries in the
+# weekly stats file; projected team carries are derived as plays minus
+# dropbacks from play-by-play. The first runs ~6.9% higher than the second
+# (measured, 2026 weeks 1-4), so the two must be reconciled before a share
+# is multiplied by a total. Without this every running back's carry count
+# was understated by that margin, and by up to 20% on some teams.
+CARRY_DEFINITION_RATIO = 1.069
+
 # Game script: how far the spread may move a team's pass rate. Uncapped,
 # this rewards being bad -- a 13.5-point underdog was getting a 0.673 pass
 # rate and MORE projected dropbacks than Mahomes. Real trailing teams do
@@ -309,8 +329,8 @@ PLAYS_PER_POINT_TOTAL = 0.22              # higher totals -> slightly more plays
 # genuine projection error that the other fixes are still reducing.
 DISPERSION_CV: Dict[str, float] = {
     "passing_yards": 0.430,
-    "rushing_yards": 0.780,
-    "receiving_yards": 0.770,
+    "rushing_yards": 0.845,
+    "receiving_yards": 0.820,
     "receptions": 0.520,
 }
 # CV shrinks as projected volume rises: cv = cv_base * (ref/mu)**CV_VOLUME_EXP

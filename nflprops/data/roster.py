@@ -261,7 +261,18 @@ def apply_roster_adjustments(usage: pd.DataFrame,
             # red-zone replacement baselines produced no visible change.
             elig = df["position"].isin(["RB", "WR", "TE"])
         elif col in ("rush_share", "rz_rush_share", "inside5_rush_share"):
-            elig = df["position"].isin(["RB", "WR", "QB"])
+            # Renormalise within position group to the measured split
+            # (RB 0.833 / QB 0.155 / WR 0.051), not across all carriers at
+            # once. See CARRY_SHARE_BY_POSITION in config for why.
+            from ..config import CARRY_SHARE_BY_POSITION
+            for pos, target in CARRY_SHARE_BY_POSITION.items():
+                m = df["position"] == pos
+                if m.any():
+                    df.loc[m, col] = renormalize_shares(
+                        df[m].assign(**{col: df.loc[m, col]}), col,
+                        team_col="team",
+                        target_total=target).values
+            continue
         elif col == "pass_att_share":
             # A team has exactly one set of dropbacks to give out. Without
             # this, every rostered QB blends toward a starter's share and

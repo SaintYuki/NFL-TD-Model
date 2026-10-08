@@ -1,13 +1,13 @@
 {
   "anytime_td_calibration": {
-    "intercept": -0.34454099789135045,
-    "slope_log_lambda": 0.5112576660218323,
-    "n": 1084
+    "intercept": -0.14002339786919804,
+    "slope_log_lambda": 0.6065565852593746,
+    "n": 1440
   },
-  "passing_yards_empirical_cv": 0.4126,
-  "passing_yards_mean_bias": 15.532,
-  "receiving_yards_empirical_cv": 0.8078,
-  "receiving_yards_mean_bias": -1.152,
-  "rushing_yards_empirical_cv": 0.8656,
-  "rushing_yards_mean_bias": 3.401
+  "passing_yards_empirical_cv": 0.4049,
+  "passing_yards_mean_bias": 15.616,
+  "receiving_yards_empirical_cv": 0.8492,
+  "receiving_yards_mean_bias": 0.148,
+  "rushing_yards_empirical_cv": 0.8567,
+  "rushing_yards_mean_bias": 5.724
 }

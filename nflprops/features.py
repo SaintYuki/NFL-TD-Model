@@ -51,6 +51,7 @@ from .config import (
     ModelConfig, DEFAULT_CONFIG, LEAGUE_BASELINE,
     PASS_RATE_PER_POINT_SPREAD, RUSH_SHARE_PER_POINT_SPREAD,
     MAX_PASS_RATE_SCRIPT_ADJ, PLAYS_PER_POINT_UNDERDOG,
+    CARRY_DEFINITION_RATIO,
     PLAYS_PER_POINT_TOTAL, TD_INTERCEPT, TD_SLOPE,
     OL_PASSBLOCK_YPA_BETA, OL_RUNBLOCK_YPC_BETA,
     WR_CORPS_YPA_BETA, QB_QUALITY_YPT_BETA,
@@ -179,6 +180,16 @@ def team_volume_features(team_off: dict, opp_def: dict, env: dict,
     pass_attempts *= volume_mult
     carries *= volume_mult
     plays *= volume_mult
+
+    # UNIT RECONCILIATION.
+    # Player rush shares are computed against the sum of player carries from
+    # the weekly stats file, but `carries` here is derived as plays minus
+    # dropbacks from play-by-play. Those are not the same quantity: the
+    # play-by-play figure runs about 7% lower league-wide and up to 20% lower
+    # for some teams (Tampa Bay: 20.3 vs 24.3). Multiplying a share from one
+    # definition by a total from the other silently shrank every back's
+    # carries -- Bucky Irving projected 9.1 against an actual 14.0.
+    carries *= CARRY_DEFINITION_RATIO
 
     return {
         "proj_team_plays": plays,

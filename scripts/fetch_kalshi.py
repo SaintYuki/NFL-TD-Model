@@ -204,6 +204,20 @@ def main():
         for q in qs:
             try:
                 dist, res_proj = None, None
+
+                # QB RUSHING IS NOT MODELLED AND MUST NOT BE PRICED.
+                # projections.project_player already refuses this, but this
+                # script builds its own projections and bypassed that guard,
+                # so QB rushing lines kept reaching the board -- Jalen Hurts
+                # at model 0.097 against a 0.555 market for 25+ rushing
+                # yards, and Dak Prescott inflated in the other direction.
+                # Rush share is derived from a running-back model; designed
+                # QB runs and scrambles do not behave that way, and this was
+                # the bulk of the remaining -9.8pp rushing deficit after the
+                # RB fixes landed.
+                if q.market == "rushing_yards" and f.get("position") == "QB":
+                    continue
+
                 if q.market == "anytime_td":
                     td = engine.td_model.predict(f)
                     k = int(q.strike)

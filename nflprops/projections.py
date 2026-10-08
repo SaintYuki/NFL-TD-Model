@@ -482,6 +482,13 @@ class ProjectionEngine:
             is_starter = usage["player_id"] == pid
             usage.loc[mask & is_starter, "pass_att_share"] = STARTER_SHARE
             usage.loc[mask & ~is_starter, "pass_att_share"] = BACKUP_SHARE
+            # Rushing too: a backup QB who will not take a snap cannot take a
+            # designed run either. Leaving his rush share intact let Cleveland
+            # carry BOTH Deshaun Watson (0.177) and Shedeur Sanders (0.092),
+            # inflating the carry pool and taxing the running backs on
+            # renormalisation.
+            if "rush_share" in usage.columns:
+                usage.loc[mask & ~is_starter, "rush_share"] *= 0.10
         return usage
 
     # ------------------------------------------------------------------
