@@ -16,7 +16,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6648, 00-0035477,Brock Ruble,,OT,,,,,Active,3.0
 3342,00-0032791,Jakeem Grant,,WR,,,,,Active,8.0
 1684,00-0030300,Jaron Brown,,WR,,,,,Active,9.0
-3268,00-0033038,Eric Murray,JAX,DB,1.0,FS,Doubtful,Concussion,Active,10.0
+3268,00-0033038,Eric Murray,JAX,DB,1.0,FS,Out,Concussion,Active,10.0
 4449,00-0033445,Nicholas Morrow,,LB,,,,,Active,8.0
 6137, 00-0035308,Tommy Sweeney,,TE,,,,,Active,6.0
 5668,00-0034668,Aaron Stinnie,NYG,G,,OL,,,Active,8.0
@@ -1188,7 +1188,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6697, 00-0035635,Floyd Allen,,WR,,,,,Active,3.0
 2500,00-0031607,Leterrius Walton,,DE,,,,,Active,7.0
 1261,00-0029678,David DeCastro,,OG,,,,,Active,10.0
-1340,00-0030561,Lane Johnson,,T,,,NA,Personal,Active,13.0
+1340,00-0030561,Lane Johnson,,T,,,Out,Personal,Active,13.0
 3170,00-0033108,Paxton Lynch,,QB,,,,,Inactive,6.0
 4799,00-0034018,Jeremy Faulk,,DT,,,,,Active,5.0
 1674,00-0030228,A.J. Bouye,CAR,CB,,,,,Active,9.0
