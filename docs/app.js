@@ -536,48 +536,118 @@ function toggleDrawer(tr, row) {
 // ---------------------------------------------------------------------
 // Render: mobile cards
 // ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// Mobile cards
+// ---------------------------------------------------------------------
+const CARD_PAGE = 50;
+let CARD_LIMIT = CARD_PAGE;
+let CARD_ROWS = [];
+let LAST_SIG = "";
+
+function pct(v, d = 0) {
+  return v === null || v === undefined || Number.isNaN(v) ? "-" : (v * 100).toFixed(d) + "%";
+}
+
 function cardHtml(r, idx) {
   const isFav = FAVORITES.has(favKey(r));
-  const prob = r.probability !== undefined && r.probability !== null ? fmt(r.probability * 100, 1) + "%" : "-";
-  const edgeText = r.edge !== null && r.edge !== undefined ? fmt(r.edge * 100, 1) + "pp" : "-";
+  const isTD = r.market === "anytime_td";
+  const hasEdge = r.edge !== null && r.edge !== undefined;
+  const modelP = r.model_probability ?? (isTD ? r.probability : null);
+
+  // Edge is the reason the page exists, so it is the biggest thing on the
+  // card whenever a market price is available. Without one, fall back to the
+  // model's headline number rather than showing an empty dash.
+  let hero, heroLabel, heroClass;
+  if (hasEdge) {
+    const e = r.edge * 100;
+    hero = (e > 0 ? "+" : "") + e.toFixed(1);
+    heroLabel = "edge pp";
+    heroClass = edgeClass(r);
+  } else if (isTD) {
+    hero = pct(r.probability, 0);
+    heroLabel = "TD prob";
+    heroClass = "";
+  } else {
+    hero = fmt(r.projection, 1);
+    heroLabel = "proj yds";
+    heroClass = "";
+  }
+
+  const stats = [
+    ["Model", pct(modelP)],
+    ["Market", pct(r.market_implied_probability)],
+    [isTD ? "Exp TD" : "Proj", fmt(r.projection, isTD ? 2 : 1)],
+    ["Line", r.line !== null && r.line !== undefined ? r.line + "+" : "-"],
+  ].map(([l, v]) => `<div class="pc-stat"><label>${l}</label><b>${v}</b></div>`).join("");
+
+  const side = (r.recommended_side || "").toLowerCase();
+  const sideTxt = side === "yes" ? "YES" : side === "no" ? "NO" : "";
+  const tag = r.bettable
+    ? `<span class="tag tag-${r.bettable.replace(/\s/g, "")}">${r.bettable}</span>` : "";
+  const conf = r.confidence_grade ? `<span class="conf-pill">${r.confidence_grade}</span>` : "";
+  const kelly = r.kelly ? `<span class="pc-kelly">${(r.kelly * 100).toFixed(1)}% kelly</span>` : "";
+
   return `<div class="prop-card" data-idx="${idx}">
-    <div class="prop-card-top">
-      <div>
+    <div class="pc-head">
+      <div class="pc-id">
         <div class="player-name">${r.player_name} <span class="pos-badge">${r.position}</span></div>
-        <div class="prop-card-matchup">${r.team} @ ${r.opponent} \u00b7 ${MARKET_LABEL[r.market] || r.market}</div>
+        <div class="pc-sub">${r.team} @ ${r.opponent || "BYE"} &middot; ${MARKET_LABEL[r.market] || r.market}</div>
       </div>
-      <span class="fav-star ${isFav ? "active" : ""}" data-fav-idx="${idx}">\u2605</span>
-    </div>
-    <div class="prop-card-body">
-      <span class="prob-cell ${probClass(r)}">${prob}</span>
-      <div class="prop-card-proj">
-        <div class="proj-value">${fmt(r.projection, r.market === "anytime_td" ? 2 : 1)}</div>
-        <div class="proj-ci">${r.line !== null && r.line !== undefined ? "line " + r.line : ""}</div>
+      <div class="pc-hero-wrap">
+        <span class="pc-hero ${heroClass}">${hero}</span>
+        <div class="pc-hero-label">${heroLabel}</div>
       </div>
+      <span class="fav-star ${isFav ? "active" : ""}" data-fav-idx="${idx}">&#9733;</span>
     </div>
-    <div class="prop-card-footer">
-      <span class="edge-cell ${edgeClass(r)}">${edgeText}</span>
-      <span class="${sideClass(r.recommended_side)}">${r.recommended_side || "-"}</span>
+    <div class="pc-stats">${stats}</div>
+    <div class="pc-foot">
+      ${tag}${conf}${sideTxt ? `<span class="pc-side ${sideClass(side)}">${sideTxt}</span>` : ""}${kelly}
+      <span class="pc-chev">Details &#9662;</span>
     </div>
+    <div class="pc-detail"></div>
   </div>`;
 }
 
 function renderCards(rows) {
+  CARD_ROWS = rows;
   const list = document.getElementById("card-list");
   if (!rows.length) {
     list.innerHTML = `<div class="loading">No rows match those filters.</div>`;
     return;
   }
-  const limited = rows.slice(0, 200);
-  list.innerHTML = limited.map((r, i) => cardHtml(r, i)).join("");
-  list.querySelectorAll(".fav-star").forEach(star => {
-    star.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const row = limited[star.dataset.favIdx];
-      toggleFavorite(row);
-      star.classList.toggle("active");
-    });
-  });
+  const shown = rows.slice(0, CARD_LIMIT);
+  const remaining = rows.length - shown.length;
+  list.innerHTML = shown.map((r, i) => cardHtml(r, i)).join("") +
+    (remaining > 0
+      ? `<button class="card-more" id="card-more">Show ${Math.min(CARD_PAGE, remaining)} more <span>(${remaining} remaining)</span></button>`
+      : "");
+}
+
+// Keeps the mobile-only controls in step with the real filter state.
+function syncMobileUI(rows) {
+  let n = 0;
+  if (activePosition() !== "all") n++;
+  if (activeTeam() !== "all") n++;
+  if (ACTIVE_PRESET) n++;
+  const badge = document.getElementById("filter-count");
+  if (badge) { badge.textContent = n || ""; badge.hidden = !n; }
+
+  const apply = document.getElementById("sheet-apply");
+  if (apply) apply.textContent = `Show ${rows.length} result${rows.length === 1 ? "" : "s"}`;
+
+  const mSort = document.getElementById("m-sort");
+  if (mSort && [...mSort.options].some(o => o.value === SORT_KEY)) mSort.value = SORT_KEY;
+  const dir = document.getElementById("m-sort-dir");
+  if (dir) dir.textContent = SORT_DIR === 1 ? "\u2191" : "\u2193";
+
+  const mk = activeMarket();
+  let cur = null;
+  if (ACTIVE_PRESET === "high-edge") cur = "high-edge";
+  else if (ACTIVE_PRESET === "favorites") cur = "favorites";
+  else if (!ACTIVE_PRESET && mk === "anytime_td") cur = "anytime_td";
+  else if (!ACTIVE_PRESET && mk === "all") cur = "all";
+  document.querySelectorAll(".bottom-nav .pill").forEach(p =>
+    p.classList.toggle("active", p.dataset.mobileFilter === cur));
 }
 
 // ---------------------------------------------------------------------
@@ -610,6 +680,20 @@ function renderTopPlays(rows) {
       <span class="top-play-edge ${(r.edge||0) > 0 ? "side-over" : "side-under"}">
         ${(r.edge||0) > 0 ? "+" : ""}${((r.edge||0)*100).toFixed(1)}pp</span>
     </div>`).join("");
+  // On a phone only the first three show until tapped; the panel otherwise
+  // fills the whole first screen and pushes search and the cards off it.
+  if (plays.length > 3) {
+    const more = document.createElement("div");
+    more.className = "tp-more";
+    const label = () => el.classList.contains("expanded")
+      ? "Show fewer \u25B4" : `Show all ${plays.length} \u25BE`;
+    more.textContent = label();
+    more.addEventListener("click", () => {
+      el.classList.toggle("expanded");
+      more.textContent = label();
+    });
+    el.appendChild(more);
+  }
   el.querySelectorAll(".top-play-row").forEach(row => {
     row.addEventListener("click", () => {
       document.getElementById("search").value = row.dataset.player;
@@ -620,9 +704,22 @@ function renderTopPlays(rows) {
 
 function render() {
   const rows = sortRows(filteredRows());
+
+  // New filters or a new sort order start the card list from the top again.
+  const sig = JSON.stringify([document.getElementById("search").value,
+    activePosition(), activeMarket(), activeTeam(), ACTIVE_PRESET, SORT_KEY, SORT_DIR]);
+  if (sig !== LAST_SIG) {
+    CARD_LIMIT = CARD_PAGE;
+    if (LAST_SIG !== "" && window.matchMedia("(max-width: 760px)").matches) {
+      window.scrollTo(0, 0);
+    }
+    LAST_SIG = sig;
+  }
+
   renderTopPlays(ROWS);
   renderTable(rows);
   renderCards(rows);
+  syncMobileUI(rows);
 
   document.getElementById("stat-total").textContent = rows.length;
   document.getElementById("stat-edges").textContent =
@@ -636,46 +733,7 @@ function render() {
   document.getElementById("stat-filters").textContent =
     activeFilters.length ? activeFilters.join(", ") : "No filters applied";
 
-  const teamSel = document.getElementById("team-filter");
-if (teamSel) teamSel.addEventListener("change", render);
-
-const clearBtn = document.getElementById("clear-filters");
-if (clearBtn) clearBtn.addEventListener("click", () => {
-  document.getElementById("search").value = "";
-  if (teamSel) teamSel.value = "all";
-  document.querySelectorAll("#position-pills .pill").forEach(p => p.classList.remove("active"));
-  document.querySelector('#position-pills .pill[data-position="all"]')?.classList.add("active");
-  document.querySelectorAll("#market-pills .pill").forEach(p => p.classList.remove("active"));
-  document.querySelector('#market-pills .pill[data-market="all"]')?.classList.add("active");
-  document.querySelectorAll("#preset-pills .pill").forEach(p => p.classList.remove("active"));
-  ACTIVE_PRESET = null;
-  render();
-});
-
-// Mobile: the controls block was five stacked pill rows that pushed the
-// table off screen in portrait. Collapse it behind a button.
-(function setupMobileFilters() {
-  const fab = document.getElementById("filter-fab");
-  const controls = document.querySelector(".controls");
-  if (!fab || !controls) return;
-  const scrim = document.createElement("div");
-  scrim.className = "filter-scrim";
-  document.body.appendChild(scrim);
-  const close = () => { controls.classList.remove("open"); scrim.classList.remove("open"); };
-  fab.addEventListener("click", () => {
-    const open = controls.classList.toggle("open");
-    scrim.classList.toggle("open", open);
-  });
-  scrim.addEventListener("click", close);
-  controls.addEventListener("click", e => {
-    // close after a choice so the results are visible immediately
-    if (e.target.closest(".pill") || e.target.id === "clear-filters") {
-      if (window.matchMedia("(max-width: 760px)").matches) setTimeout(close, 180);
-    }
-  });
-})();
-
-document.querySelectorAll("th[data-sort]").forEach(th => {
+  document.querySelectorAll("th[data-sort]").forEach(th => {
     th.classList.toggle("sorted", th.dataset.sort === SORT_KEY);
     th.querySelector(".arrow")?.remove();
     if (th.dataset.sort === SORT_KEY) {
@@ -731,7 +789,12 @@ document.querySelectorAll(".bottom-nav .pill").forEach(pill => {
     document.querySelectorAll(".bottom-nav .pill").forEach(p => p.classList.remove("active"));
     pill.classList.add("active");
     const f = pill.dataset.mobileFilter;
-    if (f === "all") { ACTIVE_PRESET = null; }
+    if (f === "all") {
+      ACTIVE_PRESET = null;
+      document.querySelectorAll("#preset-pills .pill").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll("#market-pills .pill").forEach(p => p.classList.remove("active"));
+      document.querySelector('#market-pills .pill[data-market="all"]')?.classList.add("active");
+    }
     else if (f === "high-edge" || f === "favorites") { ACTIVE_PRESET = f; }
     else {
       document.querySelectorAll("#market-pills .pill").forEach(p => p.classList.remove("active"));
@@ -740,11 +803,18 @@ document.querySelectorAll(".bottom-nav .pill").forEach(pill => {
     render();
   });
 });
+// ---------------------------------------------------------------------
+// Toolbar, filter sheet, sort and card taps. Registered ONCE, here.
+//
+// An earlier version of this wiring was pasted inside render(), so every
+// re-render registered another copy of each handler. The Filters button then
+// fired two or three times per tap, toggling the sheet open and shut in the
+// same instant, which is why it never appeared on a phone.
+// ---------------------------------------------------------------------
 const teamSel = document.getElementById("team-filter");
 if (teamSel) teamSel.addEventListener("change", render);
 
-const clearBtn = document.getElementById("clear-filters");
-if (clearBtn) clearBtn.addEventListener("click", () => {
+document.getElementById("clear-filters")?.addEventListener("click", () => {
   document.getElementById("search").value = "";
   if (teamSel) teamSel.value = "all";
   document.querySelectorAll("#position-pills .pill").forEach(p => p.classList.remove("active"));
@@ -756,28 +826,65 @@ if (clearBtn) clearBtn.addEventListener("click", () => {
   render();
 });
 
-// Mobile: the controls block was five stacked pill rows that pushed the
-// table off screen in portrait. Collapse it behind a button.
-(function setupMobileFilters() {
-  const fab = document.getElementById("filter-fab");
-  const controls = document.querySelector(".controls");
-  if (!fab || !controls) return;
+// sort control (phones have no sortable table header)
+const mSort = document.getElementById("m-sort");
+mSort?.addEventListener("change", () => {
+  SORT_KEY = mSort.value;
+  SORT_DIR = SORT_KEY === "player_name" ? 1 : -1;
+  render();
+});
+document.getElementById("m-sort-dir")?.addEventListener("click", () => {
+  SORT_DIR *= -1;
+  render();
+});
+
+// filter sheet
+(function setupFilterSheet() {
+  const btn = document.getElementById("filter-fab");
+  const sheet = document.getElementById("controls");
+  if (!btn || !sheet) return;
   const scrim = document.createElement("div");
   scrim.className = "filter-scrim";
   document.body.appendChild(scrim);
-  const close = () => { controls.classList.remove("open"); scrim.classList.remove("open"); };
-  fab.addEventListener("click", () => {
-    const open = controls.classList.toggle("open");
+  const setOpen = (open) => {
+    sheet.classList.toggle("open", open);
     scrim.classList.toggle("open", open);
-  });
-  scrim.addEventListener("click", close);
-  controls.addEventListener("click", e => {
-    // close after a choice so the results are visible immediately
-    if (e.target.closest(".pill") || e.target.id === "clear-filters") {
-      if (window.matchMedia("(max-width: 760px)").matches) setTimeout(close, 180);
-    }
-  });
+    document.body.classList.toggle("sheet-open", open);
+    btn.setAttribute("aria-expanded", String(open));
+  };
+  btn.addEventListener("click", () => setOpen(!sheet.classList.contains("open")));
+  scrim.addEventListener("click", () => setOpen(false));
+  document.getElementById("sheet-close")?.addEventListener("click", () => setOpen(false));
+  document.getElementById("sheet-apply")?.addEventListener("click", () => setOpen(false));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setOpen(false); });
+  // The sheet stays open while choosing, so several filters can be combined;
+  // "Show N results" closes it.
 })();
+
+// card taps: expand details, favourite, show more (delegated, once)
+document.getElementById("card-list")?.addEventListener("click", (e) => {
+  if (e.target.closest("#card-more")) {
+    CARD_LIMIT += CARD_PAGE;
+    renderCards(CARD_ROWS);
+    return;
+  }
+  const star = e.target.closest(".fav-star");
+  if (star) {
+    toggleFavorite(CARD_ROWS[+star.dataset.favIdx]);
+    star.classList.toggle("active");
+    return;
+  }
+  const card = e.target.closest(".prop-card");
+  if (!card) return;
+  const box = card.querySelector(".pc-detail");
+  if (card.classList.contains("open")) {
+    card.classList.remove("open");
+    box.innerHTML = "";
+    return;
+  }
+  box.innerHTML = drawerHtml(CARD_ROWS[+card.dataset.idx]);
+  card.classList.add("open");
+});
 
 document.querySelectorAll("th[data-sort]").forEach(th => {
   th.addEventListener("click", () => {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>NFL Player Prop Projections</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -26,10 +26,45 @@
 
   <div class="top-plays" id="top-plays"></div>
 
-  <div class="controls">
-    <div class="search-row">
-      <input id="search" type="text" placeholder="Search player, team, or matchup..." autocomplete="off">
-      <div id="autocomplete"></div>
+  <div class="toolbar" id="toolbar">
+    <div class="toolbar-main">
+      <div class="search-row">
+        <input id="search" type="search" inputmode="search" enterkeyhint="search"
+               placeholder="Search players or teams" autocomplete="off"
+               autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div id="autocomplete"></div>
+      </div>
+      <button class="m-filter-btn" id="filter-fab" aria-label="Filters" aria-expanded="false">
+        Filters <span class="badge" id="filter-count" hidden></span>
+      </button>
+    </div>
+
+    <div class="toolbar-sub">
+      <div class="pill-row" id="market-pills">
+        <span class="pill-group-label">Market</span>
+        <button class="pill active" data-market="all">All</button>
+        <button class="pill" data-market="anytime_td"><span class="lg">Anytime TD</span><span class="sm">TD</span></button>
+        <button class="pill" data-market="passing_yards"><span class="lg">Passing</span><span class="sm">Pass</span></button>
+        <button class="pill" data-market="rushing_yards"><span class="lg">Rushing</span><span class="sm">Rush</span></button>
+        <button class="pill" data-market="receiving_yards"><span class="lg">Receiving</span><span class="sm">Rec</span></button>
+      </div>
+      <div class="m-sort">
+        <select id="m-sort" aria-label="Sort by">
+          <option value="edge">Edge</option>
+          <option value="confidence">Conf</option>
+          <option value="projection">Proj</option>
+          <option value="probability">Prob</option>
+          <option value="player_name">A-Z</option>
+        </select>
+        <button id="m-sort-dir" aria-label="Reverse sort direction">&#8595;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls" id="controls">
+    <div class="sheet-head">
+      <span>Filters</span>
+      <button id="sheet-close">Done</button>
     </div>
 
     <div class="pill-row" id="team-row">
@@ -49,15 +84,6 @@
       <button class="pill" data-position="TE">TE</button>
     </div>
 
-    <div class="pill-row" id="market-pills">
-      <span class="pill-group-label">Market</span>
-      <button class="pill active" data-market="all">All</button>
-      <button class="pill" data-market="anytime_td">Anytime TD</button>
-      <button class="pill" data-market="passing_yards">Passing</button>
-      <button class="pill" data-market="rushing_yards">Rushing</button>
-      <button class="pill" data-market="receiving_yards">Receiving</button>
-    </div>
-
     <div class="pill-row" id="preset-pills">
       <span class="pill-group-label">Presets</span>
       <button class="pill preset" data-preset="high-edge">High Edge Only</button>
@@ -65,6 +91,10 @@
       <button class="pill preset" data-preset="qb-passing">All QB Passing</button>
       <button class="pill preset" data-preset="longshot-td">Longshot TDs (&lt;10%)</button>
       <button class="pill preset" data-preset="favorites">&#9733; Favorites</button>
+    </div>
+
+    <div class="sheet-foot">
+      <button id="sheet-apply">Show results</button>
     </div>
   </div>
 
@@ -95,8 +125,6 @@
 
   <div class="card-list" id="card-list"></div>
 
-  <button class="filter-fab" id="filter-fab" aria-label="Filters">Filters</button>
-
   <div class="bottom-nav">
     <button class="pill active" data-mobile-filter="all">All</button>
     <button class="pill" data-mobile-filter="high-edge">High Edge</button>
@@ -107,7 +135,7 @@
   <footer>
     <p>Generated automatically each week. Edge is computed against the
        de-vigged market price. Probability and edge cells are colored by
-       magnitude. Click any row for a full breakdown. Not betting advice.</p>
+       magnitude. Click or tap any row for a full breakdown. Not betting advice.</p>
   </footer>
 
   <script src="app.js"></script>

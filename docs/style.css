@@ -43,7 +43,11 @@
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+/* body must grow with its content: with a fixed height, position:sticky
+   elements (the phone toolbar) lose their boundary after one screen and
+   scroll away with it. */
+html { height: 100%; }
+body { min-height: 100%; }
 
 body {
   margin: 0;
@@ -516,8 +520,21 @@ footer {
 
 
 /* =========================================================================
-   Team filter + mobile usability
+   Toolbar (search + market) and the filter sheet
+   Desktop: the toolbar is the search box and market pills, inline.
+   Phone:   the toolbar sticks to the top of the screen so search, market and
+            sort are always one thumb-tap away, and the rest lives in a sheet.
    ========================================================================= */
+.toolbar { padding: 16px 24px 0; display: flex; flex-direction: column; gap: 12px; }
+.toolbar-main { display: flex; gap: 10px; align-items: center; }
+.toolbar-main .search-row { flex: 1; max-width: 420px; }
+.toolbar-sub { display: flex; align-items: center; gap: 10px; }
+
+/* phone-only pieces are hidden on desktop */
+.m-filter-btn, .m-sort, .sheet-head, .sheet-foot { display: none; }
+
+.controls { padding-top: 10px; }
+
 #team-filter {
   background: var(--panel); border: 1px solid var(--border); color: var(--text);
   padding: 6px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600;
@@ -525,49 +542,167 @@ footer {
 }
 #team-filter:focus { outline: none; border-color: var(--market-pass); }
 
-.filter-fab {
-  display: none;
-  position: fixed; right: 14px; bottom: calc(66px + env(safe-area-inset-bottom));
-  z-index: 60; border: 1px solid var(--border-strong);
-  background: var(--panel); color: var(--text);
-  font-size: 13px; font-weight: 700; padding: 11px 18px; border-radius: 999px;
-  box-shadow: var(--shadow-md); cursor: pointer;
-}
+.card-list { display: none; }
+.pill .sm { display: none; }
+.tp-more { display: none; }
 
+/* =========================================================================
+   Phone layout
+   ========================================================================= */
 @media (max-width: 760px) {
-  /* The controls block was ~5 stacked pill rows, which pushed the table off
-     screen in portrait and made filtering effectively landscape-only.
-     Collapse it behind a button and open it as a sheet. */
-  .filter-fab { display: block; }
+  html { -webkit-text-size-adjust: 100%; }
+  button, .pill, select { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  body.sheet-open { overflow: hidden; }
+
+  header.top { padding-top: calc(12px + env(safe-area-inset-top)); padding-bottom: 4px; }
+  h1 { font-size: 18px; }
+  .subtitle { font-size: 12px; }
+
+  /* one compact line instead of three wrapped ones */
+  .summary-bar { padding: 4px 14px 10px; gap: 2px 14px; font-size: 12px; flex-wrap: wrap; }
+  .summary-bar .dot, #stat-filters, #stat-updated { display: none; }
+
+  /* ---- sticky toolbar ---- */
+  .toolbar {
+    position: sticky; top: 0; z-index: 40;
+    padding: 8px 14px; gap: 8px;
+    padding-top: calc(8px + env(safe-area-inset-top));
+    background: rgba(10, 13, 18, 0.96);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .toolbar-main .search-row { max-width: none; }
+  /* 16px stops iOS Safari zooming the whole page when the field is focused */
+  .search-row input { font-size: 16px; min-height: 44px; padding: 11px 14px 11px 38px; }
+
+  .m-filter-btn {
+    display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    min-height: 44px; padding: 0 14px;
+    background: var(--panel); border: 1px solid var(--border-strong);
+    color: var(--text); border-radius: var(--radius-md);
+    font-size: 14px; font-weight: 700;
+  }
+  .m-filter-btn .badge {
+    min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--market-pass); color: #06101f; font-size: 11px; font-weight: 800;
+  }
+  .m-filter-btn .badge[hidden] { display: none; }
+
+  /* market chips swipe sideways instead of wrapping into extra rows */
+  #market-pills {
+    flex: 1 1 auto; min-width: 0; flex-wrap: nowrap; gap: 6px; padding: 2px 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  #market-pills::-webkit-scrollbar { display: none; }
+  #market-pills .pill-group-label { display: none; }
+  #market-pills .pill { flex: 0 0 auto; white-space: nowrap; min-height: 38px; padding: 8px 12px; font-size: 13px; }
+
+  .m-sort { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; }
+  .m-sort select {
+    font-size: 16px; min-height: 38px; padding: 6px 4px 6px 8px; width: 86px;
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .m-sort button {
+    width: 38px; min-height: 38px; font-size: 17px; font-weight: 800;
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+
+  /* ---- filter sheet ---- */
   .controls {
-    position: fixed; left: 0; right: 0; bottom: 0;
-    max-height: 78vh; overflow-y: auto; z-index: 70;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+    max-height: 82vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
     background: var(--bg-elevated);
-    border-top: 1px solid var(--border-strong);
-    border-radius: 16px 16px 0 0;
-    box-shadow: 0 -8px 30px rgba(0,0,0,.55);
-    padding: 16px 14px calc(22px + env(safe-area-inset-bottom));
-    transform: translateY(102%);
-    transition: transform .22s ease;
+    border-top: 1px solid var(--border-strong); border-radius: 18px 18px 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+    padding: 0 16px calc(14px + env(safe-area-inset-bottom)); gap: 18px;
+    transform: translateY(105%); visibility: hidden;
+    transition: transform 0.22s ease, visibility 0s linear 0.22s;
   }
-  .controls.open { transform: translateY(0); }
-  .controls::before {
-    content: ""; display: block; width: 38px; height: 4px; border-radius: 2px;
-    background: var(--border-strong); margin: -6px auto 12px;
+  .controls.open { transform: translateY(0); visibility: visible; transition: transform 0.22s ease; }
+  .sheet-head {
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 1; padding: 14px 0 6px;
+    background: var(--bg-elevated); font-size: 17px; font-weight: 800;
   }
-  .filter-scrim {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 65;
+  .sheet-head button {
+    min-height: 44px; padding: 0 4px 0 14px; background: none; border: none;
+    color: var(--market-pass); font-size: 15px; font-weight: 700;
   }
+  .sheet-foot { display: block; position: sticky; bottom: 0; padding-top: 8px; background: var(--bg-elevated); }
+  #sheet-apply {
+    width: 100%; min-height: 50px; border: none; border-radius: 12px;
+    background: #f1f5f9; color: #0a0d12; font-size: 15px; font-weight: 800;
+  }
+  .controls .pill-row { flex-wrap: wrap; gap: 8px; }
+  .controls .pill-group-label { width: 100%; margin-bottom: -2px; }
+  .controls .pill { min-height: 42px; padding: 9px 15px; font-size: 14px; }
+  #team-filter { flex: 1; min-width: 0; font-size: 16px; min-height: 44px; padding: 8px 14px; }
+
+  .filter-scrim { display: none; position: fixed; inset: 0; z-index: 70; background: rgba(0, 0, 0, 0.55); }
   .filter-scrim.open { display: block; }
 
-  /* bigger touch targets */
-  .pill { padding: 9px 14px; font-size: 13.5px; }
-  #team-filter { padding: 9px 12px; font-size: 13.5px; width: 100%; }
-  #team-row { flex-direction: column; align-items: stretch; gap: 8px; }
+  .top-plays { margin: 10px 14px 0; padding: 10px 12px 6px; }
+  .top-plays h3 { margin-bottom: 4px; }
+  .top-plays .empty { font-size: 12px; padding-bottom: 4px; }
+  .top-play-row { gap: 8px; padding: 6px 0; font-size: 13px; }
+  .top-play-rank { width: 14px; }
+  .top-play-edge { font-size: 14px; }
+  .top-plays:not(.expanded) .top-play-row:nth-of-type(n+4) { display: none; }
+  .tp-more { display: block; padding: 8px 0 4px; text-align: center; font-size: 12.5px; font-weight: 700; color: var(--market-pass); cursor: pointer; }
 
-  .top-plays { margin: 12px 14px 0; }
-  .prop-card { padding: 16px 14px 14px; }
-  .prop-card .player-name { font-size: 16px; }
-  .prop-card-proj .proj-value { font-size: 22px; }
-  .card-list { padding-bottom: 130px; }
+  /* short chip labels on a phone so the row is not cut off mid-word */
+  #market-pills .pill .lg { display: none; }
+  #market-pills .pill .sm { display: inline; }
+
+  /* ---- cards ---- */
+  .table-wrap { display: none; }
+  .card-list { display: block; padding: 10px 14px calc(96px + env(safe-area-inset-bottom)); }
+  .bottom-nav { display: flex; padding-bottom: calc(8px + env(safe-area-inset-bottom)); }
+
+  .prop-card {
+    position: relative; margin-bottom: 10px; padding: 12px 12px 10px; cursor: pointer;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+  }
+  .prop-card.open { border-color: var(--border-strong); }
+  .pc-head { display: flex; align-items: flex-start; gap: 10px; }
+  .pc-id { flex: 1; min-width: 0; }
+  .pc-id .player-name { font-size: 16px; font-weight: 700; line-height: 1.25; }
+  .pc-sub { margin-top: 2px; font-size: 12px; color: var(--text-dim); }
+  .pc-hero-wrap { flex: 0 0 auto; min-width: 64px; text-align: right; }
+  .pc-hero { display: block; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .pc-hero-label { margin-top: 3px; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); }
+  .prop-card .fav-star {
+    flex: 0 0 auto; width: 40px; height: 40px; margin: -8px -8px 0 0;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .pc-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+  }
+  .pc-stat label { display: block; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); }
+  .pc-stat b { font-size: 14px; font-weight: 700; }
+  .pc-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .pc-side { font-size: 11px; font-weight: 800; letter-spacing: 0.05em; }
+  .pc-kelly { font-size: 11.5px; color: var(--text-dim); }
+  .pc-chev { margin-left: auto; font-size: 12px; color: var(--text-faint); }
+  .prop-card.open .pc-chev { color: var(--text-dim); }
+
+  .pc-detail:empty { display: none; }
+  .pc-detail {
+    margin: 10px -12px -10px; background: var(--bg);
+    border-top: 1px solid var(--border); border-radius: 0 0 14px 14px; overflow: hidden;
+  }
+  .pc-detail .drawer { grid-template-columns: 1fr; padding: 14px 14px 16px; gap: 14px; border-top: none; }
+  .pc-detail .drawer-block { grid-column: 1 / -1 !important; }
+
+  .card-more {
+    display: block; width: 100%; min-height: 48px; margin-top: 4px;
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--border-strong); border-radius: 12px;
+    font-size: 14px; font-weight: 700;
+  }
+  .card-more span { color: var(--text-faint); font-weight: 500; }
 }
