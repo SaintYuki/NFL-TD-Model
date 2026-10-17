@@ -192,6 +192,7 @@ GAME_ENVIRONMENT: Dict[str, Col] = {
     "spread":           ("float", "Team spread. POSITIVE = underdog by that many points."),
     "total":            ("float", "Game total."),
     "implied_total":    ("float", "total/2 - spread/2. Team's implied points."),
+    "kickoff_utc":      ("str",   "ISO kickoff time in UTC. Lets CLV analysis exclude games already in progress."),
     "dome":             ("bool",  "Indoor or closed roof."),
     "wind_mph":         ("float", "Forecast wind."),
     "precip_prob":      ("float", "Forecast precipitation probability."),

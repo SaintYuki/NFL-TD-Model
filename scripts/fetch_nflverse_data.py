@@ -584,6 +584,20 @@ def build_game_environment(season: int, week: int) -> pd.DataFrame:
     rows = []
     for _, r in g.iterrows():
         total = r.get("total_line", np.nan)
+        # Kickoff in UTC. Needed so closing-line-value analysis can exclude
+        # games already in progress: a market on a live game converges toward
+        # the known outcome, which looks like enormous CLV but is just the
+        # scoreboard. Thursday and early-London games contaminated this
+        # badly (Mariota and McGowan showed -73pp "CLV" on a game underway).
+        kickoff = None
+        try:
+            gd, gt = str(r.get("gameday", "")), str(r.get("gametime", ""))
+            if gd and gt and gd != "nan" and gt != "nan":
+                # gametime is US Eastern; UTC offset is +4 during the season
+                kickoff = (pd.Timestamp(f"{gd} {gt}")
+                           + pd.Timedelta(hours=4)).tz_localize("UTC").isoformat()
+        except Exception:
+            kickoff = None
         for team, opp, spread, home in (
             (r["home_team"], r["away_team"], -r.get("spread_line", 0.0) or 0.0, True),
             (r["away_team"], r["home_team"], r.get("spread_line", 0.0) or 0.0, False),
@@ -592,6 +606,7 @@ def build_game_environment(season: int, week: int) -> pd.DataFrame:
                 "season": season, "week": week, "team": team, "opponent": opp,
                 "home": home, "spread": spread, "total": total,
                 "implied_total": (total / 2 - spread / 2) if pd.notna(total) else np.nan,
+                "kickoff_utc": kickoff,
                 "dome": r.get("roof", "") in ("dome", "closed"),
                 "wind_mph": r.get("wind", np.nan),
                 "precip_prob": np.nan,

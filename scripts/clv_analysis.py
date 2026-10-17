@@ -76,34 +76,106 @@ def load_snapshots(hist_dir: str, season: int, week: int) -> list[tuple[datetime
     return sorted(out, key=lambda x: x[0])
 
 
-def build_clv(snaps) -> pd.DataFrame:
+def load_kickoffs(root: str, season: int, week: int) -> dict:
+    """team -> kickoff datetime (UTC) for this week."""
+    path = os.path.join(root, "game_environment.csv")
+    if not os.path.exists(path):
+        return {}
+    try:
+        e = pd.read_csv(path)
+    except Exception:
+        return {}
+    e = e[(e.get("season") == season) & (e.get("week") == week)]
+    if "kickoff_utc" not in e.columns:
+        return {}
+    out = {}
+    for _, r in e.iterrows():
+        k = r.get("kickoff_utc")
+        if isinstance(k, str) and k:
+            try:
+                out[r["team"]] = pd.Timestamp(k).to_pydatetime()
+            except Exception:
+                pass
+    return out
+
+
+def build_clv(snaps, kickoffs: dict | None = None) -> pd.DataFrame:
+    """
+    Compute CLV using a PER-TEAM close.
+
+    A single global "last snapshot" is wrong whenever snapshots straddle a
+    kickoff. The Sunday-morning fetch ran while the London game was underway,
+    so for those contracts the final snapshot was a LIVE price converging on
+    a known scoreline -- which showed up as -73pp of fake CLV on Mariota and
+    McGowan.
+
+    So each contract's close is the last snapshot strictly BEFORE that team's
+    kickoff, and any contract with no pre-kickoff close is dropped rather
+    than measured against a live price. Timing is measured as hours before
+    that team's own kickoff, which also makes the timing bands comparable
+    across Thursday, London and Sunday games.
+    """
+    kickoffs = kickoffs or {}
     if len(snaps) < 2:
         return pd.DataFrame()
-    close_ts, close_rows = snaps[-1]
-    close = {r.get("market_ticker"): r.get("market_implied_probability")
-             for r in close_rows if r.get("market_ticker")}
 
-    recs = []
-    for ts, rows in snaps[:-1]:
-        hrs = (close_ts - ts).total_seconds() / 3600.0
-        for r in rows:
-            tkr = r.get("market_ticker")
+    def team_kick(r):
+        return kickoffs.get(r.get("team")) or kickoffs.get(r.get("opponent"))
+
+    # index every snapshot by ticker
+    indexed = []
+    for ts, rows in snaps:
+        indexed.append((ts, {r.get("market_ticker"): r for r in rows if r.get("market_ticker")}))
+
+    # per-ticker: the last snapshot strictly before its kickoff is the close
+    closes = {}
+    for ts, by_tkr in indexed:
+        for tkr, r in by_tkr.items():
+            ko = team_kick(r)
+            ts_cmp = ts if ts.tzinfo else (ts.replace(tzinfo=ko.tzinfo) if ko else ts)
+            if ko is not None and ts_cmp >= ko:
+                continue                      # live price, never a valid close
+            prev = closes.get(tkr)
+            if prev is None or ts_cmp > prev[0]:
+                closes[tkr] = (ts_cmp, r.get("market_implied_probability"))
+
+    recs, skipped_live, skipped_noclose = [], 0, 0
+    for ts, by_tkr in indexed:
+        for tkr, r in by_tkr.items():
             side = r.get("recommended_side")
             if side not in ("yes", "no") or not r.get("liquid"):
                 continue
+            ko = team_kick(r)
+            ts_cmp = ts if ts.tzinfo else (ts.replace(tzinfo=ko.tzinfo) if ko else ts)
+            if ko is not None and ts_cmp >= ko:
+                skipped_live += 1
+                continue
+            c = closes.get(tkr)
+            if c is None or c[1] is None:
+                skipped_noclose += 1
+                continue
+            close_ts, closing = c
+            if ts_cmp >= close_ts:
+                continue                      # this IS the close
             entry = r.get("market_implied_probability")
-            closing = close.get(tkr)
-            if entry is None or closing is None:
+            if entry is None:
                 continue
             clv = (closing - entry) if side == "yes" else (entry - closing)
+            hrs = ((ko - ts_cmp).total_seconds() / 3600.0 if ko is not None
+                   else (close_ts - ts_cmp).total_seconds() / 3600.0)
             recs.append({
                 "ticker": tkr, "player": r.get("player_name"),
-                "market": r.get("market"), "side": side,
+                "team": r.get("team"), "market": r.get("market"), "side": side,
                 "hours_before_close": hrs,
                 "entry_prob": entry, "closing_prob": closing,
                 "clv": clv, "edge": r.get("edge"),
                 "cluster": f"{r.get('player_id')}|{r.get('market')}",
             })
+
+    if skipped_live:
+        print(f"excluded {skipped_live} contract-snapshots priced after kickoff")
+    if skipped_noclose:
+        print(f"excluded {skipped_noclose} with no valid pre-kickoff close")
     return pd.DataFrame(recs)
 
 
@@ -139,7 +211,12 @@ def main():
         print("saves a stamped copy, so just fetching Wed / Fri / Sun builds this.")
         return
 
-    df = build_clv(snaps)
+    kickoffs = load_kickoffs("data", args.season, args.week)
+    if kickoffs:
+        print(f"kickoff times loaded for {len(kickoffs)} teams")
+    else:
+        print("no kickoff times found -- live-game contamination NOT filtered")
+    df = build_clv(snaps, kickoffs)
     if not len(df):
         print("\nno comparable contracts across snapshots")
         return
@@ -147,6 +224,10 @@ def main():
     print()
     overall = clustered_mean(df)
     print("OVERALL CLV (positive = market moved toward the model)")
+    if overall is None:
+        print("  not enough independent clusters to compute a mean "
+              f"(rows={len(df)}). Fetch more snapshots across the week.")
+        return
     print(f"  mean CLV {100*overall['mean']:+.2f}pp   95% CI "
           f"[{100*overall['lo']:+.2f}, {100*overall['hi']:+.2f}]pp")
     print(f"  n={overall['n']} contracts across {overall['n_clusters']} clusters")

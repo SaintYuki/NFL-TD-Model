@@ -75,7 +75,7 @@ def settle(contract: dict, actual_row: pd.Series) -> int | None:
 def grade(contracts: list[dict], actuals: pd.DataFrame, week: int,
           sides=("yes", "no"), min_prob: float = 0.0,
           min_edge: float = 0.0, max_edge: float = 1.0,
-          tiers=None) -> list[dict]:
+          tiers=None, fees: str = "taker") -> list[dict]:
     """
     Grade archived contracts, optionally restricted to the population a
     given strategy would actually bet.
@@ -120,6 +120,13 @@ def grade(contracts: list[dict], actuals: pd.DataFrame, week: int,
         won = (settled_yes == 1) if side == "yes" else (settled_yes == 0)
         # binary contract: stake `entry`, return 1.0 on a win
         profit = (1.0 - entry) if won else -entry
+        # Kalshi taker fee: 0.07 x price x (1 - price) per contract. At the
+        # ~28c average YES entry that is ~1.4c, about 5% of the stake, which
+        # is the same order as the edge itself. Resting limit (maker) orders
+        # are fee-free on most sports markets.
+        fee = 0.07 * entry * (1.0 - entry) if fees == "taker" else 0.0
+        profit -= fee
+        stake_paid = entry + fee
 
         out.append({
             "week": week,
@@ -135,9 +142,10 @@ def grade(contracts: list[dict], actuals: pd.DataFrame, week: int,
             "market_prob": c.get("market_implied_probability"),
             "settled_yes": settled_yes,
             "won": int(won),
-            "profit_per_unit_stake": profit / entry,
+            "profit_per_unit_stake": profit / stake_paid,
             "profit_abs": profit,
-            "stake": entry,
+            "stake": stake_paid,
+            "fee": fee,
         })
     return out
 
@@ -265,6 +273,9 @@ def main():
                     help="drop longshots below this model probability")
     ap.add_argument("--min-edge", type=float, default=0.0)
     ap.add_argument("--max-edge", type=float, default=1.0)
+    ap.add_argument("--fees", default="taker", choices=["taker", "maker", "none"],
+                    help="taker = Kalshi fee on every fill (default, conservative); "
+                         "maker/none = fee-free resting limit orders")
     ap.add_argument("--tiers", default=None,
                     help="comma list, e.g. STRONG,PLAYABLE")
     args = ap.parse_args()
@@ -292,12 +303,12 @@ def main():
         tiers = [t.strip() for t in args.tiers.split(",")] if args.tiers else None
         g = grade(contracts, actuals, wk, sides=sides,
                   min_prob=args.min_prob, min_edge=args.min_edge,
-                  max_edge=args.max_edge, tiers=tiers)
+                  max_edge=args.max_edge, tiers=tiers, fees=args.fees)
         print(f"  week {wk}: {len(g)} gradeable contracts", file=sys.stderr)
         graded.extend(g)
 
     print()
-    filt = [f"side={args.side}"]
+    filt = [f"side={args.side}", f"fees={args.fees}"]
     if args.min_prob > 0: filt.append(f"model_prob>={args.min_prob}")
     if args.min_edge > 0: filt.append(f"|edge|>={args.min_edge}")
     if args.max_edge < 1: filt.append(f"|edge|<={args.max_edge}")
