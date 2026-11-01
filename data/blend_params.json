@@ -1,0 +1,72 @@
+{
+  "season": 2026,
+  "weeks": [
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "markets": {
+    "anytime_td": {
+      "lambda": 0.13,
+      "lambda_ci": [
+        0.0,
+        0.41550000000000015
+      ],
+      "n": 1814,
+      "n_clusters": 1083,
+      "cv_logloss": {
+        "market": 0.34795625684505277,
+        "model": 0.36316013250508683,
+        "blend": 0.34994425638956195
+      },
+      "verdict": "no demonstrated edge over the market"
+    },
+    "passing_yards": {
+      "lambda": 0.0,
+      "lambda_ci": [
+        0.0,
+        0.1803750000000001
+      ],
+      "n": 963,
+      "n_clusters": 125,
+      "cv_logloss": {
+        "market": 0.48591996990771497,
+        "model": 0.5438713495604776,
+        "blend": 0.4859199699077149
+      },
+      "verdict": "no demonstrated edge over the market"
+    },
+    "receiving_yards": {
+      "lambda": 0.005,
+      "lambda_ci": [
+        0.0,
+        0.23550000000000013
+      ],
+      "n": 3639,
+      "n_clusters": 624,
+      "cv_logloss": {
+        "market": 0.5332831934857909,
+        "model": 0.5944554354008146,
+        "blend": 0.5337049070889952
+      },
+      "verdict": "no demonstrated edge over the market"
+    },
+    "rushing_yards": {
+      "lambda": 0.055,
+      "lambda_ci": [
+        0.0,
+        0.26012500000000005
+      ],
+      "n": 1957,
+      "n_clusters": 272,
+      "cv_logloss": {
+        "market": 0.4846697611460665,
+        "model": 0.58300705048292,
+        "blend": 0.48580302236095513
+      },
+      "verdict": "no demonstrated edge over the market"
+    }
+  }
+}

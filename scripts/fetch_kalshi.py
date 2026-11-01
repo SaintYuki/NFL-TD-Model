@@ -34,6 +34,7 @@ from nflprops.kalshi_edge import (  # noqa: E402
     evaluate_quote, kalshi_yes_probability, td_probability_at_least,
 )
 from nflprops.ladder import divergence_report  # noqa: E402
+from nflprops.market_blend import load_blend_params, blend_probability  # noqa: E402
 
 
 def selftest(client: KalshiClient):
@@ -173,6 +174,11 @@ def main():
     # 2. match to internal players
     store = DataStore(args.root, args.season, args.week)
     engine = ProjectionEngine(store)
+    BLEND = load_blend_params(args.root)
+    if BLEND:
+        print(f"model/market blend active for: {', '.join(sorted(BLEND))}", file=sys.stderr)
+    else:
+        print("no blend_params.json -- using raw model probabilities", file=sys.stderr)
     _pcols = ["player_id", "player_name", "team", "position"]
     if "jersey_number" in engine.meta.columns:
         _pcols.append("jersey_number")
@@ -235,7 +241,15 @@ def main():
                     dist = mres["_dist"]
                     res_proj = mres["projection"]
                     p_model = kalshi_yes_probability(dist, q.market, q.strike)
+
+                # Blend the model with the market before computing edge (see
+                # nflprops/market_blend.py). The RAW model probability is kept
+                # separately so future refits are not fitted on numbers that
+                # already contain the market price.
+                p_raw = p_model
+                p_model = blend_probability(q.market, p_raw, q.implied_prob, BLEND)
                 ev = evaluate_quote(p_model, q)
+                ev["model_probability_raw"] = round(float(p_raw), 4)
                 ev["player_id"] = pid
                 ev["market"] = q.market
                 ev["player_name"] = f.get("player_name")

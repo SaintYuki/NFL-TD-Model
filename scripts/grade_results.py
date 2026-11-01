@@ -46,6 +46,80 @@ MARKET_STAT = {
 }
 
 
+RAW_FLAG_EDGE = 0.035   # same threshold the board used before the blend
+
+GAMES_URL = "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv"
+
+
+def load_kickoffs(season: int) -> dict:
+    """(team, week) -> kickoff (UTC) for every game of the season."""
+    from zoneinfo import ZoneInfo
+    try:
+        g = pd.read_csv(GAMES_URL)
+    except Exception as e:
+        print(f"  [warn] could not load kickoff times ({e}); live prices NOT excluded",
+              file=sys.stderr)
+        return {}
+    g = g[g["season"] == season]
+    et = ZoneInfo("America/New_York")
+    out = {}
+    for _, r in g.iterrows():
+        try:
+            ko = (pd.Timestamp(f"{r['gameday']} {r['gametime']}")
+                  .tz_localize(et).tz_convert("UTC").to_pydatetime())
+        except Exception:
+            continue
+        for t in (r["home_team"], r["away_team"]):
+            out[(t, int(r["week"]))] = ko
+    return out
+
+
+def load_week_contracts(hist: str, season: int, week: int, kickoffs: dict):
+    """
+    Build the week's graded population from the timestamped snapshots.
+
+    The single weekly file is overwritten by every fetch, so a fetch late in
+    the week replaces the full Sunday board with whatever is still listed.
+    Week 6 was graded on 34 contracts because the last fetch ran during the
+    Monday night game. Instead, each contract is taken from the LAST snapshot
+    before its own kickoff, which is the price you could actually have bet.
+    Returns None when no snapshots exist (weeks before snapshots began).
+    """
+    import glob
+    from datetime import datetime
+    paths = sorted(glob.glob(os.path.join(hist, "snapshots",
+                                          f"kalshi_{season}_wk{week}_*.json")))
+    if not paths:
+        return None, 0
+    best = {}
+    for path in paths:
+        try:
+            rows = json.load(open(path))
+        except Exception:
+            continue
+        ts = None
+        for r in rows:
+            if r.get("fetched_at"):
+                try:
+                    ts = datetime.fromisoformat(str(r["fetched_at"]).replace("Z", "+00:00"))
+                except Exception:
+                    ts = None
+                break
+        if ts is None:
+            continue
+        for r in rows:
+            tkr = r.get("market_ticker")
+            if not tkr:
+                continue
+            ko = kickoffs.get((r.get("team"), week)) or kickoffs.get((r.get("opponent"), week))
+            if ko is not None and ts >= ko:
+                continue                  # live price, game already started
+            prev = best.get(tkr)
+            if prev is None or ts > prev[0]:
+                best[tkr] = (ts, r)
+    return [v[1] for v in best.values()], len(paths)
+
+
 def load_actuals(root: str, season: int) -> pd.DataFrame:
     path = os.path.join(root, "current", "player_gamelog.csv")
     if not os.path.exists(path):
@@ -75,7 +149,9 @@ def settle(contract: dict, actual_row: pd.Series) -> int | None:
 def grade(contracts: list[dict], actuals: pd.DataFrame, week: int,
           sides=("yes", "no"), min_prob: float = 0.0,
           min_edge: float = 0.0, max_edge: float = 1.0,
-          tiers=None, fees: str = "taker") -> list[dict]:
+          tiers=None, fees: str = "taker", select: str | None = None,
+          max_prob: float = 1.0, max_mkt: float = 1.0,
+          market: str | None = None) -> list[dict]:
     """
     Grade archived contracts, optionally restricted to the population a
     given strategy would actually bet.
@@ -94,15 +170,39 @@ def grade(contracts: list[dict], actuals: pd.DataFrame, week: int,
     by_pid = {r["player_id"]: r for _, r in wk.iterrows()}
     out = []
     for c in contracts:
-        side = c.get("recommended_side")
-        if side not in sides:
+        if market and c.get("market") != market:
             continue
         if not c.get("liquid"):
             continue
-        mp = c.get("model_probability")
-        if mp is None or float(mp) < min_prob:
-            continue          # excludes longshots when min_prob is set
-        e = abs(float(c.get("edge") or 0.0))
+        p_raw = c.get("model_probability_raw", c.get("model_probability"))
+        p_mkt = c.get("market_implied_probability")
+        entry_override = None
+
+        if select:
+            # Selection by the model's RAW opinion, independent of the blend:
+            #   raw = buy YES where the raw model beats the market by > 3.5pp
+            #   all = buy YES on every contract (the blind baseline)
+            # Comparing the two answers "does the model pick better than
+            # simply buying everything in this segment?"
+            if p_raw is None or p_mkt is None:
+                continue
+            raw_edge = float(p_raw) - float(p_mkt)
+            if select == "raw" and raw_edge <= RAW_FLAG_EDGE:
+                continue
+            side = "yes"
+            entry_override = c.get("yes_ask")
+            mp, e = float(p_raw), abs(raw_edge)
+        else:
+            side = c.get("recommended_side")
+            if side not in sides:
+                continue
+            mp = c.get("model_probability")
+            e = abs(float(c.get("edge") or 0.0))
+
+        if mp is None or float(mp) < min_prob or float(mp) >= max_prob:
+            continue
+        if max_mkt < 1.0 and (p_mkt is None or float(p_mkt) >= max_mkt):
+            continue
         if e < min_edge or e > max_edge:
             continue
         if tiers and c.get("bettable") not in tiers:
@@ -114,7 +214,7 @@ def grade(contracts: list[dict], actuals: pd.DataFrame, week: int,
         if settled_yes is None:
             continue
 
-        entry = c.get("entry_price")
+        entry = entry_override if entry_override is not None else c.get("entry_price")
         if entry is None or entry <= 0 or entry >= 1:
             continue
         won = (settled_yes == 1) if side == "yes" else (settled_yes == 0)
@@ -136,9 +236,9 @@ def grade(contracts: list[dict], actuals: pd.DataFrame, week: int,
             "market": c.get("market"),
             "strike": c.get("market_strike"),
             "side": side,
-            "edge": c.get("edge"),
+            "edge": (float(p_raw) - float(p_mkt)) if select else c.get("edge"),
             "entry_price": entry,
-            "model_prob": c.get("model_probability"),
+            "model_prob": float(mp),
             "market_prob": c.get("market_implied_probability"),
             "settled_yes": settled_yes,
             "won": int(won),
@@ -276,6 +376,15 @@ def main():
     ap.add_argument("--fees", default="taker", choices=["taker", "maker", "none"],
                     help="taker = Kalshi fee on every fill (default, conservative); "
                          "maker/none = fee-free resting limit orders")
+    ap.add_argument("--select", default=None, choices=["raw", "all"],
+                    help="raw = model's raw YES picks (ignores the blend); "
+                         "all = buy YES on everything (blind baseline)")
+    ap.add_argument("--max-prob", type=float, default=1.0,
+                    help="only contracts with model prob below this (longshots)")
+    ap.add_argument("--max-mkt", type=float, default=1.0,
+                    help="only contracts with market prob below this (longshots)")
+    ap.add_argument("--market", default=None,
+                    help="restrict to one market, e.g. anytime_td")
     ap.add_argument("--tiers", default=None,
                     help="comma list, e.g. STRONG,PLAYABLE")
     args = ap.parse_args()
@@ -288,27 +397,38 @@ def main():
     weeks = ([int(w) for w in args.weeks.split(",") if w.strip()]
              if args.weeks else sorted(actuals["week"].unique()))
 
+    kickoffs = load_kickoffs(args.season)
     graded = []
     for wk in weeks:
-        path = os.path.join(args.hist, f"kalshi_{args.season}_wk{wk}.json")
-        if not os.path.exists(path):
-            print(f"  [skip] no archived market snapshot for week {wk}", file=sys.stderr)
-            continue
-        try:
-            contracts = json.load(open(path))
-        except Exception as e:
-            print(f"  [skip] week {wk}: {e}", file=sys.stderr)
-            continue
+        contracts, n_snaps = load_week_contracts(args.hist, args.season, wk, kickoffs)
+        if contracts is not None:
+            print(f"  week {wk}: {len(contracts)} contracts from {n_snaps} snapshots "
+                  f"(last pre-kickoff price each)", file=sys.stderr)
+        else:
+            path = os.path.join(args.hist, f"kalshi_{args.season}_wk{wk}.json")
+            if not os.path.exists(path):
+                print(f"  [skip] no archived market snapshot for week {wk}", file=sys.stderr)
+                continue
+            try:
+                contracts = json.load(open(path))
+            except Exception as e:
+                print(f"  [skip] week {wk}: {e}", file=sys.stderr)
+                continue
         sides = ("yes", "no") if args.side == "both" else (args.side,)
         tiers = [t.strip() for t in args.tiers.split(",")] if args.tiers else None
         g = grade(contracts, actuals, wk, sides=sides,
                   min_prob=args.min_prob, min_edge=args.min_edge,
-                  max_edge=args.max_edge, tiers=tiers, fees=args.fees)
+                  max_edge=args.max_edge, tiers=tiers, fees=args.fees,
+                  select=args.select, max_prob=args.max_prob,
+                  max_mkt=args.max_mkt, market=args.market)
         print(f"  week {wk}: {len(g)} gradeable contracts", file=sys.stderr)
         graded.extend(g)
 
     print()
-    filt = [f"side={args.side}", f"fees={args.fees}"]
+    filt = ([f"select={args.select}"] if args.select else [f"side={args.side}"]) + [f"fees={args.fees}"]
+    if args.market: filt.append(f"market={args.market}")
+    if args.max_prob < 1: filt.append(f"model_prob<{args.max_prob}")
+    if args.max_mkt < 1: filt.append(f"market_prob<{args.max_mkt}")
     if args.min_prob > 0: filt.append(f"model_prob>={args.min_prob}")
     if args.min_edge > 0: filt.append(f"|edge|>={args.min_edge}")
     if args.max_edge < 1: filt.append(f"|edge|<={args.max_edge}")

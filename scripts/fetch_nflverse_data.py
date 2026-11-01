@@ -593,9 +593,11 @@ def build_game_environment(season: int, week: int) -> pd.DataFrame:
         try:
             gd, gt = str(r.get("gameday", "")), str(r.get("gametime", ""))
             if gd and gt and gd != "nan" and gt != "nan":
-                # gametime is US Eastern; UTC offset is +4 during the season
+                # gametime is US Eastern. Convert with the real time zone: a
+                # fixed +4h offset is wrong from Nov 1, when daylight saving
+                # ends and Eastern becomes UTC-5.
                 kickoff = (pd.Timestamp(f"{gd} {gt}")
-                           + pd.Timedelta(hours=4)).tz_localize("UTC").isoformat()
+                           .tz_localize("America/New_York").tz_convert("UTC").isoformat())
         except Exception:
             kickoff = None
         for team, opp, spread, home in (
