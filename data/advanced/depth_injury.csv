@@ -89,7 +89,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3484,00-0032685,Nelson Spruce,,WR,,,,,Inactive,6.0
 2676,00-0031728,Zach Vigil,,LB,,,,,Inactive,7.0
 6374, 00-0035484,Drew Belcher,,TE,,,,,Active,3.0
-4054,00-0033217,Mo Alie-Cox,IND,TE,2.0,TE,,,Active,9.0
+4054,00-0033217,Mo Alie-Cox,IND,TE,2.0,TE,Questionable,Groin,Active,9.0
 1550,00-0029857,Ryan Griffin,,QB,,,,,Active,10.0
 4969,00-0034773,Vita Vea,TB,DT,1.0,NT,,,Active,8.0
 623,00-0027648,Rodger Saffold,,G,,,,,Active,14.0
@@ -147,8 +147,8 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 103,00-0026184,Matt Forte,,RB,,,,,Inactive,12.0
 6305, 00-0035709,Austin Cutting,,LS,,,,,Inactive,3.0
 788,00-0028087,Dion Lewis,,RB,,,,,Injured Reserve,11.0
-5043,00-0034760,Nathan Shepherd,NO,DT,1.0,RDE,Questionable,Illness,Active,8.0
-5854, 00-0035704,Drew Lock,SEA,QB,2.0,QB,Questionable,Elbow,Active,7.0
+5043,00-0034760,Nathan Shepherd,NO,DT,1.0,RDE,,,Active,8.0
+5854, 00-0035704,Drew Lock,SEA,QB,1.0,QB,Questionable,Oblique,Active,7.0
 5021,00-0034360,Lorenzo Carter,,LB,,,,,Active,7.0
 4594,00-0033746,Alex Barrett,,DE,,,,,Active,8.0
 3211,00-0032417,Paul Perkins,,RB,,,,,Active,6.0
@@ -168,7 +168,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3517,00-0032839,Hunter Sharp,,WR,,,,,Inactive,6.0
 2851,00-0032031,Kaleb Eulls,,DT,,,,,Injured Reserve,5.0
 2498,00-0032069,Derron Smith,,SS,,,,,Inactive,5.0
-421,00-0026498,Matthew Stafford,LAR,QB,1.0,QB,Questionable,Arm,Active,17.0
+421,00-0026498,Matthew Stafford,LAR,QB,1.0,QB,,,Active,17.0
 6654, 00-0035522,JoJo Tillery,,FS,,,,,Active,3.0
 4368,00-0033344,Hardy Nickerson,,LB,,,,,Active,5.0
 6023, 00-0034979,Iman Marshall,,CB,,,,,Active,3.0
@@ -264,7 +264,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 655,00-0022084,Anquan Boldin,,WR,,,,,Inactive,17.0
 6519, 00-0035181,Darrius Shepherd,,WR,,,,,Active,4.0
 1196,00-0029422,Keith Tandy,,FS,,,,,Inactive,10.0
-4943,00-0034869,Sam Darnold,SEA,QB,1.0,QB,Out,Quadriceps,Active,8.0
+4943,00-0034869,Sam Darnold,SEA,QB,2.0,QB,Out,Quadriceps,Active,8.0
 5809,00-0034900,Ja'Quan Gardner,,RB,,,,,Active,4.0
 4215,00-0033467,Brian Allen,,CB,,,,,Active,5.0
 4026,00-0033899,DeShone Kizer,,QB,,,,,Active,5.0
@@ -308,7 +308,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1944,00-0031075,Alfred Blue,,RB,,,,,Inactive,8.0
 6259, 00-0035405,Darnell Holland,,RB,,,,,Active,3.0
 5645,00-0034445,Nick Gates,,C,,,Questionable,Groin,Active,7.0
-4970,00-0034342,Quenton Nelson,SEA,OL,,OL,,,Active,8.0
+4970,00-0034342,Quenton Nelson,SEA,OL,,OL,Doubtful,Knee,Active,8.0
 5495,00-0034559,Austin Larkin,,DE,,,,,Active,4.0
 2789,00-0031757,Lucky Whitehead,,WR,,,,,Injured Reserve,5.0
 6437, 00-0034937,John Leglue,,OT,,,,,Active,6.0
@@ -340,7 +340,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5090,00-0034275,Folorunso Fatukasi,LV,DT,1.0,LDT,,,Active,8.0
 6176, 00-0034986,Cameron Smith,,LB,,,,,Injured Reserve,3.0
 1587,00-0030470,Vance McDonald,,TE,,,,,Injured Reserve,9.0
-2471,00-0031595,Michael Burton,CLE,FB,4.0,RB,,,Active,11.0
+2471,00-0031595,Michael Burton,CLE,FB,4.0,RB,Questionable,Calf,Active,11.0
 5473,00-0034520,Lyndon Johnson,,NT,,,,,Inactive,4.0
 6534, 00-0035332,Ray Smith,,DT,,,,,Injured Reserve,3.0
 1193,00-0029418,Najee Goode,,LB,,,,,Active,10.0
@@ -380,7 +380,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 929,00-0028069,Davon House,,CB,,,,,Injured Reserve,11.0
 4666,00-0033702,Younghoe Koo,,K,,,,,Active,9.0
 5092,00-0034393,Troy Fumagalli,,TE,,,,,Active,6.0
-2197,00-0031236,Brandin Cooks,SF,WR,4.0,LWR,,,Active,12.0
+2197,00-0031236,Brandin Cooks,SF,WR,6.0,LWR,,,Active,12.0
 1718,00-0029119,Derek Carrier,,TE,,,,,Active,10.0
 3623,00-0032484,Vontarrius Dora,,OLB,,,,,Active,6.0
 6236, 00-0035212,Travon McMillian,,RB,,,,,Active,3.0
@@ -402,7 +402,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3226,00-0032768,Cody Whitehair,,OL,,,,,Active,9.0
 389,00-0023662,Matt Cassel,,QB,,,,,Inactive,17.0
 5348,00-0034375,Kyzir White,,LB,,,,,Active,8.0
-5844, 00-0035229,T.J. Hockenson,MIN,TE,1.0,TE,,,Active,7.0
+5844, 00-0035229,T.J. Hockenson,MIN,TE,1.0,TE,Questionable,Wrist,Active,7.0
 2135,00-0031333,Ha Ha Clinton-Dix,DEN,DB,,,,,Active,8.0
 5963, 00-0035383,Nate Herbig,,G,,,,,Active,6.0
 4716,00-0033863,Dan Skipper,,T,,,,,Active,9.0
@@ -480,7 +480,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5733,00-0034716,Clayton Wilson,,TE,,,,,Active,4.0
 6018, 00-0035222,Zach Gentry,,TE,,,,,Active,5.0
 5065,00-0034763,Brandon Parker,,T,,,,,Active,8.0
-4964,00-0034856,Denzel Ward,CLE,CB,1.0,LCB,,,Active,8.0
+4964,00-0034856,Denzel Ward,CLE,CB,1.0,LCB,Questionable,Quadriceps,Active,8.0
 5569,00-0034311,Johnny Stanton,,FB,,,,,Active,4.0
 883,00-0028030,Joe Barksdale,,T,,,,,Inactive,11.0
 6597, 00-0035337,Wes Farnsworth,,LS,,,,,Inactive,3.0
@@ -522,7 +522,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 893,00-0027988,Marcus Gilchrist,,DB,,,,,Active,11.0
 3225,00-0033009,Tyler Boyd,,WR,,,,,Active,9.0
 2596,00-0031864,Wes Saxton,,TE,,,,,Inactive,5.0
-5121,00-0034419,Braxton Berrios,NYG,WR,5.0,,IR,Foot,Inactive,8.0
+5121,00-0034419,Braxton Berrios,NYG,WR,6.0,,IR,Foot,Inactive,8.0
 3156,00-0033156,Joey Bosa,,LB,,,,,Active,10.0
 24,00-0026143,Matt Ryan,,QB,,,,,Active,15.0
 2257,00-0031045,Carlos Hyde,,RB,,,,,Active,8.0
@@ -544,7 +544,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2677,00-0031740,Neville Hewitt,,LB,,,,,Active,11.0
 1112, 00-0027187,Matt Overton,,LS,,,,,Active,14.0
 5966, 00-0035048,Wyatt Ray,,DE,,,,,Inactive,5.0
-5981, 00-0035667,Greg Gaines,BUF,DT,3.0,RDE,Questionable,Calf,Active,7.0
+5981, 00-0035667,Greg Gaines,BUF,DT,3.0,RDE,,,Active,7.0
 3634,00-0032464,Kalif Raymond,CHI,WR,3.0,SWR,,,Active,10.0
 5773,00-0034854,KhaDarel Hodge,SF,WR,,,,,Active,8.0
 4848, 00-0034051,Christian Kuntz,PIT,LS,,LS,,,Active,9.0
@@ -563,9 +563,9 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5783,00-0034871,Christian Boutte,,CB,,,,,Active,4.0
 4222,00-0033585,Brad Kaaya,,QB,,,,,Inactive,5.0
 1709,00-0029731,Fozzy Whittaker,,RB,,,,,Inactive,7.0
-6485, 00-0035166,Azeez Al-Shaair,HOU,LB,1.0,MLB,,,Active,7.0
+6485, 00-0035166,Azeez Al-Shaair,HOU,LB,1.0,MLB,Questionable,Groin,Active,7.0
 3176,00-0033058,Reggie Ragland,,LB,,,,,Active,7.0
-4415,00-0033381,Adam Butler,LV,DT,2.0,RDT,,,Active,9.0
+4415,00-0033381,Adam Butler,LV,DT,1.0,RDT,,,Active,9.0
 5137,00-0034286,Richie James,,WR,,,,,Active,6.0
 6569, 00-0035463,Malcolm Pridgeon,,G,,,,,Active,3.0
 2170, 00-0031281,Ra'Shede Hageman,,DT,,,,,Injured Reserve,6.0
@@ -591,7 +591,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2372,00-0032255,A.J. Cann,,OL,,,,,Active,8.0
 2278,00-0031084,Eric Pinkins,,LB,,,,,Inactive,6.0
 983,00-0028177,Mike Person,,G,,,,,Active,11.0
-260, 00-0026300,Josh Johnson,CIN,QB,,,,,Active,18.0
+260, 00-0026300,Josh Johnson,ARI,QB,2.0,QB,,,Active,18.0
 2711,00-0031800,Taylor Heinicke,,QB,,,,,Active,10.0
 5416,00-0034545,Brandon Facyson,,CB,,,,,Inactive,6.0
 1202,00-0028872,Johnny Hekker,,P,,,,,Active,14.0
@@ -611,7 +611,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6510, 00-0035179,Jalen Dalton,,DT,,,,,Active,6.0
 1364,00-0030421,Jamie Collins,,LB,,,,,Active,10.0
 6342, 00-0035460,Stephen Louis,,WR,,,,,Active,3.0
-1166,00-0029604,Kirk Cousins,LV,QB,1.0,QB,,,Active,14.0
+1166,00-0029604,Kirk Cousins,MIN,QB,1.0,QB,,,Active,14.0
 537,00-0027870,Maurkice Pouncey,,C,,,,,Injured Reserve,12.0
 5185,00-0034521,Allen Lazard,,WR,,,,,Active,7.0
 5958, 00-0034926,JoJo McIntosh,,SS,,,,,Active,3.0
@@ -644,7 +644,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3793,00-0032719,Lenny Jones,,DE,,,,,Active,6.0
 1049,00-0029701,Ryan Tannehill,,QB,,,,,Active,12.0
 5595,00-0034327,Step Durham,,CB,,,,,Active,4.0
-5882, 00-0035663,Taylor Rapp,DEN,DB,3.0,FS,,,Active,7.0
+5882, 00-0035663,Taylor Rapp,DEN,DB,,,,,Active,7.0
 2407,00-0031567,Daryl Williams,BUF,OL,,,,,Active,7.0
 5414,00-0034552,Bijhon Jackson,,NT,,,,,Active,4.0
 5703, 00-0034715,Deontez Alexander,,WR,,,,,Active,4.0
@@ -669,7 +669,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1381,00-0030442,John Simon,,LB,,,,,Active,9.0
 6687, 00-0035609,Jake Gervase,,LB,,,,,Active,4.0
 4046,00-0033873,Patrick Mahomes,KC,QB,1.0,QB,,,Active,9.0
-3286,00-0032775,Demarcus Robinson,SF,WR,6.0,LWR,IR,Ankle,Inactive,10.0
+3286,00-0032775,Demarcus Robinson,SF,WR,2.0,LWR,,,Active,10.0
 2315,00-0032241,Todd Gurley,,RB,,,,,Active,7.0
 4551,00-0033633,Tanner Gentry,,WR,,,,,Active,6.0
 6171, 00-0035164,Cody Thompson,,WR,,,,,Active,6.0
@@ -741,7 +741,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3659,00-0032369,Anthony Lanier,,DE,,,,,Inactive,6.0
 2287,00-0031404,Adrian Phillips,,DB,,,,,Active,10.0
 4111,00-0033925,D'Onta Foreman,,RB,,,,,Active,8.0
-6386, 00-0035602,Alex Bachman,,WR,,,,,Active,7.0
+6386, 00-0035602,Alex Bachman,LAR,WR,,,,,Active,7.0
 2511,00-0031615,Christian Ringo,,DT,,,,,Active,8.0
 2050,00-0031277,Branden Oliver,,RB,,,,,Inactive,6.0
 5946, 00-0035699,Jamel Dean,PIT,CB,1.0,RCB,,,Active,7.0
@@ -756,7 +756,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1570,00-0030530,T.J. McDonald,,SS,,,,,Inactive,9.0
 4081,00-0033890,Budda Baker,ARI,DB,1.0,SS,,,Active,9.0
 2399,00-0032200,Ty Montgomery,,RB,,,,,Active,8.0
-3598,00-0032753,Luke Rhodes,IND,LS,,LS,,,Active,10.0
+3598,00-0032753,Luke Rhodes,IND,LS,,LS,Questionable,Hamstring,Active,10.0
 2398,00-0032269,Henry Anderson,,DE,,,,,Active,9.0
 5673,00-0034622,Davin Bellamy,,LB,,,,,Active,4.0
 5775,00-0034862,Jared Murphy,,WR,,,,,Active,4.0
@@ -770,7 +770,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 997,00-0028180,Malcolm Smith,,LB,,,,,Active,11.0
 5256,00-0034640,DeAndre Goolsby,,TE,,,,,Inactive,4.0
 4994,00-0034799,Kalen Ballage,,RB,,,,,Active,4.0
-1737,00-0028986,Case Keenum,CHI,QB,2.0,QB,,,Active,14.0
+1737,00-0028986,Case Keenum,CHI,QB,2.0,QB,Out,Coach's Decision,Active,14.0
 5443,00-0034107,Jeff Holland,,LB,,,,,Inactive,4.0
 643,00-0027866,Earl Thomas,,FS,,,,,Active,12.0
 6469, 00-0035083,Davis Koppenhaver,,TE,,,,,Active,3.0
@@ -792,7 +792,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 200,00-0024221,Vernon Davis,,TE,,,,,Injured Reserve,16.0
 2420,00-0032198,Ibraheim Campbell,,DB,,,,,Active,7.0
 6584, 00-0035557,Deyon Sizer,,DT,,,,,Active,3.0
-4881,00-0034796,Lamar Jackson,BAL,QB,2.0,QB,Out,Thumb,Inactive,8.0
+4881,00-0034796,Lamar Jackson,BAL,QB,2.0,QB,IR,Thumb,Inactive,8.0
 301,00-0025473,Marshal Yanda,,G,,,,,Injured Reserve,15.0
 3185,00-0032381,Taylor Decker,,T,,,,,Active,10.0
 358,00-0026982,Andre Smith,,T,,,,,Active,13.0
@@ -802,7 +802,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 49,00-0023252,Robbie Gould,,K,,,,,Active,18.0
 167,00-0019596,Tom Brady,,QB,,,,,Active,23.0
 681,00-0026714,Nick Sundberg,,LS,,,,,Active,13.0
-4219,00-0033955,Jeremy McNichols,WAS,RB,3.0,RB,IR,Foot,Inactive,9.0
+4219,00-0033955,Jeremy McNichols,WAS,RB,4.0,RB,IR,Foot,Inactive,9.0
 4135,00-0033935,Trey Hendrickson,BAL,DE,1.0,ROLB,,,Active,9.0
 5146,00-0034140,Matt Gono,,OT,,,,,Active,4.0
 6093, 00-0035280,Jake Bailey,ATL,P,,P,,,Active,7.0
@@ -814,9 +814,9 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6684, 00-0035576,LaDarius Wiley,,DB,,,,,Active,3.0
 993,00-0028111,Byron Maxwell,,CB,,,,,Injured Reserve,9.0
 4228,00-0033790,Jordan Evans,CIN,LB,,,,,Inactive,5.0
-2133,00-0031381,Davante Adams,LAR,WR,6.0,LWR,IR,Hamstring,Inactive,12.0
+2133,00-0031381,Davante Adams,LAR,WR,5.0,LWR,IR,Hamstring,Inactive,12.0
 96,00-0023459,Aaron Rodgers,PIT,QB,1.0,QB,,,Active,21.0
-5872, 00-0035719,Deebo Samuel Sr.,SF,WR,8.0,SWR,Questionable,Hamstring,Active,7.0
+5872, 00-0035719,Deebo Samuel Sr.,SF,WR,1.0,SWR,Questionable,Hamstring,Active,7.0
 6492, 00-0035097,Terry Wright,,WR,,,,,Active,3.0
 4042,00-0033286,Joe Williams,,RB,,,,,Active,5.0
 1470,00-0030517,David Bass,,LB,,,,,Inactive,7.0
@@ -837,7 +837,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 4892,00-0034855,Baker Mayfield,TB,QB,1.0,QB,,,Active,8.0
 4532, 00-0033612,Sojourn Shelton,,CB,,,,,Inactive,5.0
 3227,00-0033059,T.J. Green,HOU,DB,,,,,Active,6.0
-4137,00-0033553,James Conner,ARI,RB,3.0,RB,IR,Foot,Inactive,9.0
+4137,00-0033553,James Conner,ARI,RB,4.0,RB,IR,Foot,Inactive,9.0
 1116,00-0029600,Andre Branch,,LB,,,,,Inactive,10.0
 6051, 00-0035306,Darryl Johnson,,DE,,,,,Inactive,4.0
 1443,00-0030538,Johnathan Cyprien,JAX,SS,,,,,Active,11.0
@@ -889,7 +889,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 4173,00-0033940,Jaleel Johnson,,DT,,,,,Active,7.0
 1612,00-0030151,Tyler Bray,,QB,,,,,Inactive,9.0
 6186, 00-0034992,Armon Watts,,DT,,,,,Active,6.0
-5947, 00-0034960,Jakobi Meyers,JAX,WR,2.0,RWR,,,Active,7.0
+5947, 00-0034960,Jakobi Meyers,JAX,WR,2.0,RWR,Questionable,Ankle,Active,7.0
 5651,00-0034470,Toby Weathersby,,OT,,,,,Active,4.0
 5681,00-0034443,Johnathan Alston,,FS,,,,,Active,4.0
 4063,00-0033875,Haason Reddick,,LB,,,,,Active,9.0
@@ -917,13 +917,13 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1474,00-0030515,Stacy McGee,,DT,,,,,Inactive,9.0
 830,00-0027942,A.J. Green,,WR,,,,,Active,12.0
 1222,00-0029528,Bobby Massie,,T,,,,,Active,10.0
-6353, 00-0035617,Troy Reeder,NYJ,LB,,,,,Active,7.0
+6353, 00-0035617,Troy Reeder,NYJ,LB,4.0,LOLB,,,Active,7.0
 2956,00-0031489,Brett Jones,,C,,,,,Active,7.0
 5504,00-0034134,Mackendy Cheridor,,DE,,,,,Active,4.0
 4318,00-0033253,Tyler Catalina,,G,,,,,Inactive,5.0
 5977, 00-0035313,Terry Godwin,,WR,,,,,Active,3.0
 3990,00-0033185,Adam Bighill,,ILB,,,,,Inactive,5.0
-3271,00-0033110,Tyler Higbee,LAR,TE,2.0,TE,,,Active,10.0
+3271,00-0033110,Tyler Higbee,LAR,TE,1.0,TE,,,Active,10.0
 1502,00-0030404,Chris Thompson,,RB,,,,,Active,9.0
 1099,00-0029421,Randy Bullock,,K,,,,,Active,12.0
 1820,00-0031317,Terrence Fede,,DE,,,,,Inactive,6.0
@@ -1028,7 +1028,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 943,00-0027981,Kyle Rudolph,,TE,,,,,Active,12.0
 5902, 00-0035022,Penny Hart,,WR,,,,,Inactive,4.0
 5717,00-0034689,Manase Hungalu,,OLB,,,,,Active,4.0
-5944, 00-0035687,Bobby Okereke,CAR,LB,1.0,LILB,Doubtful,Foot,Active,7.0
+5944, 00-0035687,Bobby Okereke,CAR,LB,1.0,LILB,Questionable,Foot,Active,7.0
 1980,00-0031191,Luke Bowanko,,C,,,,,Inactive,8.0
 4092,00-0033546,Dalvin Tomlinson,LAC,DT,1.0,NT,,,Active,9.0
 3220,00-0032387,Jarran Reed,SEA,DT,1.0,RDE,,,Active,10.0
@@ -1046,7 +1046,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1536,00-0030575,Xavier Rhodes,,CB,,,,,Active,10.0
 6283, 00-0035633,Corey Ballentine,,CB,,,,,Active,7.0
 6389, 00-0035605,Keenen Brown,,TE,,,,,Active,3.0
-5938, 00-0035406,Lil'Jordan Humphrey,DEN,WR,5.0,LWR,,,Active,7.0
+5938, 00-0035406,Lil'Jordan Humphrey,DEN,WR,6.0,LWR,Out,Coach's Decision,Active,7.0
 5383,00-0034489,Jalen Tolliver,,WR,,,,,Inactive,4.0
 5074,00-0034806,Micah Kiser,,LB,,,,,Inactive,5.0
 6070, 00-0035307,Jimmy Moreland,,CB,,,,,Inactive,4.0
@@ -1058,7 +1058,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3400,00-0032807,Clayton Fejedelem,,DB,,,,,Active,7.0
 2442,00-0032170,Rashad Greene,,WR,,,,,Inactive,7.0
 6414, 00-0035372,Bunchy Stallings,,C,,,,,Active,3.0
-5869, 00-0035266,Michael Jordan,BAL,G,,,,,Active,7.0
+5869, 00-0035266,Michael Jordan,,G,,,,,Active,7.0
 4572, 00-0033659,Joe Jones,,LB,,,,,Active,7.0
 2779,00-0031829,Ladarius Gunter,,CB,,,,,Inactive,5.0
 4545,00-0033623,Keith Towbridge,,TE,,,,,Active,5.0
@@ -1077,14 +1077,14 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5788,00-0034879,Dante Sawyer,,DE,,,NA,,Inactive,4.0
 4040,00-0033857,JuJu Smith-Schuster,,WR,,,,,Active,9.0
 5342,00-0034382,Marquis Haynes,,DE,,,,,Active,6.0
-2592,00-0031583,Grady Jarrett,CHI,DT,1.0,RDT,Questionable,Groin,Active,11.0
+2592,00-0031583,Grady Jarrett,CHI,DT,1.0,RDT,,,Active,11.0
 5771,00-0034851,Kiante Anderson,,DE,,,,,Active,4.0
 2491,00-0032067,Ian Silberman,,G,,,,,Inactive,7.0
 6179, 00-0035240,Jahlani Tavai,JAX,LB,2.0,MLB,,,Active,7.0
 5110,00-0034411,Russell Gage,,WR,,,,,Active,7.0
 3159,00-0032380,Laremy Tunsil,WAS,OL,,OL,IR,Triceps,Inactive,10.0
 6363, 00-0035374,Michael Walker,,WR,,,,,Active,3.0
-3321,00-0033040,Tyreek Hill,,WR,,,Questionable,Knee - ACL,Active,10.0
+3321,00-0033040,Tyreek Hill,,WR,,,,Knee - ACL,Active,10.0
 6458, 00-0034958,Tyree St. Louis,,OT,,,,,Active,3.0
 605,00-0027701,Everson Griffen,,DE,,,,,Active,12.0
 2443,00-0032201,Ben Heeney,,LB,,,,,Injured Reserve,5.0
@@ -1100,7 +1100,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 4153,00-0033953,Jordan Leggett,,TE,,,,,Inactive,5.0
 487,00-0026502,Ricky Jean-Francois,,DT,,,,,Inactive,13.0
 6664, 00-0035583,A.J. Ouellette,,RB,,,,,Active,3.0
-2216,00-0031408,Mike Evans,SF,WR,1.0,LWR,Questionable,Achilles,Active,12.0
+2216,00-0031408,Mike Evans,SF,WR,4.0,LWR,Questionable,Achilles,Active,12.0
 6682, 00-0035573,Kareem Orr,LAR,DB,,,,,Active,3.0
 985,00-0028256,Sealver Siliga,,DT,,,,,Inactive,9.0
 2429,00-0032109,Kwon Alexander,,LB,,,,,Active,10.0
@@ -1196,8 +1196,8 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1808,00-0031171,Preston Brown,,LB,,,,,Active,8.0
 5558,00-0034240,Marcus Martin,,RB,,,,,Active,4.0
 1233,00-0029255,Bobby Wagner,,LB,,,,,Active,14.0
-5346,00-0034431,Zaire Franklin,GB,LB,1.0,RILB,Questionable,Shin,Active,8.0
-4351,00-0033375,Tim Patrick,NYJ,WR,6.0,LWR,,,Active,9.0
+5346,00-0034431,Zaire Franklin,GB,LB,1.0,RILB,Doubtful,Shin,Active,8.0
+4351,00-0033375,Tim Patrick,NYJ,WR,5.0,LWR,,,Active,9.0
 1639,00-0029889,Patrick Omameh,,OL,,,,,Active,9.0
 2614,00-0032162,T.Y. McGill,,DT,,,,,Active,9.0
 5433,00-0034105,Ranthony Texada,,CB,,,NA,,Inactive,4.0
@@ -1240,7 +1240,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5211,00-0034222,Jake Wieneke,,WR,,,,,Active,4.0
 5680,00-0034539,Corey Thompson,,OLB,,,,,Active,4.0
 5257,00-0034177,Tim Boyle,,QB,,,,,Active,7.0
-2750,00-0031763,DeAndre Carter,DET,WR,4.0,RWR,,,Active,11.0
+2750,00-0031763,DeAndre Carter,DET,WR,5.0,RWR,,,Active,11.0
 3718,00-0032631,Makinton Dorleant,,CB,,,,,Inactive,6.0
 6030, 00-0035305,Jordan Brown,,DB,,,,,Active,3.0
 4256,00-0033969,Ifeadi Odenigbo,,DE,,,,,Active,7.0
@@ -1271,8 +1271,8 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2383,00-0032059,P.J. Williams,,CB,,,,,Active,8.0
 6710, 00-0035691,Josh Caldwell,,RB,,,,,Active,3.0
 3265,00-0033010,Sheldon Day,,DT,,,,,Active,10.0
-4981,00-0034837,Calvin Ridley,TEN,WR,3.0,LWR,,,Active,8.0
-4102,00-0033904,Dion Dawkins,BUF,OT,,OL,,,Active,9.0
+4981,00-0034837,Calvin Ridley,TEN,WR,4.0,LWR,,,Active,8.0
+4102,00-0033904,Dion Dawkins,BUF,OT,,OL,Questionable,Ribs,Active,9.0
 4171,00-0033943,Josh Reynolds,,WR,,,,,Active,9.0
 4573,00-0033661,Lewis Neal,,DT,,,,,Inactive,5.0
 1999,00-0031101,Shaquil Barrett,,LB,,,,,Active,11.0
@@ -1293,7 +1293,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2373,00-0032256,Clive Walford,,TE,,,,,Active,7.0
 235,00-0022045,Terence Newman,,CB,,,,,Inactive,17.0
 2961,00-0031852,David Andrews,,C,,,,,Active,10.0
-5914, 00-0035665,David Long Jr.,,CB,,,,,Inactive,7.0
+5914, 00-0035665,David Long Jr.,LAR,CB,,,,,Active,7.0
 2181,00-0030750,James Stone,,C,,,,,Inactive,6.0
 4168,00-0033952,Grover Stewart,IND,DT,1.0,LDT,,,Active,9.0
 4244,00-0033304,Devante Mays,,RB,,,,,Inactive,5.0
@@ -1303,15 +1303,15 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1858,00-0031414,Dexter McDougle,,CB,,,,,Inactive,8.0
 1035,00-0029570,Nate Ebner,NYG,DB,,,,,Inactive,10.0
 4374,00-0033350,Donatello Brown,,CB,,,,,Inactive,5.0
-5859, 00-0035676,A.J. Brown,NE,WR,1.0,LWR,Questionable,Ankle,Active,7.0
+5859, 00-0035676,A.J. Brown,NE,WR,1.0,LWR,Questionable,Knee,Active,7.0
 441,00-0026944,Captain Munnerlyn,,CB,,,,,Inactive,13.0
 2645,00-0032007,Quinton Dunbar,,CB,,,,,Active,7.0
 2333,00-0032234,Laken Tomlinson,GB,OL,,OL,,,Active,11.0
-4034,00-0033280,Christian McCaffrey,SF,RB,1.0,RB,Questionable,Calf,Active,9.0
+4034,00-0033280,Christian McCaffrey,SF,RB,1.0,RB,,,Active,9.0
 1216,00-0029530,Justin Bethel,,DB,,,,,Active,12.0
 988,00-0028434,Doug Baldwin,,WR,,,,,Injured Reserve,11.0
 5016,00-0034835,Malik Jefferson,,LB,,,,,Inactive,6.0
-6699, 00-0035645,Gunner Olszewski,NYG,WR,6.0,,IR,Achilles,Inactive,7.0
+6699, 00-0035645,Gunner Olszewski,NYG,WR,7.0,,IR,Achilles,Inactive,7.0
 5603,00-0034453,Anthony Moten,,DL,,,,,Active,4.0
 3249,00-0033037,Adolphus Washington,,DT,,,,,Inactive,6.0
 1521,00-0030074,David Bakhtiari,,OT,,,,,Inactive,11.0
@@ -1322,7 +1322,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2720,00-0031491,Brian Peters,,LB,,,,,Inactive,7.0
 3335,00-0032896,Drew Kaser,,P,,,,,Active,6.0
 4263,00-0033295,Elijah McGuire,KC,RB,,,,,Active,5.0
-3973,00-0033868,Myles Garrett,LAR,DE,1.0,ROLB,IR,Knee,Inactive,9.0
+3973,00-0033868,Myles Garrett,LAR,DE,1.0,ROLB,,,Active,9.0
 6725, 00-0035729,Rishard Cook,,G,,,,,Active,3.0
 1310,00-0029144,Tom Compton,,OL,,,,,Inactive,11.0
 5577,00-0034289,Ryan Hunter,,G,,,,,Active,4.0
@@ -1501,7 +1501,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3472,00-0032634,David Grinnage,,TE,,,,,Inactive,6.0
 4066,00-0033881,Evan Engram,DEN,TE,1.0,TE,,,Active,9.0
 6467, 00-0035073,Jonathan Harris,,DT,,,,,Active,7.0
-3048,00-0031484,Chris Manhertz,NYG,TE,3.0,TE,,,Active,11.0
+3048,00-0031484,Chris Manhertz,NYG,TE,4.0,TE,,,Active,11.0
 3164,00-0033045,Ezekiel Elliott,,RB,,,,,Active,9.0
 6227, 00-0035353,Nick Easley,,WR,,,,,Active,3.0
 5415, 00-0034542,Zachary Crabtree,,OT,,,,,Active,4.0
@@ -1528,7 +1528,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5509,00-0034579,Kyle Bosch,,G,,,,,Active,4.0
 6495, 00-0035096,Jay-Tee Tiuli,,NT,,,,,Active,3.0
 3182,00-0033096,Shaq Lawson,,DE,,,,,Active,10.0
-6333, 00-0035133,Keisean Nixon,GB,CB,1.0,LCB,Questionable,Groin,Active,7.0
+6333, 00-0035133,Keisean Nixon,GB,CB,1.0,LCB,,,Active,7.0
 6543, 00-0035391,Kevin Wilkins,,DE,,,,,Inactive,3.0
 5373,00-0034283,Jullian Taylor,,DT,,,,,Active,4.0
 2375, 00-0031560,Jaelen Strong,,WR,,,,,Inactive,5.0
@@ -1536,8 +1536,8 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2357,00-0031557,Jordan Phillips,,DE,,,Questionable,Ankle,Active,11.0
 6215, 00-0035263,Wes Martin,,G,,,,,Active,4.0
 1561,00-0030387,Steven Means,,LB,,,,,Inactive,10.0
-5901, 00-0035234,Tytus Howard,CLE,OL,,OL,,,Active,7.0
-5097,00-0034399,Wyatt Teller,HOU,G,,OL,,,Active,8.0
+5901, 00-0035234,Tytus Howard,CLE,OL,,OL,Questionable,Knee,Active,7.0
+5097,00-0034399,Wyatt Teller,HOU,G,,OL,Questionable,Illness,Active,8.0
 6571, 00-0035349,Tre Watson,,ILB,,,,,Active,3.0
 5943, 00-0035274,Ross Pierschbacher,,OL,,,,,Active,4.0
 3547,00-0032515,Braedon Bowman,,TE,,,,,Inactive,6.0
@@ -1583,9 +1583,9 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5632,00-0034599,Elijah Norris,,ILB,,,,,Active,4.0
 4270, 00-0033531,Colin Holba,CIN,LS,,,,,Active,5.0
 5336,00-0034166,Ade Aruna,,DE,,,,,Active,4.0
-6419, 00-0035227,P.J. Locke,DAL,DB,2.0,FS,Questionable,Concussion,Active,7.0
+6419, 00-0035227,P.J. Locke,DAL,DB,2.0,FS,Out,Concussion,Active,7.0
 823,00-0028103,Pernell McPhee,,LB,,,,,Active,11.0
-4983,00-0034827,DJ Moore,BUF,WR,1.0,LWR,Questionable,Undisclosed,Active,8.0
+4983,00-0034827,DJ Moore,BUF,WR,1.0,LWR,,,Active,8.0
 5022,00-0034351,Dallas Goedert,PHI,TE,1.0,TE,,,Active,8.0
 735,00-0026019,Danny Woodhead,,RB,,,,,Inactive,12.0
 616,00-0027696,Jimmy Graham,,TE,,,,,Active,14.0
@@ -1601,7 +1601,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3285,00-0032406,Antonio Morrison,,ILB,,,,,Inactive,6.0
 4541,00-0033620,Brandon Reilly,,WR,,,,,Inactive,5.0
 4990,00-0034846,Shaquille Leonard,,LB,,,,,Active,6.0
-6612, 00-0035413,Luke Gifford,SF,LB,3.0,MLB,Questionable,Groin,Active,7.0
+6612, 00-0035413,Luke Gifford,SF,LB,3.0,MLB,,,Active,7.0
 6031, 00-0035512,Alex Barnes,,RB,,,,,Active,3.0
 5678,00-0034505,Ike Boettger,,OG,,,,,Active,6.0
 307,00-0019714,Shane Lechler,,P,,,,,Inactive,20.0
@@ -1833,7 +1833,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2827,00-0031795,DeShawn Williams,,DT,,,,,Active,10.0
 6658, 00-0035566,Austin Maloata,,NT,,,,,Active,3.0
 5928, 00-0035292,David Long,,LB,,,,,Active,5.0
-4177,00-0033555,Mack Hollins,NE,WR,5.0,RWR,IR,Calf,Inactive,9.0
+4177,00-0033555,Mack Hollins,NE,WR,3.0,RWR,,,Active,9.0
 4238,00-0033579,Xavier Woods,,DB,,,,,Active,9.0
 5605,00-0034341,Matthew Thomas,,OLB,,,,,Inactive,4.0
 375,00-0027081,Glover Quin,,FS,,,,,Injured Reserve,13.0
@@ -1843,7 +1843,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5610,00-0034495,Evan Brown,HOU,C,,OL,,,Active,8.0
 1854,00-0031023,Quincy Enunwa,,WR,,,,,Active,8.0
 1527,00-0030485,Eddie Lacy,,RB,,,,,Inactive,7.0
-5848, 00-0035662,Marquise Brown,PHI,WR,5.0,SWR,,,Active,7.0
+5848, 00-0035662,Marquise Brown,PHI,WR,3.0,SWR,,,Active,7.0
 3832,00-0032918,C.J. Ham,,FB,,,NA,Undisclosed,Active,10.0
 1457,00-0030096,Vinston Painter,,OT,,,,,Inactive,9.0
 5487,00-0034550,Jake Campos,,OT,,,,,Active,4.0
@@ -1905,7 +1905,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5006,00-0034268,J'Mon Moore,,WR,,,Questionable,,Inactive,4.0
 6312, 00-0035511,Myquon Stout,,DE,,,,,Active,3.0
 6609, 00-0035036,Ross Reynolds,,OG,,,,,Active,3.0
-4207,00-0033860,Davon Godchaux,NO,DT,3.0,NT,,,Active,9.0
+4207,00-0033860,Davon Godchaux,JAX,DT,1.0,RDT,,,Active,9.0
 6347, 00-0035198,Tre' Crawford,,ILB,,,,,Active,3.0
 4461,00-0033316,Lorenzo Jerome,,FS,,,,,Inactive,5.0
 5881, 00-0035677,Nasir Adderley,,DB,,,,,Active,7.0
@@ -1927,7 +1927,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3819,00-0032852,Taniela Tupou,,FB,,,,,Inactive,6.0
 455,00-0026986,Michael Crabtree,,WR,,,,,Active,13.0
 1039,00-0029410,Tavon Wilson,SF,DB,,,,,Inactive,10.0
-3163,00-0033106,Jared Goff,DET,QB,1.0,QB,,,Active,10.0
+3163,00-0033106,Jared Goff,DET,QB,1.0,QB,Questionable,Chest,Active,10.0
 6354, 00-0035108,Nathan Meadors,,DB,,,,,Inactive,5.0
 1576,00-0030459,Tyrann Mathieu,,DB,,,,,Active,12.0
 1415,00-0030434,Vince Williams,,LB,,,,,Injured Reserve,9.0
@@ -1999,7 +1999,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3490,00-0032616,Marshall Koehn,,K,,,,,Inactive,6.0
 4161,00-0033558,Howard Wilson,,CB,,,,,Active,5.0
 1318,00-0029076,Austin Pasztor,,G,,,,,Inactive,10.0
-5875, 00-0035242,Erik McCoy,NO,OL,,OL,,,Active,7.0
+5875, 00-0035242,Erik McCoy,NO,OL,,OL,Doubtful,Biceps,Active,7.0
 1144,00-0029000,Cole Beasley,,WR,,,,,Inactive,11.0
 3256,00-0033109,Javon Hargrave,GB,DT,,DL,IR,Achilles,Inactive,10.0
 5266,00-0034565,Detrez Newsome,,RB,,,,,Inactive,4.0
@@ -2021,20 +2021,20 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3461,00-0032747,Russell Hansbrough,,RB,,,,,Inactive,6.0
 5576,00-0034296,Ben Niemann,,LB,,,,,Active,8.0
 1488,00-0030403,B.W. Webb,,CB,,,,,Active,9.0
-4353,00-0033376,Patrick Ricard,NYG,FB,3.0,RB,,,Active,9.0
+4353,00-0033376,Patrick Ricard,NYG,FB,4.0,RB,,,Active,9.0
 1078,00-0028932,L.J. Fort,,LB,,,,,Active,10.0
 5480,00-0034526,C.J. Reavis,,CB,,,,,Inactive,4.0
-5757,00-0034801,Josh Woods,ATL,LB,3.0,RILB,,,Active,8.0
-5615,00-0034657,Matt Dickerson,JAX,DE,1.0,LDT,,,Active,8.0
+5757,00-0034801,Josh Woods,ATL,LB,3.0,RILB,Questionable,Ankle,Active,8.0
+5615,00-0034657,Matt Dickerson,JAX,DE,3.0,LDT,,,Active,8.0
 2335,00-0032251,Damarious Randall,,CB,,,,,Active,7.0
 2306,00-0031503,Jameis Winston,NYG,QB,2.0,QB,,,Active,11.0
 3502,00-0032655,Romeo Okwara,,LB,,,,,Active,8.0
-1479,00-0030279,Keenan Allen,IND,WR,2.0,RWR,,,Active,13.0
+1479,00-0030279,Keenan Allen,SF,WR,3.0,RWR,,,Active,13.0
 5061,00-0034350,Uchenna Nwosu,SEA,LB,1.0,ROLB,Questionable,Ankle,Active,8.0
 904,00-0028009,DeMarco Murray,,RB,,,,,Inactive,9.0
 1929,00-0031112,Travis Coons,,K,,,,,Inactive,6.0
 3559,00-0032772,Ryan Smith,,CB,,,,,Active,6.0
-3258,00-0032394,Nick Vannett,BAL,TE,4.0,TE,,,Active,10.0
+3258,00-0032394,Nick Vannett,BAL,TE,,,,,Active,10.0
 1392,00-0030449,Margus Hunt,,DE,,,,,Active,9.0
 4470,00-0033424,Riley Bullough,,ILB,,,,,Inactive,5.0
 6164, 00-0035660,Kahale Warring,,TE,,,,,Active,3.0
@@ -2087,7 +2087,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 4221,00-0033528,Jeremy Sprinkle,,TE,,,,,Inactive,5.0
 6554, 00-0035035,Shawn Poindexter,,WR,,,,,Inactive,3.0
 3240,00-0033083,Darian Thompson,DAL,DB,,,,,Active,6.0
-5913, 00-0035679,Connor McGovern,BUF,G,,OL,,,Active,7.0
+5913, 00-0035679,Connor McGovern,BUF,G,,OL,Questionable,Neck,Active,7.0
 4531,00-0033611,Ricky Seals-Jones,,TE,,,,,Inactive,6.0
 6464, 00-0035054,John Wirtel,,LS,,,,,Active,3.0
 2002,00-0030671,Isaiah Burse,,WR,,,,,Inactive,8.0
@@ -2124,7 +2124,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1393,00-0030126,T.J. Johnson,,C,,,,,Inactive,7.0
 3232,00-0033064,Adam Gotsis,,DE,,,,,Active,10.0
 5968, 00-0035155,Mark Fields,SF,CB,,,,,Active,3.0
-5051,00-0034356,Donte Jackson,LAC,CB,1.0,RCB,Questionable,Hamstring,Active,8.0
+5051,00-0034356,Donte Jackson,LAC,CB,1.0,RCB,,,Active,8.0
 4083,00-0033543,Sidney Jones,,CB,,,,,Active,7.0
 4309,00-0033240,Scott Orndoff,,TE,,,,,Active,5.0
 5404,00-0034212,Chris Gonzalez,,G,,,,,Active,4.0
@@ -2203,7 +2203,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2521,00-0031958,Austin Reiter,,C,,,,,Active,9.0
 6064, 00-0035107,E.J. Ejiya,,OLB,,,,,Active,3.0
 6188, 00-0035218,Sutton Smith,,FB,,,,,Active,3.0
-2078,00-0031235,Odell Beckham Jr.,MIN,WR,,,,,Active,12.0
+2078,00-0031235,Odell Beckham Jr.,,WR,,,,,Active,12.0
 6472, 00-0035419,Justin Phillips,,LB,,,,,Active,3.0
 2308,00-0032052,Dante Fowler Jr.,SEA,LB,2.0,LOLB,,,Active,11.0
 4317,00-0033254,Brandon Banks,,DE,,,,,Inactive,5.0
@@ -2238,7 +2238,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3601,00-0032827,Leonard Wester,,G,,,,,Inactive,6.0
 3282,00-0032405,Willie Beavers,,OL,,,,,Active,7.0
 6059, 00-0035592,Travis Fulgham,,WR,,,,,Active,4.0
-5017, 00-0034675,Jessie Bates III,ATL,DB,1.0,SS,,,Active,8.0
+5017, 00-0034675,Jessie Bates III,JAX,DB,1.0,FS,,,Active,8.0
 5582,00-0034312,Brett Taylor,,LB,,,,,Active,4.0
 1805,00-0030648,Alejandro Villanueva,BAL,OT,,,,,Active,8.0
 1870,00-0030694,James Hurst,,OL,,,,,Active,10.0
@@ -2330,7 +2330,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6057, 00-0035223,Ulysees Gilbert,,LB,,,,,Active,4.0
 6641, 00-0035211,Andrew Soroh,,DB,,,,,Active,3.0
 1357,00-0030422,Dion Sims,,TE,,,,,Injured Reserve,9.0
-5071,00-0034277,DeShon Elliott,PIT,DB,1.0,SS,,,Active,8.0
+5071,00-0034277,DeShon Elliott,PIT,DB,1.0,SS,Questionable,Ankle,Active,8.0
 3213,00-0032462,Trevone Boykin,,QB,,,,,Inactive,6.0
 6257, 00-0035437,Roderic Teamer,,DB,,,,,Active,5.0
 77,00-0025503,Zak DeOssie,,LS,,,,,Active,15.0
@@ -2447,7 +2447,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5426,00-0034082,McKay Murphy,,DT,,,NA,,Inactive,4.0
 2205,00-0030807,Seantavius Jones,,WR,,,,,Inactive,6.0
 4344,00-0033367,C.J. Board,,WR,,,,,Active,6.0
-2130,00-0031360,Kyle Van Noy,MIN,LB,2.0,LOLB,,,Active,12.0
+2130,00-0031360,Kyle Van Noy,MIN,LB,2.0,LOLB,Questionable,Calf,Active,12.0
 5302,00-0034387,Bilal Nichols,,DT,,,Questionable,Knee,Active,8.0
 4218,00-0033292,Trent Taylor,,WR,,,,,Active,9.0
 6178, 00-0035148,Darwin Thompson,,RB,,,,,Active,4.0
@@ -2495,7 +2495,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2113,00-0031079,Pat O'Donnell,,P,,,,,Active,11.0
 3224,00-0032389,Mackensie Alexander,,CB,,,,,Inactive,7.0
 3212, 00-0032810,Kalan Reed,,CB,,,,,Inactive,6.0
-5892, 00-0035685,David Montgomery,HOU,RB,1.0,RB,Out,Groin,Active,7.0
+5892, 00-0035685,David Montgomery,HOU,RB,2.0,RB,Questionable,Groin,Active,7.0
 5660,00-0034590,Frank Herron,,DE,,,,,Active,4.0
 2559,00-0031968,E.J. Bibbs,,TE,,,,,Injured Reserve,5.0
 6638, 00-0035180,Tommy Doles,,OT,,,,,Active,3.0
@@ -2508,7 +2508,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2477,00-0031599,Cameron Artis-Payne,,RB,,,,,Inactive,7.0
 3521,00-0032714,Alex Balducci,,G,,,,,Inactive,6.0
 6197, 00-0035727,Durval Queiroz Neto,MIA,G,,,,,Active,3.0
-6084, 00-0035258,Hjalte Froholdt,ARI,G,,OL,,,Active,7.0
+6084, 00-0035258,Hjalte Froholdt,ARI,G,,OL,Questionable,Concussion,Active,7.0
 4220,00-0033954,Jayon Brown,,LB,,,,,Inactive,6.0
 2141,00-0031019,Corey Linsley,,C,,,,,Active,10.0
 6020, 00-0035115,Te'von Coney,,LB,,,,,Active,3.0
@@ -2552,7 +2552,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1959,00-0031225,Julius Warmsley,,DT,,,,,Inactive,8.0
 967,00-0027952,Robert Quinn,,LB,,,,,Active,12.0
 4156,00-0033287,Nico Siragusa,,G,,,,,Inactive,5.0
-4274,00-0033589,David Moore,CAR,WR,5.0,SWR,,,Active,9.0
+4274,00-0033589,David Moore,,WR,,,,,Active,9.0
 2572,00-0031796,Justin Coleman,,CB,,,,,Active,8.0
 395, 00-0027023,Michael Mitchell,,FS,,,,,Inactive,13.0
 1472,00-0030572,D.J. Hayden,WAS,CB,,,,,Active,9.0
@@ -2589,10 +2589,10 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5553,00-0034231,Darius James,,G,,,,,Active,4.0
 635,00-0027869,Mike Iupati,,G,,,,,Injured Reserve,12.0
 5465,00-0034192,Nick Keizer,,TE,,,,,Injured Reserve,4.0
-4854,00-0034054,River Cracraft,,WR,,,Questionable,Undisclosed,Inactive,9.0
+4854,00-0034054,River Cracraft,,WR,,,,,Inactive,9.0
 1601,00-0030414,Spencer Ware,,RB,,,,,Inactive,9.0
 4547,00-0033626,Nigel Williams,,DT,,,,,Active,5.0
-3888,00-0033082,Lucas Patrick,WAS,G,,OL,,,Active,10.0
+3888,00-0033082,Lucas Patrick,WAS,G,,OL,Out,Concussion,Active,10.0
 2328,00-0032221,Shane Ray,,LB,,,,,Active,9.0
 5960, 00-0035386,T.J. Edwards,CHI,LB,1.0,LOLB,,,Active,7.0
 2444,00-0031945,Martrell Spaight,,LB,,,,,Inactive,7.0
@@ -2614,7 +2614,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 944,00-0028130,Matt Bosher,,P,,,,,Active,11.0
 6705, 00-0035658,Taj McGowan,,RB,,,,,Active,3.0
 5030,00-0034828,Harold Landry III,NE,LB,1.0,ROLB,PUP,Undisclosed,Active,8.0
-5927, 00-0035659,Terry McLaurin,WAS,WR,7.0,,IR,Knee,Inactive,7.0
+5927, 00-0035659,Terry McLaurin,WAS,WR,6.0,,IR,Knee,Inactive,7.0
 6348, 00-0035202,Del'Shawn Phillips,LAC,LB,1.0,LILB,,,Active,7.0
 6209, 00-0034922,Ishmael Hyman,,WR,,,,,Inactive,3.0
 5974, 00-0035146,Trace McSorley,,QB,,,,,Active,5.0
@@ -2622,7 +2622,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2563,00-0031931,Tony Washington,,OLB,,,,,Active,7.0
 5618,00-0034666,Larry Rose,,RB,,,NA,,Inactive,4.0
 4819,00-0034030,Keionta Davis,,DE,,,,,Inactive,5.0
-4199,00-0033293,Aaron Jones Sr.,MIN,RB,1.0,RB,,,Active,9.0
+4199,00-0033293,Aaron Jones Sr.,MIN,RB,2.0,RB,,,Active,9.0
 2184,00-0031261,Tre Boston,,DB,,,,,Active,8.0
 2595,00-0032006,Tim Semisch,,TE,,,,,Active,7.0
 2015,00-0031297,Dee Ford,,DE,,,,,Active,8.0
@@ -2635,7 +2635,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6449, 00-0035038,Dorian Baker,,WR,,,,,Active,3.0
 6666, 00-0035549,Noah Dawkins,,LB,,,,,Active,3.0
 6156, 00-0035217,Benny Snell,,RB,,,,,Active,4.0
-4950,00-0034775,Christian Kirk,SF,WR,2.0,SWR,,,Active,8.0
+4950,00-0034775,Christian Kirk,SF,WR,8.0,SWR,IR,Knee - Meniscus,Inactive,8.0
 6134, 00-0035128,Gerald Willis,,NT,,,,,Active,3.0
 2339,00-0032217,Donovan Smith,,T,,,,,Active,9.0
 1777,00-0030216,Josh Hill,,TE,,,,,Injured Reserve,9.0
@@ -2645,7 +2645,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2507,00-0031612,Aaron Ripkowski,,FB,,,,,Inactive,5.0
 5311,00-0034848,R.J. McIntosh,,DT,,,,,Active,5.0
 2223,00-0031390,Charles Sims,,RB,,,,,Injured Reserve,6.0
-4454,00-0033307,Kendrick Bourne,ARI,WR,6.0,,IR,Lower Leg,Inactive,9.0
+4454,00-0033307,Kendrick Bourne,ARI,WR,7.0,,IR,Lower Leg,Inactive,9.0
 284,00-0024389,Delanie Walker,,TE,,,,,Active,16.0
 2966,00-0031765,Nick Easton,,G,,,,,Active,7.0
 4085,00-0033896,Adam Shaheen,,TE,,,,,Inactive,6.0
@@ -2659,7 +2659,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5313,00-0034380,Will Richardson,,OL,,,,,Active,4.0
 858,00-0027960,Anthony Castonzo,,T,,,,,Injured Reserve,11.0
 1722,00-0029164,Mike Remmers,,T,,,,,Active,11.0
-6154, 00-0035359,David Sills V,TB,WR,6.0,LWR,,,Active,7.0
+6154, 00-0035359,David Sills V,,WR,,,,,Active,7.0
 4101,00-0033913,Chris Wormley,,DT,,,,,Active,9.0
 2731,00-0031743,Akeem Hunt,,RB,,,,,Inactive,5.0
 2704,00-0031902,Jonathan Anderson,,LB,,,,,Inactive,7.0
@@ -2683,7 +2683,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2082,00-0031035,Xavier Grimble,,TE,,,,,Active,8.0
 1843,00-0031081,Zach Moore,,DE,,,,,Inactive,8.0
 2513,00-0031956,Anthony Chickillo,,LB,,,,,Injured Reserve,7.0
-5371,00-0034320,Kentavius Street,CHI,DT,3.0,RDT,IR,Knee,Active,8.0
+5371,00-0034320,Kentavius Street,CHI,DT,3.0,RDT,IR,Knee,Inactive,8.0
 6063, 00-0035457,Tyron Billy-Johnson,,WR,,,,,Active,5.0
 4018,00-0033897,Joe Mixon,,RB,,,Questionable,Foot,Active,9.0
 2319,00-0031547,DeVante Parker,,WR,,,,,Active,9.0
@@ -2742,7 +2742,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1745,00-0028284,Patrick Scales,,LS,,,,,Active,14.0
 4355,00-0033379,Tim White,,WR,,,,,Inactive,5.0
 3364,00-0032438,Maurice Canady,,CB,,,,,Active,6.0
-3161,00-0032950,Carson Wentz,MIN,QB,2.0,QB,,,Active,10.0
+3161,00-0032950,Carson Wentz,MIN,QB,2.0,QB,Questionable,Ankle,Active,10.0
 3735,00-0032735,Duke Thomas,,CB,,,,,Active,6.0
 188,00-0022803,Eli Manning,,QB,,,,,Active,16.0
 5111,00-0034426,Javon Wims,,WR,,,,,Active,5.0
@@ -2779,7 +2779,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3642,00-0032729,Ufomba Kamalu,,OLB,,,,,Active,6.0
 5831, 00-0034901,Bryant Mitchell,,WR,,,,,Inactive,3.0
 5375,00-0034374,Jordan Whitehead,,DB,,,,,Active,7.0
-5226,00-0034234,Poona Ford,LAR,DT,1.0,NT,IR,Triceps,Inactive,8.0
+5226,00-0034234,Poona Ford,LAR,DT,,DL,IR,Triceps,Inactive,8.0
 112,00-0022824,Andy Lee,,P,,,,,Active,19.0
 4977,00-0034833,Isaiah Wynn,,OL,,,,,Active,7.0
 4976,00-0034333,Daron Payne,WAS,DT,,DL,IR,Foot,Inactive,8.0
@@ -2790,7 +2790,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 120,00-0016919,Adam Vinatieri,,K,,,,,Injured Reserve,26.0
 5774,00-0034863,Cam Serigne,,TE,,,,,Active,4.0
 2599,00-0032298,Bronson Hill,,RB,,,,,Inactive,7.0
-6011, 00-0035289,Gardner Minshew II,ARI,QB,1.0,QB,,,Active,7.0
+6011, 00-0035289,Gardner Minshew II,ARI,QB,3.0,QB,IR,Elbow,Inactive,7.0
 1107,00-0029697,Coby Fleener,,TE,,,,,Inactive,8.0
 5089,00-0034401,Mike White,,QB,,,,,Active,8.0
 142,00-0021678,Tony Romo,,QB,,,,,Inactive,17.0
@@ -2816,7 +2816,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 965,00-0028394,Jake McQuaide,LAR,LS,,,,,Active,15.0
 2428,00-0032188,Vince Mayle,,TE,,,,,Injured Reserve,5.0
 5700,00-0034708,Robert Martin,,RB,,,,,Active,4.0
-5857, 00-0035644,Noah Fant,NO,TE,2.0,TE,,,Active,7.0
+5857, 00-0035644,Noah Fant,NO,TE,2.0,TE,Questionable,Back,Active,7.0
 3714,00-0032560,Charles Washington,,DB,,,,,Active,7.0
 6730, 00-0035735,Jordan Ta'amu,,QB,,,,,Active,4.0
 1528,00-0030104,Nate Palmer,,LB,,,,,Inactive,7.0
@@ -2864,7 +2864,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 391,00-0026968,Ryan Succop,,K,,,,,Active,14.0
 1640,00-0029890,Mike Purcell,,NT,,,,,Active,11.0
 4255,00-0033973,Elijah Lee,,LB,,,,,Active,6.0
-6217, 00-0035276,Blake Cashman,MIN,LB,1.0,RILB,,,Active,7.0
+6217, 00-0035276,Blake Cashman,MIN,LB,1.0,RILB,Questionable,Concussion,Active,7.0
 6044, 00-0035061,Alex Bars,,OL,,,,,Active,4.0
 1442,00-0029747,Chris Banjo,,DB,,,,,Inactive,10.0
 5996, 00-0035404,Porter Gustin,,DE,,,,,Inactive,4.0
@@ -2906,7 +2906,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5980, 00-0035311,Myles Gaskin,,RB,,,,,Active,6.0
 1903,00-0031228,Taylor Gabriel,,WR,,,,,Injured Reserve,8.0
 4963,00-0034789,Minkah Fitzpatrick,NYJ,DB,1.0,FS,,,Active,8.0
-5008,00-0034798,Durham Smythe,BAL,TE,5.0,TE,IR,Achilles,Inactive,8.0
+5008,00-0034798,Durham Smythe,BAL,TE,4.0,TE,IR,Achilles,Inactive,8.0
 6445, 00-0035015,James O'Hagan,,C,,,,,Active,3.0
 5785,00-0034870,James Butler,,RB,,,,,Active,4.0
 6628, 00-0035548,Ventell Bryant,,WR,,,,,Active,3.0
@@ -2936,7 +2936,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 4299,00-0033229,Andreas Knappe,,OT,,,,,Active,5.0
 6120, 00-0035231,Christian Wilkins,,DT,,,Questionable,Foot,Active,6.0
 6204, 00-0034917,Cole Mazza,,LS,,,,,Active,3.0
-6453, 00-0035045,D.J. Montgomery,IND,WR,8.0,,IR,Abdomen,Inactive,7.0
+6453, 00-0035045,D.J. Montgomery,IND,WR,7.0,,IR,Abdomen,Inactive,7.0
 5587,00-0034315,Chris Warren,,RB,,,,,Active,4.0
 5235,00-0034575,David Wells,,TE,,,,,Active,6.0
 5705,00-0034705,John Franklin,,WR,,,,,Inactive,4.0
@@ -2990,7 +2990,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6256, 00-0035435,Rodney Randle,,CB,,,,,Active,4.0
 2833,00-0031847,Josh Keyes,,LB,,,,,Inactive,7.0
 5889, 00-0035256,Bryce Love,,RB,,,,,Inactive,3.0
-5908, 00-0035632,Amani Hooker,TEN,DB,1.0,SS,,,Active,7.0
+5908, 00-0035632,Amani Hooker,BUF,DB,1.0,FS,,,Active,7.0
 2482,00-0032154,Michael Bennett,,DT,,,,,Inactive,7.0
 5661,00-0034593,Chris Lacy,,WR,,,,,Active,5.0
 6439, 00-0035025,Hale Hentges,,TE,,,,,Injured Reserve,3.0
@@ -3008,11 +3008,11 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3276,00-0032401,De'Vondre Campbell,,LB,,,,,Active,9.0
 6400, 00-0034939,Ryan Bee,ARI,DE,,,,,Active,3.0
 6008, 00-0035084,Yosh Nijman,,T,,,,,Active,7.0
-6216, 00-0035142,Ugo Amadi,DEN,DB,,,,,Active,7.0
+6216, 00-0035142,Ugo Amadi,,DB,,,,,Active,7.0
 6587, 00-0035560,Quindarius Thagard,,DT,,,,,Active,3.0
 5381,00-0034684,Johnny Townsend,,P,,,,,Active,4.0
 4188,00-0033512,Damontae Kazee,,DB,,,,,Active,9.0
-650,00-0025565,Nick Folk,ATL,K,1.0,K,,,Active,19.0
+650,00-0025565,Nick Folk,,K,,,,,Active,19.0
 3595,00-0032745,Alan Cross,,FB,,,,,Inactive,6.0
 202,00-0024270,Andrew Whitworth,LAR,OL,,,,,Active,16.0
 947,00-0027944,Julio Jones,,WR,,,,,Active,13.0
@@ -3050,7 +3050,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6013, 00-0035288,Saquan Hampton,,DB,,,,,Active,3.0
 2623,00-0031680,Robenson Therezie,,SS,,,,,Injured Reserve,5.0
 813,00-0027955,Nate Solder,,T,,,,,Active,11.0
-5865, 00-0035678,Dre'Mont Jones,NE,DE,1.0,LOLB,Questionable,Shoulder,Active,7.0
+5865, 00-0035678,Dre'Mont Jones,NE,DE,1.0,LOLB,,,Active,7.0
 2784,00-0031755,Jameill Showers,,SS,,,,,Injured Reserve,5.0
 2331,00-0032054,Breshad Perriman,,WR,,,,,Active,8.0
 4965,00-0034344,Marcus Davenport,,DE,,,,,Active,8.0
@@ -3149,11 +3149,11 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3394,00-0032452,Trevor Bates,,ILB,,,,,Inactive,6.0
 2640,00-0031657,Isaiah Johnson,,FS,,,,,Inactive,7.0
 334,00-0027027,Andy Levitre,,G,,,,,Injured Reserve,13.0
-5036,00-0034361,Justin Reid,NO,DB,1.0,SS,Questionable,Concussion,Active,8.0
+5036,00-0034361,Justin Reid,NO,DB,1.0,SS,,,Active,8.0
 6272, 00-0034997,Gerri Green,,DE,,,,,Active,4.0
 5624,00-0034509,Keith Ford,,RB,,,,,Inactive,4.0
 6483, 00-0035111,Markus Jones,,OLB,,,,,Active,3.0
-1074,00-0029592,Kevin Zeitler,GB,OG,,OL,,,Active,14.0
+1074,00-0029592,Kevin Zeitler,GB,OG,,OL,Questionable,Ankle,Active,14.0
 3166,00-0032968,Myles Jack,,LB,,,,,Active,8.0
 5096,00-0034407,Ray-Ray McCloud,,WR,,,Questionable,Undisclosed,Inactive,8.0
 5823, 00-0034909,Tristan Vizcaino,,K,,,,,Active,4.0
@@ -3186,7 +3186,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6027, 00-0035415,Nate Hall,,LB,,,,,Active,3.0
 5779,00-0034864,Blake Jackson,,WR,,,,,Inactive,4.0
 2172,00-0031279,Jake Matthews,ATL,T,,OL,,,Active,12.0
-5816, 00-0035717,Nick Bosa,SF,DE,1.0,LDE,Questionable,Knee,Active,7.0
+5816, 00-0035717,Nick Bosa,SF,DE,1.0,LDE,,,Active,7.0
 2588,00-0031806,Malcolm Brown,,RB,,,,,Active,8.0
 5712,00-0034695,Tyrice Beverette,,FS,,,,,Active,4.0
 4166,00-0033563,Carlos Watkins,,DE,,,,,Active,9.0
@@ -3254,7 +3254,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1467,00-0030094,Eric Kush,,OL,,,,,Inactive,9.0
 4534,00-0033614,Pasoni Tasini,,DE,,,,,Inactive,5.0
 3451,00-0032726,Ka'imi Fairbairn,HOU,K,1.0,K,,,Active,10.0
-3155,00-0032951,Laquon Treadwell,IND,WR,3.0,LWR,,,Active,10.0
+3155,00-0032951,Laquon Treadwell,IND,WR,1.0,LWR,,,Active,10.0
 1620,00-0030312,Jahleel Addae,,DB,,,,,Active,9.0
 4292,00-0033220,Marcelis Branch,,SS,,,,,Active,5.0
 6674, 00-0035558,Garrett McGhin,,OT,,,,,Active,4.0
@@ -3263,7 +3263,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6635, 00-0035407,Derrick Kelly,,OL,,,,,Active,4.0
 4390,00-0033400,Matt Haack,,P,,,,,Active,9.0
 2194,00-0031362,Trai Turner,,G,,,,,Active,10.0
-6012, 00-0035594,Travis Homer,PIT,RB,3.0,RB,,,Active,7.0
+6012, 00-0035594,Travis Homer,PIT,RB,6.0,RB,,,Active,7.0
 5867, 00-0035702,Dalton Risner,CIN,G,,OL,,,Active,7.0
 560,00-0027874,Demaryius Thomas,,WR,,,,,Active,12.0
 855,00-0027980,Brooks Reed,,LB,,,,,Inactive,11.0
@@ -3284,9 +3284,9 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5588,00-0034313,Paul Butler,,TE,,,,,Inactive,5.0
 5526,00-0034203,Darious Williams,,CB,,,NA,Undisclosed,Active,8.0
 2321,00-0031548,Kevin Johnson,,CB,,,,,Injured Reserve,7.0
-5054,00-0034778,Carlton Davis III,NE,CB,1.0,LCB,Questionable,Neck,Active,8.0
+5054,00-0034778,Carlton Davis III,NE,CB,1.0,LCB,Out,Knee,Active,8.0
 5979, 00-0035533,Ryan Connelly,,LB,,,,,Active,5.0
-4035,00-0033906,Alvin Kamara,NO,RB,1.0,RB,Questionable,Back,Active,9.0
+4035,00-0033906,Alvin Kamara,NO,RB,2.0,RB,Questionable,Back,Active,9.0
 5701,00-0034718,Connor Flagel,,DE,,,,,Active,4.0
 1441,00-0030117,Kerwynn Williams,,RB,,,,,Inactive,7.0
 1540,00-0030528,Robert Alford,,CB,,,,,Active,9.0
@@ -3337,7 +3337,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5641,00-0034537,Chris Worley,,ILB,,,,,Inactive,4.0
 3253,00-0033060,Leonte Carroo,,WR,,,,,Inactive,6.0
 2707,00-0031915,John Timu,,LB,,,,,Inactive,5.0
-4190,00-0033290,Jermaine Eluemunor,NYG,OL,,OL,Questionable,Calf,Active,9.0
+4190,00-0033290,Jermaine Eluemunor,NYG,OL,,OL,,,Active,9.0
 3292,00-0032409,Willie Henry,,DT,,,,,Active,6.0
 1174,00-0029284,Mike Daniels,CIN,DT,,,,,Active,10.0
 3254,00-0032892,Nick Vigil,,LB,,,,,Active,9.0
@@ -3359,7 +3359,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 333,00-0023682,Ryan Fitzpatrick,,QB,,,,,Active,17.0
 2747,00-0031492,Jason Myers,SEA,K,1.0,K,,,Active,11.0
 4947,00-0034762,Billy Price,,OL,,,,,Inactive,6.0
-3257,00-0033119,Jacoby Brissett,ARI,QB,2.0,QB,,,Active,10.0
+3257,00-0033119,Jacoby Brissett,BAL,QB,1.0,QB,,,Active,10.0
 6518, 00-0035082,Greg Roberts,,DE,,,,,Active,3.0
 5377,00-0034729,Jamarco Jones,,T,,,Questionable,Achilles,Active,8.0
 4240,00-0033582,Jeremiah Ledbetter,,DE,,,,,Active,8.0
@@ -3373,7 +3373,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5237,00-0034478,Chad Kanoff,,QB,,,,,Inactive,4.0
 4030,00-0033887,Reuben Foster,,LB,,,,,Active,5.0
 5145,00-0034149,Luke McNitt,,FB,,,,,Active,4.0
-5904, 00-0035668,David Edwards,NO,OL,,OL,,,Active,7.0
+5904, 00-0035668,David Edwards,NO,OL,,OL,Questionable,Knee,Active,7.0
 3199,00-0032765,Michael Thomas,,WR,,,,,Active,8.0
 2454,00-0031592,David Parry,,DT,,,,,Inactive,7.0
 6321, 00-0035135,Tim Ward,,DE,,,,,Active,4.0
@@ -3407,7 +3407,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 3331,00-0032895,Jatavis Brown,,LB,,,,,Injured Reserve,6.0
 5978, 00-0035538,Emeke Egbule,,LB,,,,,Active,4.0
 5382,00-0034767,Nick Nelson,,CB,,,,,Active,4.0
-5970, 00-0035500,Greg Dortch,BUF,WR,5.0,RWR,,,Active,7.0
+5970, 00-0035500,Greg Dortch,BUF,WR,4.0,RWR,,,Active,7.0
 1652,00-0029981,Terrell Sinkfield,,WR,3.0,SWR,,,Active,9.0
 5924, 00-0035070,Emanuel Hall,,WR,,,,,Inactive,3.0
 4761,00-0033997,Brady Sheldon,,LB,,,,,Active,5.0
@@ -3443,7 +3443,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2307,00-0032268,Marcus Mariota,WAS,QB,2.0,QB,,,Active,11.0
 3969,00-0033856,Leonard Fournette,,RB,,,,,Active,7.0
 2123,00-0030725,Cornelius Lucas,,T,,,,,Active,12.0
-1466,00-0030506,Travis Kelce,KC,TE,1.0,TE,Questionable,Ankle,Active,13.0
+1466,00-0030506,Travis Kelce,KC,TE,1.0,TE,,,Active,13.0
 6149, 00-0035535,Darius Slayton,,WR,,,,,Active,7.0
 5098,00-0034391,Siran Neal,SF,CB,2.0,FS,,,Active,8.0
 6047, 00-0035002,Dillon Mitchell,,WR,,,,,Inactive,3.0
@@ -3460,7 +3460,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2413,00-0032130,Jalston Fowler,,FB,,,,,Inactive,7.0
 6022, 00-0035005,Javon Patterson,,OL,,,,,Active,3.0
 499,00-0026138,Connor Barth,,K,,,,,Inactive,12.0
-4017,00-0033537,Deshaun Watson,CLE,QB,1.0,QB,Questionable,Concussion,Active,9.0
+4017,00-0033537,Deshaun Watson,CLE,QB,1.0,QB,,,Active,9.0
 4464,00-0033319,Nick Mullens,JAX,QB,,,,,Active,9.0
 3785, 00-0032660,Brandin Bryant,,DT,,,,,Active,7.0
 6512, 00-0035072,Doyin Jibowu,,FS,,,,,Active,3.0
@@ -3490,7 +3490,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6680, 00-0035581,David Kenney,,OLB,,,,,Active,3.0
 4651,00-0033725,Corey Clement,,RB,,,,,Active,6.0
 6006, 00-0035278,Byron Cowart,WAS,DT,,,,,Active,7.0
-6451, 00-0035039,Stephen Carlson,CHI,TE,,,,,Active,7.0
+6451, 00-0035039,Stephen Carlson,CHI,TE,3.0,TE,,,Active,7.0
 2149,00-0030629,Jeremy Vujnovich,,G,,,,,Active,8.0
 6151, 00-0035243,Miles Sanders,,RB,,,,,Active,7.0
 4750,00-0033992,Lance Lenoir,,WR,,,,,Active,6.0
@@ -3547,7 +3547,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 879,00-0027993,Rodney Hudson,,OL,,,,,Inactive,12.0
 5193,00-0034591,J.C. Jackson,,DB,,,,,Active,6.0
 856,00-0027949,J.J. Watt,,DE,,,,,Active,12.0
-5850, 00-0035700,Josh Jacobs,GB,RB,1.0,RB,,,Active,7.0
+5850, 00-0035700,Josh Jacobs,GB,RB,4.0,RB,Out,Finger,Active,7.0
 4086,00-0033782,DeMarcus Walker,,DE,,,,,Active,9.0
 424,00-0027078,T.J. Lang,,G,,,,,Injured Reserve,13.0
 5804,00-0034894,Julian Williams,,WR,,,,,Active,4.0
@@ -3618,7 +3618,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 2128,00-0031284,Travis Swanson,,C,,,,,Injured Reserve,8.0
 1006,00-0027573,Mitch Unrein,,DE,,,,,Inactive,10.0
 3246,00-0032891,Daryl Worley,,CB,,,,,Active,9.0
-3415,00-0032580,Jonathan Jones,PHI,DB,3.0,LCB,Questionable,Hamstring,Active,10.0
+3415,00-0032580,Jonathan Jones,PHI,DB,3.0,LCB,Out,Hamstring,Active,10.0
 1916,00-0031373,Martavis Bryant,,WR,,,,,Active,10.0
 4079,00-0033524,Kevin King,,CB,,,Questionable,Undisclosed,Active,8.0
 5984, 00-0035520,Anthony Ratliff-Williams,,WR,,,,,Active,3.0
@@ -3677,7 +3677,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 6118, 00-0035718,Quinnen Williams,DAL,DT,1.0,RDE,,,Active,7.0
 2067,00-0031097,Terrance Mitchell,,DB,,,,,Active,10.0
 1525,00-0030090,Micah Hyde,,DB,,,,,Active,12.0
-4033,00-0033885,David Njoku,LAC,TE,4.0,TE,IR,Lower Leg,Inactive,9.0
+4033,00-0033885,David Njoku,LAC,TE,3.0,TE,IR,Lower Leg,Inactive,9.0
 5669,00-0034659,Sharif Finch,,LB,,,,,Inactive,4.0
 4152,00-0033951,Marlon Mack,,RB,,,,,Active,7.0
 3194,00-0032758,Vernon Hargreaves,,DB,,,,,Active,6.0
@@ -3694,7 +3694,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 4643,00-0033716,Calvin Munson,,LB,,,,,Active,8.0
 691, 00-0023645,Derek Anderson,,QB,,,,,Injured Reserve,17.0
 2729,00-0031731,Corey Grant,,RB,,,,,Inactive,7.0
-5849, 00-0035228,Kyler Murray,MIN,QB,1.0,QB,Questionable,Hamstring,Active,7.0
+5849, 00-0035228,Kyler Murray,MIN,QB,3.0,QB,Doubtful,Hamstring,Active,7.0
 5409,00-0034613,Tanner Hudson,CIN,TE,5.0,TE,IR,Pectoral,Inactive,8.0
 1796,00-0031179,Taylor Hart,,T,,,,,Inactive,6.0
 5037,00-0034774,Breeland Speaks,,DE,,,,,Active,6.0
@@ -3752,7 +3752,7 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1328,00-0029310,Cam Johnson,,DE,,,,,Inactive,8.0
 3546,00-0032521,Mike Hilton,,CB,,,Questionable,Shoulder,Active,10.0
 1298,00-0027539,Anthony Levine,BAL,DB,,,,,Active,12.0
-6065, 00-0035672,Cody Barton,TEN,LB,1.0,MLB,,,Active,7.0
+6065, 00-0035672,Cody Barton,TEN,LB,1.0,MLB,Questionable,Concussion,Active,7.0
 1103,00-0029643,Whitney Mercilus,GB,LB,,,,,Active,10.0
 6667, 00-0035543,Jordan Agasiva,,G,,,,,Active,3.0
 3236,00-0033131,Maliek Collins,CLE,DT,1.0,LDT,Questionable,Elbow,Active,10.0
@@ -3783,11 +3783,11 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 1700,00-0030196,Jeff Heath,,DB,,,,,Active,9.0
 3729,00-0032652,Herb Waters,,WR,,,,,Inactive,6.0
 4647,00-0033720,Colin Thompson,,TE,,,,,Active,6.0
-2322,00-0032164,Arik Armstead,JAX,DE,1.0,RDT,,,Active,11.0
+2322,00-0032164,Arik Armstead,JAX,DE,2.0,LDT,,,Active,11.0
 3834,00-0032926,K.J. Brent,,WR,,,,,Inactive,6.0
 6530, 00-0035014,Mark McLaurin,,LB,,,,,Active,3.0
 986, 00-0027945,Aldon Smith,,DE,,,,,Active,11.0
-6427, 00-0035021,Ashton Dulin,IND,WR,5.0,SWR,,,Active,7.0
+6427, 00-0035021,Ashton Dulin,IND,WR,2.0,RWR,,,Active,7.0
 4165,00-0033560,Julien Davenport,,T,,,,,Active,7.0
 5278,00-0034205,Jarvion Franklin,,RB,,,,,Active,4.0
 1028,00-0029412,Vinny Curry,,DE,,,,,Active,11.0
@@ -3833,12 +3833,12 @@ sleeper_id,player_id,player_name,team,position,depth_chart_order,depth_chart_pos
 5954, 00-0035319,Jordan Brailford,,DE,,,,,Active,3.0
 1965,00-0031105,Zach Kerr,,DE,,,,,Active,8.0
 2602,00-0031972,Darius Jennings,,WR,,,,,Active,7.0
-5297,00-0034285,Zach Sieler,MIA,DT,1.0,RDT,Questionable,Shoulder,Active,8.0
+5297,00-0034285,Zach Sieler,MIA,DT,,DL,IR,Biceps,Inactive,8.0
 3506,00-0032650,Ryan Malleck,,TE,,,,,Inactive,6.0
 5623,00-0034511,Mike Love,,DE,,,,,Active,5.0
 2009,00-0031353,Michael Schofield,,T,,,,,Active,10.0
 6026, 00-0035455,Albert Huggins,,DT,,,,,Active,5.0
-2334,00-0032208,Phillip Dorsett II,LV,WR,,,,,Active,11.0
+2334,00-0032208,Phillip Dorsett II,ARI,WR,,,,,Active,11.0
 1987,00-0031431,Marqise Lee,,WR,,,,,Inactive,8.0
 2345,00-0032218,Dorial Green-Beckham,,WR,,,,,Inactive,5.0
 6562, 00-0035425,Blake Camper,,OT,,,,,Active,3.0
